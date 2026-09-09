@@ -1,8 +1,8 @@
-﻿import React from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   GraduationCap, FileText, CheckCircle2, Clock, PlusCircle,
-  Building2, Users, AlertTriangle, ArrowRight, ChevronRight
+  Building2, Users, ChevronRight
 } from 'lucide-react';
 import { partnerService } from '../../../services/partnerService';
 import { usePartnerAuth } from '../../../context/PartnerAuthContext';
@@ -32,7 +32,7 @@ export const CollegeDashboard: React.FC = () => {
             <span>Admissions Dean Console</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-            Oxford International College
+            {(partner as any)?.institutionName || 'Oxford International College'}
           </h1>
           <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-xl">
             Direct review of international student dossiers, credential verifications, course offerings, and offer letter issuances.
@@ -50,9 +50,10 @@ export const CollegeDashboard: React.FC = () => {
           </Button>
           <Button
             onClick={() => navigate('/partner/college/applications')}
-            variant="primary"
+            variant="white"
             size="md"
-            className="bg-white text-indigo-950 hover:bg-slate-100 font-bold"
+            className="!text-[#1E1B4B] hover:bg-slate-100 font-bold"
+            leftIcon={<FileText className="w-4 h-4 text-[#1E1B4B]" />}
           >
             Review Applications ({applications.length})
           </Button>

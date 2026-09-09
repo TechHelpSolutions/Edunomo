@@ -1,8 +1,8 @@
-﻿import React from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Users, FileText, Clock, CheckCircle2, UserPlus, PlusCircle,
-  GraduationCap, ArrowRight, ChevronRight, AlertTriangle
+  GraduationCap, ArrowRight, ChevronRight
 } from 'lucide-react';
 import { partnerService } from '../../../services/partnerService';
 import { usePartnerAuth } from '../../../context/PartnerAuthContext';
@@ -56,9 +56,9 @@ export const AgentDashboard: React.FC = () => {
           </Button>
           <Button
             onClick={() => navigate('/partner/agent/applications/new')}
-            variant="primary"
+            variant="white"
             size="md"
-            className="bg-white text-[#0D2A68] hover:bg-slate-100 font-bold"
+            className="!text-[#0D2A68] hover:bg-slate-100 font-bold"
             leftIcon={<PlusCircle className="w-4 h-4 text-[#0D2A68]" />}
           >
             Create Application

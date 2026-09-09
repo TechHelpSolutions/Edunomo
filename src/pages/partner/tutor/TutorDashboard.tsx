@@ -1,8 +1,7 @@
-﻿import React from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
-  BookOpen, Users, Calendar, CheckCircle2, Clock, PlusCircle,
-  Award, ArrowRight, Video, MapPin
+  BookOpen, Calendar, CheckCircle2, Clock, Award
 } from 'lucide-react';
 import { partnerService } from '../../../services/partnerService';
 import { usePartnerAuth } from '../../../context/PartnerAuthContext';
@@ -35,7 +34,7 @@ export const TutorDashboard: React.FC = () => {
               <span>Certified Academic Instructor</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-              Welcome back, {tutorProfile.name.split(' ')[0]}
+              Welcome back, {(partner?.name || tutorProfile.name).split(' ')[0]}
             </h1>
             <p className="text-xs sm:text-sm text-amber-100 max-w-xl">
               {tutorProfile.educationLevel} • {tutorProfile.teachingExperienceYears} Years Mentorship Experience
@@ -54,9 +53,10 @@ export const TutorDashboard: React.FC = () => {
           </Button>
           <Button
             onClick={() => navigate('/partner/tutor/bookings')}
-            variant="primary"
+            variant="white"
             size="md"
-            className="bg-white text-amber-950 hover:bg-slate-100 font-bold"
+            className="!text-amber-950 hover:bg-slate-100 font-bold"
+            leftIcon={<Calendar className="w-4 h-4 text-amber-950" />}
           >
             Tutoring Sessions ({bookings.length})
           </Button>

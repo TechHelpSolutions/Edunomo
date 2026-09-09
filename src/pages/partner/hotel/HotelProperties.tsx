@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {
-  PlusCircle, Building2, Eye, Edit2, Clock, Wifi
+  PlusCircle, Building2, Eye, Edit2, Clock, Wifi,
+  Image as ImageIcon, UploadCloud, Trash2, Star,
+  Link as LinkIcon, Sparkles, ChevronLeft, ChevronRight,
+  RefreshCw
 } from 'lucide-react';
 import { partnerService } from '../../../services/partnerService';
 import { HotelProperty } from '../../../types/partner';
@@ -9,6 +12,17 @@ import { Button } from '../../../components/common/Button';
 import { Modal } from '../../../components/common/Modal';
 import { useToast } from '../../../context/ToastContext';
 import { usePartnerAuth } from '../../../context/PartnerAuthContext';
+
+const DEFAULT_FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800&h=600&fit=crop';
+
+const SAMPLE_PROPERTY_PHOTOS = [
+  { label: 'Modern Studio', url: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800&h=600&fit=crop' },
+  { label: 'Cozy Bedroom', url: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800&h=600&fit=crop' },
+  { label: 'Exterior Façade', url: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=600&fit=crop' },
+  { label: 'Study & Lounge', url: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=600&fit=crop' },
+  { label: 'Modern Kitchenette', url: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=800&h=600&fit=crop' },
+  { label: 'Ensuite Bathroom', url: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&h=600&fit=crop' },
+];
 
 const MASTER_AMENITIES = [
   'WiFi',
@@ -55,6 +69,16 @@ export const HotelProperties: React.FC = () => {
   const [startingRate, setStartingRate] = useState('650');
   const [currency, setCurrency] = useState('GBP');
 
+  // Property Photos State
+  const [images, setImages] = useState<string[]>([DEFAULT_FALLBACK_IMAGE]);
+  const [imageUrlInput, setImageUrlInput] = useState('');
+  const [replaceTargetIndex, setReplaceTargetIndex] = useState<number | null>(null);
+  const [isDragOver, setIsDragOver] = useState(false);
+  const [activeViewingImageIdx, setActiveViewingImageIdx] = useState(0);
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const replaceFileInputRef = useRef<HTMLInputElement>(null);
+
   const currentPartnerId = partner?.id || 'partner-hotel-001';
 
   const resetForm = () => {
@@ -73,12 +97,16 @@ export const HotelProperties: React.FC = () => {
     setFreeCancellationHours(48);
     setStartingRate('650');
     setCurrency('GBP');
+    setImages([DEFAULT_FALLBACK_IMAGE]);
+    setImageUrlInput('');
+    setReplaceTargetIndex(null);
     setEditingPropertyId(null);
     setIsFormModalOpen(false);
   };
 
   const handleOpenAddModal = () => {
     resetForm();
+    setImages([DEFAULT_FALLBACK_IMAGE]);
     setIsFormModalOpen(true);
   };
 
@@ -105,6 +133,9 @@ export const HotelProperties: React.FC = () => {
     setFreeCancellationHours(prop.freeCancellationHours ?? 48);
     setStartingRate(prop.roomTypes[0]?.pricePerMonth?.toString() || '650');
     setCurrency(prop.roomTypes[0]?.currency || 'GBP');
+    setImages(prop.images && prop.images.length > 0 ? [...prop.images] : [DEFAULT_FALLBACK_IMAGE]);
+    setImageUrlInput('');
+    setReplaceTargetIndex(null);
     setIsFormModalOpen(true);
   };
 
@@ -114,12 +145,110 @@ export const HotelProperties: React.FC = () => {
     );
   };
 
+  const handleFilesUpload = (files: FileList | null) => {
+    if (!files || files.length === 0) return;
+
+    const fileArray = Array.from(files);
+    let loadedCount = 0;
+    const newBase64Images: string[] = [];
+
+    fileArray.forEach((file) => {
+      if (!file.type.startsWith('image/')) {
+        showToast(`Skipped ${file.name}: Not an image file.`, 'warning');
+        return;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        showToast(`Skipped ${file.name}: File size exceeds 5MB limit.`, 'warning');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const result = e.target?.result as string;
+        if (result) {
+          newBase64Images.push(result);
+        }
+        loadedCount++;
+        if (loadedCount === fileArray.length) {
+          if (newBase64Images.length > 0) {
+            setImages((prev) => [...prev, ...newBase64Images]);
+            showToast(`Added ${newBase64Images.length} photo${newBase64Images.length > 1 ? 's' : ''}!`, 'success');
+          }
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const triggerReplaceImage = (idx: number) => {
+    setReplaceTargetIndex(idx);
+    replaceFileInputRef.current?.click();
+  };
+
+  const handleReplaceFile = (files: FileList | null) => {
+    if (!files || files.length === 0 || replaceTargetIndex === null) return;
+    const file = files[0];
+    if (!file.type.startsWith('image/')) {
+      showToast('Please select a valid image file.', 'warning');
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      showToast('File size exceeds 5MB limit.', 'warning');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const result = e.target?.result as string;
+      if (result) {
+        setImages((prev) => {
+          const copy = [...prev];
+          copy[replaceTargetIndex] = result;
+          return copy;
+        });
+        showToast('Photo changed successfully!', 'success');
+      }
+      setReplaceTargetIndex(null);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleAddImageUrl = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    const trimmed = imageUrlInput.trim();
+    if (!trimmed) return;
+    if (!trimmed.startsWith('http://') && !trimmed.startsWith('https://') && !trimmed.startsWith('data:image/')) {
+      showToast('Please enter a valid web image URL (starting with http:// or https://).', 'error');
+      return;
+    }
+    setImages((prev) => [...prev, trimmed]);
+    setImageUrlInput('');
+    showToast('Photo URL added to gallery!', 'success');
+  };
+
+  const handleRemoveImage = (index: number) => {
+    setImages((prev) => prev.filter((_, i) => i !== index));
+    showToast('Photo removed.', 'info');
+  };
+
+  const handleMakeCover = (index: number) => {
+    if (index === 0) return;
+    setImages((prev) => {
+      const item = prev[index];
+      const rest = prev.filter((_, i) => i !== index);
+      return [item, ...rest];
+    });
+    showToast('Primary cover photo updated!', 'success');
+  };
+
   const handleSaveProperty = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim()) {
       showToast('Property name is required.', 'error');
       return;
     }
+
+    const propertyImages = images.length > 0 ? images : [DEFAULT_FALLBACK_IMAGE];
 
     try {
       if (editingPropertyId) {
@@ -136,6 +265,7 @@ export const HotelProperties: React.FC = () => {
             distanceToCampus,
             description: description.trim() || 'Modern accommodation located near the city centre with comfortable rooms and convenient access to public transport.',
             amenities: selectedAmenities,
+            images: propertyImages,
             checkInTime,
             checkOutTime,
             cancellationPolicy,
@@ -146,7 +276,7 @@ export const HotelProperties: React.FC = () => {
         );
 
         setProperties(partnerService.getHotelProperties());
-        showToast('Property details updated successfully!', 'success');
+        showToast('Property details and photos updated successfully!', 'success');
         resetForm();
       } else {
         // Add Mode: Create new property
@@ -159,10 +289,7 @@ export const HotelProperties: React.FC = () => {
           description: description.trim() || 'Modern accommodation located near the city centre with comfortable rooms and convenient access to public transport.',
           nearbyCampus: nearbyCampus || 'Central District / Transit Hub',
           distanceToCampus,
-          images: [
-            'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=600&h=400&fit=crop',
-            'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600&h=400&fit=crop',
-          ],
+          images: propertyImages,
           amenities: selectedAmenities.length > 0 ? selectedAmenities : ['WiFi', '24/7 Reception'],
           policies: [
             cancellationPolicy,
@@ -232,7 +359,11 @@ export const HotelProperties: React.FC = () => {
           >
             <div>
               <div className="relative h-48 bg-slate-100 overflow-hidden">
-                <img src={prop.images[0]} alt={prop.name} className="w-full h-full object-cover" />
+                <img
+                  src={prop.images?.[0] || DEFAULT_FALLBACK_IMAGE}
+                  alt={prop.name}
+                  className="w-full h-full object-cover"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent" />
                 <span className="absolute top-3 left-3 text-[10px] font-bold px-2.5 py-1 rounded-full bg-white/90 text-slate-800 backdrop-blur-xs">
                   {prop.propertyType}
@@ -240,7 +371,13 @@ export const HotelProperties: React.FC = () => {
                 <span className="absolute top-3 right-3 text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-600 text-white">
                   {prop.status}
                 </span>
-                <div className="absolute bottom-3 left-3 right-3 text-white">
+                {prop.images && prop.images.length > 1 && (
+                  <span className="absolute bottom-3 right-3 text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-900/70 text-white backdrop-blur-xs flex items-center gap-1">
+                    <ImageIcon className="w-3 h-3" />
+                    {prop.images.length} photos
+                  </span>
+                )}
+                <div className="absolute bottom-3 left-3 right-20 text-white">
                   <h3 className="text-base font-bold drop-shadow-sm truncate">{prop.name}</h3>
                   <p className="text-xs text-slate-200 drop-shadow-sm">{prop.address}, {prop.city}</p>
                 </div>
@@ -312,7 +449,10 @@ export const HotelProperties: React.FC = () => {
             {/* Explicit Actions: Edit Property & View Details */}
             <div className="p-5 pt-0 grid grid-cols-2 gap-2">
               <Button
-                onClick={() => setViewingProperty(prop)}
+                onClick={() => {
+                  setViewingProperty(prop);
+                  setActiveViewingImageIdx(0);
+                }}
                 variant="outline"
                 size="sm"
                 leftIcon={<Eye className="w-3.5 h-3.5" />}
@@ -444,7 +584,206 @@ export const HotelProperties: React.FC = () => {
             </div>
           </div>
 
-          {/* Section 2: Property Description */}
+          {/* Section 2: Property Photos & Media */}
+          <div className="space-y-3.5">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-1.5">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center gap-2">
+                <ImageIcon className="w-4 h-4 text-indigo-600" />
+                <span>Property Photos & Media</span>
+              </h3>
+              <span className="text-[11px] text-slate-500 font-medium">
+                {images.length} photo{images.length !== 1 ? 's' : ''} uploaded
+              </span>
+            </div>
+
+            <p className="text-[11px] text-slate-500">
+              Upload photos from your device, enter web image URLs, or select curated sample room presets. The first image serves as the primary cover photo.
+            </p>
+
+            {/* Hidden file inputs */}
+            <input
+              type="file"
+              ref={fileInputRef}
+              accept="image/*"
+              multiple
+              className="hidden"
+              onChange={(e) => {
+                handleFilesUpload(e.target.files);
+                e.target.value = '';
+              }}
+            />
+            <input
+              type="file"
+              ref={replaceFileInputRef}
+              accept="image/*"
+              className="hidden"
+              onChange={(e) => {
+                handleReplaceFile(e.target.files);
+                e.target.value = '';
+              }}
+            />
+
+            {/* Thumbnail Grid */}
+            {images.length > 0 ? (
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                {images.map((img, idx) => (
+                  <div
+                    key={idx}
+                    className={`group relative rounded-2xl border overflow-hidden bg-slate-100 shadow-2xs transition-all ${
+                      idx === 0 ? 'border-blue-500 ring-2 ring-blue-500/20' : 'border-slate-200 hover:border-slate-300'
+                    }`}
+                  >
+                    <div className="h-28 w-full overflow-hidden bg-slate-200">
+                      <img
+                        src={img}
+                        alt={`Property photo ${idx + 1}`}
+                        className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
+                      />
+                    </div>
+
+                    {/* Primary Badge or Set Cover button */}
+                    {idx === 0 ? (
+                      <span className="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-md bg-blue-600 text-white text-[10px] font-bold flex items-center gap-1 shadow-xs">
+                        <Star className="w-2.5 h-2.5 fill-current" />
+                        Cover
+                      </span>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => handleMakeCover(idx)}
+                        className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded-md bg-slate-900/70 hover:bg-blue-600 text-white text-[10px] font-semibold opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 backdrop-blur-xs cursor-pointer"
+                        title="Set as Cover Photo"
+                      >
+                        <Star className="w-2.5 h-2.5" />
+                        Set Cover
+                      </button>
+                    )}
+
+                    {/* Actions Bar (Replace & Remove) */}
+                    <div className="absolute top-1.5 right-1.5 flex items-center gap-1 opacity-90 sm:opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button
+                        type="button"
+                        onClick={() => triggerReplaceImage(idx)}
+                        className="p-1 rounded-md bg-white/90 hover:bg-white text-slate-700 hover:text-blue-600 shadow-xs backdrop-blur-xs transition-colors cursor-pointer"
+                        title="Change / Replace photo"
+                      >
+                        <RefreshCw className="w-3 h-3" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveImage(idx)}
+                        className="p-1 rounded-md bg-white/90 hover:bg-red-50 text-slate-700 hover:text-red-600 shadow-xs backdrop-blur-xs transition-colors cursor-pointer"
+                        title="Remove photo"
+                      >
+                        <Trash2 className="w-3 h-3" />
+                      </button>
+                    </div>
+
+                    <div className="px-2 py-1 bg-white border-t border-slate-100 text-[10px] text-slate-500 font-medium truncate">
+                      Photo {idx + 1}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-xs flex items-center justify-between">
+                <span>No photos selected. Please upload or choose a sample room below.</span>
+                <button
+                  type="button"
+                  onClick={() => setImages([DEFAULT_FALLBACK_IMAGE])}
+                  className="font-bold underline ml-2 cursor-pointer"
+                >
+                  Use Default Photo
+                </button>
+              </div>
+            )}
+
+            {/* Upload Zone & URL Bar */}
+            <div className="space-y-3 pt-1">
+              {/* Drag and Drop Zone */}
+              <div
+                onDragOver={(e) => {
+                  e.preventDefault();
+                  setIsDragOver(true);
+                }}
+                onDragLeave={() => setIsDragOver(false)}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  setIsDragOver(false);
+                  if (e.dataTransfer.files) {
+                    handleFilesUpload(e.dataTransfer.files);
+                  }
+                }}
+                onClick={() => fileInputRef.current?.click()}
+                className={`p-5 rounded-2xl border-2 border-dashed text-center cursor-pointer transition-colors ${
+                  isDragOver
+                    ? 'border-blue-500 bg-blue-50/60'
+                    : 'border-slate-200 hover:border-blue-400 bg-slate-50/70 hover:bg-blue-50/30'
+                }`}
+              >
+                <div className="flex flex-col items-center justify-center gap-1.5">
+                  <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
+                    <UploadCloud className="w-5 h-5" />
+                  </div>
+                  <div className="text-xs font-bold text-slate-800">
+                    Click to upload or drag & drop photos here
+                  </div>
+                  <div className="text-[11px] text-slate-500">
+                    Supports PNG, JPG, JPEG, WebP (Max 5MB per file)
+                  </div>
+                </div>
+              </div>
+
+              {/* Add via Web URL */}
+              <div className="flex items-center gap-2">
+                <div className="relative flex-1">
+                  <LinkIcon className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="url"
+                    value={imageUrlInput}
+                    onChange={(e) => setImageUrlInput(e.target.value)}
+                    placeholder="Or paste an image web URL (e.g. https://images.unsplash.com/...)"
+                    className="w-full pl-8 pr-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white"
+                  />
+                </div>
+                <Button
+                  type="button"
+                  onClick={() => handleAddImageUrl()}
+                  variant="secondary"
+                  size="sm"
+                  disabled={!imageUrlInput.trim()}
+                >
+                  Add URL
+                </Button>
+              </div>
+
+              {/* Sample Presets */}
+              <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-2">
+                <div className="flex items-center gap-1.5 text-[11px] font-bold text-slate-700">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                  <span>Quick Presets (Click to add high-res sample room photos):</span>
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {SAMPLE_PROPERTY_PHOTOS.map((sample) => (
+                    <button
+                      key={sample.label}
+                      type="button"
+                      onClick={() => {
+                        setImages((prev) => [...prev, sample.url]);
+                        showToast(`Added sample: ${sample.label}`, 'success');
+                      }}
+                      className="px-2.5 py-1 text-[11px] font-medium bg-white hover:bg-blue-50 text-slate-700 hover:text-blue-800 border border-slate-200 hover:border-blue-300 rounded-lg transition-colors flex items-center gap-1 cursor-pointer"
+                    >
+                      <PlusCircle className="w-3 h-3 text-slate-400" />
+                      {sample.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Section 3: Property Description */}
           <div className="space-y-2">
             <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center gap-2 border-b border-slate-100 pb-1.5">
               <span>Property Description</span>
@@ -461,7 +800,7 @@ export const HotelProperties: React.FC = () => {
             />
           </div>
 
-          {/* Section 3: Amenities */}
+          {/* Section 4: Amenities */}
           <div className="space-y-2">
             <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center gap-2 border-b border-slate-100 pb-1.5">
               <Wifi className="w-4 h-4 text-emerald-600" />
@@ -493,7 +832,7 @@ export const HotelProperties: React.FC = () => {
             </div>
           </div>
 
-          {/* Section 4: Policies */}
+          {/* Section 5: Policies */}
           <div className="space-y-3">
             <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center gap-2 border-b border-slate-100 pb-1.5">
               <Clock className="w-4 h-4 text-amber-600" />
@@ -576,8 +915,71 @@ export const HotelProperties: React.FC = () => {
           maxWidth="max-w-2xl"
         >
           <div className="p-4 sm:p-6 space-y-5 text-xs sm:text-sm max-h-[80vh] overflow-y-auto">
-            <div className="h-48 rounded-2xl overflow-hidden bg-slate-100">
-              <img src={viewingProperty.images[0]} alt={viewingProperty.name} className="w-full h-full object-cover" />
+            {/* Interactive Image Gallery */}
+            <div className="space-y-2">
+              <div className="relative h-56 sm:h-64 rounded-2xl overflow-hidden bg-slate-900 shadow-inner group">
+                <img
+                  src={
+                    viewingProperty.images?.[activeViewingImageIdx] ||
+                    viewingProperty.images?.[0] ||
+                    DEFAULT_FALLBACK_IMAGE
+                  }
+                  alt={viewingProperty.name}
+                  className="w-full h-full object-cover transition-all duration-300"
+                />
+
+                {viewingProperty.images && viewingProperty.images.length > 1 && (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setActiveViewingImageIdx((prev) =>
+                          prev > 0 ? prev - 1 : viewingProperty.images.length - 1
+                        )
+                      }
+                      className="absolute left-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-slate-900/60 hover:bg-slate-900/90 text-white flex items-center justify-center backdrop-blur-xs transition-colors cursor-pointer"
+                      title="Previous photo"
+                    >
+                      <ChevronLeft className="w-5 h-5" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setActiveViewingImageIdx((prev) =>
+                          prev < viewingProperty.images.length - 1 ? prev + 1 : 0
+                        )
+                      }
+                      className="absolute right-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-slate-900/60 hover:bg-slate-900/90 text-white flex items-center justify-center backdrop-blur-xs transition-colors cursor-pointer"
+                      title="Next photo"
+                    >
+                      <ChevronRight className="w-5 h-5" />
+                    </button>
+                    <span className="absolute bottom-2.5 right-2.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-xs text-white text-[11px] font-semibold">
+                      {activeViewingImageIdx + 1} / {viewingProperty.images.length}
+                    </span>
+                  </>
+                )}
+              </div>
+
+              {/* Thumbnails strip */}
+              {viewingProperty.images && viewingProperty.images.length > 1 && (
+                <div className="flex gap-2 overflow-x-auto pb-1">
+                  {viewingProperty.images.map((img, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => setActiveViewingImageIdx(idx)}
+                      className={`relative shrink-0 w-16 h-12 rounded-lg overflow-hidden border-2 transition-all cursor-pointer ${
+                        activeViewingImageIdx === idx
+                          ? 'border-blue-600 ring-2 ring-blue-500/20'
+                          : 'border-transparent opacity-70 hover:opacity-100'
+                      }`}
+                    >
+                      <img src={img} alt={`Thumb ${idx + 1}`} className="w-full h-full object-cover" />
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Separated Section A: About the Property */}

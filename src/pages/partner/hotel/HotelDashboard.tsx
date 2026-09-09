@@ -1,8 +1,8 @@
-﻿import React from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Hotel, Calendar, CheckCircle2, Clock, PlusCircle,
-  Building2, Users, ArrowRight, ChevronRight, BedDouble
+  Building2, Users, BedDouble
 } from 'lucide-react';
 import { partnerService } from '../../../services/partnerService';
 import { usePartnerAuth } from '../../../context/PartnerAuthContext';
@@ -24,9 +24,12 @@ export const HotelDashboard: React.FC = () => {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'Confirmed':
+      case 'Checked In':
         return 'bg-emerald-50 text-emerald-800 border-emerald-200';
       case 'Pending':
         return 'bg-amber-50 text-amber-800 border-amber-200';
+      case 'Cancelled':
+        return 'bg-red-50 text-red-800 border-red-200';
       case 'Completed':
         return 'bg-blue-50 text-blue-800 border-blue-200';
       default:
@@ -44,7 +47,7 @@ export const HotelDashboard: React.FC = () => {
             <span>Campus Living Provider</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-            Edunomo Student Living
+            {partner?.organizationName || 'Edunomo Student Living'}
           </h1>
           <p className="text-xs sm:text-sm text-slate-200 mt-1 max-w-xl">
             Oversee university residence halls, manage studio & shared flat inventory, and confirm international student leases.
@@ -62,9 +65,10 @@ export const HotelDashboard: React.FC = () => {
           </Button>
           <Button
             onClick={() => navigate('/partner/hotel/bookings')}
-            variant="primary"
+            variant="white"
             size="md"
-            className="bg-white text-emerald-950 hover:bg-slate-100 font-bold"
+            className="!text-emerald-950 hover:bg-slate-100 font-bold"
+            leftIcon={<Calendar className="w-4 h-4 text-emerald-950" />}
           >
             Manage Bookings ({bookings.length})
           </Button>
