@@ -1,4 +1,4 @@
-﻿export interface VisaCategory {
+export interface VisaCategory {
   id: string;
   country: string;
   countryCode: string;
@@ -200,51 +200,71 @@ export interface MockHotel {
   pricePerNightInr: string;
   image: string;
   distanceToCampus: string;
+  description: string;
   amenities: string[];
+  checkInTime: string;
+  checkOutTime: string;
+  cancellationPolicy: string;
+  freeCancellationHours: number;
 }
 
 export const MOCK_HOTELS: MockHotel[] = [
   {
     id: 'ht-1',
-    name: 'Bloomsbury Student Residence & Studios',
+    name: 'Bloomsbury International Residence & Studios',
     location: 'Near UCL & King’s College, Bloomsbury',
     city: 'London',
     country: 'United Kingdom',
-    type: 'Student Long-Stay / Arrival Hub',
+    type: 'Serviced Residence & Long-Stay',
     rating: 4.8,
     reviewsCount: 312,
     pricePerNightInr: '₹6,800 / night',
     image: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=800&q=80',
-    distanceToCampus: '0.4 km to university',
-    amenities: ['High-speed WiFi', 'Study Pods', 'Ensuite Bathroom', 'Communal Kitchen', '24/7 Security']
+    distanceToCampus: '0.4 km to university / transit hub',
+    description: 'Modern accommodation located in central Bloomsbury with comfortable self-contained studios, quiet workspaces, and seamless connections to the city.',
+    amenities: ['High-speed WiFi', 'Study Lounges', 'Ensuite Bathroom', 'Communal Kitchen', '24/7 Reception', 'Gym'],
+    checkInTime: '15:00',
+    checkOutTime: '11:00',
+    cancellationPolicy: 'Free cancellation up to 48 hours before check-in. Non-refundable thereafter.',
+    freeCancellationHours: 48,
   },
   {
     id: 'ht-2',
-    name: 'The Campus Hub Residence',
-    location: 'Bay Street / Downtown Corridor',
+    name: 'The Downtown Bay Suites',
+    location: 'Bay Street / Financial & University Corridor',
     city: 'Toronto',
     country: 'Canada',
-    type: 'Furnished Scholar Suites',
+    type: 'Furnished Executive Suites',
     rating: 4.7,
     reviewsCount: 198,
     pricePerNightInr: '₹5,900 / night',
     image: 'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=800&q=80',
-    distanceToCampus: '0.8 km to U of T St. George',
-    amenities: ['Furnished Room', 'On-site Gym', 'Laundry Service', 'High-speed Fiber', 'All Bills Included']
+    distanceToCampus: '0.8 km to downtown corridor',
+    description: 'Centrally located luxury serviced suites in downtown Toronto with fully furnished interiors, on-site fitness facilities, and high-speed fiber connectivity.',
+    amenities: ['Furnished Room', 'On-site Gym', 'Laundry Service', 'High-speed Fiber', '24/7 Reception', 'Parking'],
+    checkInTime: '14:00',
+    checkOutTime: '11:00',
+    cancellationPolicy: 'Free cancellation up to 24 hours before check-in. First night charged thereafter.',
+    freeCancellationHours: 24,
   },
   {
     id: 'ht-3',
-    name: 'Parkville Scholar Lodge',
+    name: 'Parkville Premier Lodge',
     location: 'Royal Parade, Parkville',
     city: 'Melbourne',
     country: 'Australia',
-    type: 'University Living Apartments',
+    type: 'Premium Apartment Living',
     rating: 4.9,
     reviewsCount: 240,
     pricePerNightInr: '₹6,200 / night',
     image: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80',
-    distanceToCampus: '300m to Melbourne Uni',
-    amenities: ['Private Kitchenette', 'Rooftop Terrace', 'Study Lounges', 'Bicycle Storage', 'Air Conditioned']
+    distanceToCampus: '300m to university and parklands',
+    description: 'Boutique accommodation offering modern apartments, private kitchenettes, rooftop terrace recreation, and convenient public tram access.',
+    amenities: ['Private Kitchenette', 'Rooftop Terrace', 'Study Lounges', 'Bicycle Storage', 'Air Conditioning', 'WiFi'],
+    checkInTime: '14:00',
+    checkOutTime: '10:00',
+    cancellationPolicy: 'Free cancellation up to 48 hours before check-in.',
+    freeCancellationHours: 48,
   }
 ];
 

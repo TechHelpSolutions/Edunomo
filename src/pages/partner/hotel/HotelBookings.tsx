@@ -1,12 +1,7 @@
-﻿import React, { useState } from 'react';
-import {
-  Calendar, CheckCircle2, Clock, XCircle, Users, Building2,
-  Check, Phone, Mail, ArrowUpDown
-} from 'lucide-react';
+import React, { useState } from 'react';
 import { partnerService } from '../../../services/partnerService';
 import { HotelBooking, HotelBookingStatus } from '../../../types/partner';
 import { DataTable, Column } from '../../../components/common/DataTable';
-import { Button } from '../../../components/common/Button';
 import { useToast } from '../../../context/ToastContext';
 
 export const HotelBookings: React.FC = () => {
@@ -142,11 +137,27 @@ export const HotelBookings: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-            Student Housing Reservations
+            Hotel & Accommodation Bookings
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 font-medium">
-            Manage student bookings, lease agreements, and check-in schedules
+            Manage customer reservations, guest check-ins, and accommodation occupancy
           </p>
+        </div>
+
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
+          {(['all', 'Pending', 'Confirmed', 'Checked In', 'Completed'] as const).map((status) => (
+            <button
+              key={status}
+              onClick={() => setFilterStatus(status)}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors whitespace-nowrap ${
+                filterStatus === status
+                  ? 'bg-[#0D2A68] text-white shadow-xs'
+                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              }`}
+            >
+              {status === 'all' ? 'All Bookings' : status}
+            </button>
+          ))}
         </div>
       </div>
 

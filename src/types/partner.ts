@@ -1,4 +1,4 @@
-﻿import { ApplicationStatus, DocumentStatus } from './index';
+import { ApplicationStatus, DocumentStatus } from './index';
 
 export type PartnerType = 'AGENT' | 'COLLEGE_PARTNER' | 'HOTEL_PARTNER' | 'TUTOR_PARTNER';
 
@@ -198,6 +198,10 @@ export interface HotelProperty {
   images: string[];
   amenities: string[];
   policies: string[];
+  checkInTime?: string;
+  checkOutTime?: string;
+  cancellationPolicy?: string;
+  freeCancellationHours?: number;
   roomTypes: HotelRoomType[];
   status: 'Active' | 'Pending Review' | 'Inactive';
   totalRoomsCount: number;
@@ -281,16 +285,29 @@ export type TutorBookingStatus = 'Pending' | 'Confirmed' | 'Completed' | 'Cancel
 export interface TutorBooking {
   id: string;
   bookingNumber: string;
-  studentName: string;
-  studentEmail: string;
-  studentPhone: string;
+  bookingReference?: string;
+  studentUserId?: string;
+  customerName: string;
+  customerEmail: string;
+  customerPhone?: string;
+  studentName?: string;
+  studentEmail?: string;
+  studentPhone?: string;
+  tutorId?: string;
+  tutorName?: string;
+  subjectId?: string;
   subjectName: string;
   sessionDate: string;
   sessionTime: string;
+  startTime?: string;
+  sessionTimezone?: string;
   durationHours: number;
+  durationMinutes?: number;
   mode: 'Online Video' | 'In Person';
   amountFormatted: string;
   status: TutorBookingStatus;
+  meetingProvider?: 'edunomo_meet' | 'google_meet' | 'zoom' | 'other';
+  meetingLink?: string;
   createdAt: string;
 }
 

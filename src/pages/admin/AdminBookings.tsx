@@ -1,8 +1,6 @@
-﻿import React, { useState } from 'react';
-import { Calendar, Hotel, BookOpen } from 'lucide-react';
+import React from 'react';
+import { Hotel, BookOpen } from 'lucide-react';
 import { partnerService } from '../../services/partnerService';
-import { HotelBooking, TutorBooking } from '../../types/partner';
-import { DataTable, Column } from '../../components/common/DataTable';
 
 export const AdminBookings: React.FC = () => {
   const hotelBookings = partnerService.getHotelBookings();
@@ -15,7 +13,7 @@ export const AdminBookings: React.FC = () => {
           Mobility & Service Bookings
         </h1>
         <p className="text-xs sm:text-sm text-slate-500 font-medium">
-          Comprehensive booking logs across campus accommodations and certified tutoring mentors
+          Comprehensive booking logs across accommodations and certified tutoring mentors for all customers
         </p>
       </div>
 
@@ -23,7 +21,7 @@ export const AdminBookings: React.FC = () => {
       <div className="space-y-3">
         <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
           <Hotel className="w-4 h-4 text-emerald-600" />
-          <span>Student Housing Reservations ({hotelBookings.length})</span>
+          <span>Hotel & Accommodation Bookings ({hotelBookings.length})</span>
         </h2>
         <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden divide-y divide-slate-100 text-xs">
           {hotelBookings.map((hb) => (
@@ -54,8 +52,8 @@ export const AdminBookings: React.FC = () => {
           {tutorBookings.map((tb) => (
             <div key={tb.id} className="p-4 flex items-center justify-between gap-4">
               <div>
-                <span className="font-mono text-xs font-bold text-slate-700">#{tb.bookingNumber}</span>
-                <h4 className="font-bold text-slate-900 text-sm mt-0.5">{tb.studentName}</h4>
+                <span className="font-mono text-xs font-bold text-slate-700">#{tb.bookingReference || tb.bookingNumber}</span>
+                <h4 className="font-bold text-slate-900 text-sm mt-0.5">{tb.customerName || tb.studentName}</h4>
                 <p className="text-slate-500 text-xs">{tb.subjectName} ({tb.mode})</p>
               </div>
               <div className="text-right">

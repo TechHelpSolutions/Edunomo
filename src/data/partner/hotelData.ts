@@ -1,4 +1,4 @@
-﻿import { HotelProfile, HotelProperty, HotelBooking } from '../../types/partner';
+import { HotelProfile, HotelProperty, HotelBooking } from '../../types/partner';
 
 export const INITIAL_HOTEL_PROFILE: HotelProfile = {
   id: 'partner-hotel-001',
@@ -28,7 +28,7 @@ export const INITIAL_HOTEL_PROPERTIES: HotelProperty[] = [
     address: '8 York Way, King’s Cross',
     city: 'London',
     country: 'United Kingdom',
-    description: 'Modern student community featuring high-speed 1Gbps fiber internet, private quiet study pods, 24/7 on-site security, games lounge, and rooftop terrace.',
+    description: 'Modern accommodation located near King’s Cross with comfortable studios, premium community spaces, and convenient access to public transport.',
     nearbyCampus: 'University College London (UCL) & King’s College London (KCL)',
     distanceToCampus: '10 min direct transit',
     images: [
@@ -36,12 +36,16 @@ export const INITIAL_HOTEL_PROPERTIES: HotelProperty[] = [
       'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600&h=400&fit=crop',
       'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&h=400&fit=crop',
     ],
-    amenities: ['1 Gbps Wi-Fi', '24/7 Concierge & Security', 'Study Lounges', 'Fitness Gym', 'All Utility Bills Included', 'Laundry Facilities', 'Bicycle Storage'],
+    amenities: ['WiFi', '24/7 Reception', 'Gym', 'Laundry', 'Air Conditioning', 'Study Lounges', 'Elevator'],
     policies: [
-      'Student proof of enrolment or offer letter mandatory',
-      'Quiet study hours observed from 11:00 PM to 7:00 AM',
-      'Fully refundable deposit upon room condition review',
+      'Valid government-issued photo ID required at check-in',
+      'Quiet hours observed from 11:00 PM to 7:00 AM',
+      'Non-smoking property throughout all indoor facilities',
     ],
+    checkInTime: '15:00',
+    checkOutTime: '11:00',
+    cancellationPolicy: 'Free cancellation up to 48 hours before check-in. Non-refundable thereafter.',
+    freeCancellationHours: 48,
     roomTypes: [
       {
         id: 'room-001-a',
@@ -92,19 +96,23 @@ export const INITIAL_HOTEL_PROPERTIES: HotelProperty[] = [
     address: '650 Bay Street, Downtown',
     city: 'Toronto',
     country: 'Canada',
-    description: 'Centrally located luxury student apartments minutes from University of Toronto St. George campus and Toronto Metropolitan University.',
+    description: 'Centrally located luxury serviced suites in downtown Toronto with fully furnished interiors, panoramic city views, and effortless access to business and university districts.',
     nearbyCampus: 'University of Toronto (U of T) & TMU',
     distanceToCampus: '8 min walk',
     images: [
       'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&h=400&fit=crop',
       'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&h=400&fit=crop',
     ],
-    amenities: ['High-speed Internet', 'Hydro & Water Included', 'Indoor Swimming Pool', '24/7 Doorman', 'Package Receiving Locker', 'Underground Heated Parking'],
+    amenities: ['WiFi', 'Parking', 'Swimming Pool', '24/7 Reception', 'Gym', 'Laundry', 'Air Conditioning'],
     policies: [
-      'No smoking anywhere in building',
-      'University student ID required upon check-in',
-      'Flexible semester-based leases (4, 8, or 12 months)',
+      'No smoking anywhere on the property premises',
+      'Valid ID and credit card required at check-in for incidental deposit',
+      'Pet-friendly units available upon advance request',
     ],
+    checkInTime: '14:00',
+    checkOutTime: '11:00',
+    cancellationPolicy: 'Free cancellation up to 24 hours before check-in. First night charged thereafter.',
+    freeCancellationHours: 24,
     roomTypes: [
       {
         id: 'room-002-a',

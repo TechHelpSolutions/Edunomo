@@ -1,6 +1,6 @@
-﻿import { storage } from './storage';
+import { storage } from './storage';
 import {
-  PartnerType, PartnerApprovalStatus, BasePartnerAccount,
+  PartnerType, BasePartnerAccount,
   AgentProfile, LinkedStudent, AgentApplication,
   CollegeProfile, CollegeCourseItem, CollegeReceivedApplication,
   HotelProfile, HotelProperty, HotelBooking, HotelBookingStatus,
@@ -15,6 +15,7 @@ import {
   INITIAL_PARTNER_NOTIFICATIONS
 } from '../data/partnerDemoData';
 import { ApplicationStatus } from '../types';
+import { notificationService } from './notificationService';
 
 const STORAGE_KEYS = {
   AGENT_PROFILE: 'edunomo_partner_agent_profile',
@@ -217,6 +218,33 @@ export const partnerService = {
     return newProperty;
   },
 
+  updateProperty(propertyId: string, updates: Partial<HotelProperty>, partnerId: string): HotelProperty {
+    const list = this.getHotelProperties();
+    const idx = list.findIndex((p) => p.id === propertyId);
+    if (idx === -1) {
+      throw new Error('Property not found');
+    }
+    const currentProp = list[idx];
+    if (currentProp.partnerId !== partnerId) {
+      throw new Error('Unauthorized: You can only edit your own properties.');
+    }
+
+    // Preserve roomTypes, bookings, and existing status
+    const updatedProperty: HotelProperty = {
+      ...currentProp,
+      ...updates,
+      id: currentProp.id,
+      partnerId: currentProp.partnerId,
+      status: currentProp.status,
+      roomTypes: currentProp.roomTypes,
+      totalRoomsCount: currentProp.totalRoomsCount,
+    };
+
+    list[idx] = updatedProperty;
+    storage.set(STORAGE_KEYS.HOTEL_PROPERTIES, list);
+    return updatedProperty;
+  },
+
   getHotelBookings(): HotelBooking[] {
     return storage.get<HotelBooking[]>(STORAGE_KEYS.HOTEL_BOOKINGS, INITIAL_HOTEL_BOOKINGS);
   },
@@ -307,6 +335,85 @@ export const partnerService = {
     list[idx].status = status;
     storage.set(STORAGE_KEYS.TUTOR_BOOKINGS, list);
     return list[idx];
+  },
+
+  confirmTutorBooking(bookingId: string, tutorId?: string): { success: boolean; booking?: TutorBooking; error?: string } {
+    const list = this.getTutorBookings();
+    const idx = list.findIndex((b) => b.id === bookingId);
+    if (idx === -1) {
+      return { success: false, error: 'Tutoring booking not found.' };
+    }
+
+    const currentBooking = list[idx];
+
+    // Authorization check
+    if (tutorId && currentBooking.tutorId && currentBooking.tutorId !== tutorId) {
+      return { success: false, error: 'Unauthorized: You can only confirm bookings assigned to your mentor account.' };
+    }
+
+    if (currentBooking.status === 'Cancelled') {
+      return { success: false, error: 'Cannot confirm a cancelled session booking.' };
+    }
+
+    // Safe & Idempotent check: If already confirmed and has a meeting link, return existing
+    if (currentBooking.status === 'Confirmed' && currentBooking.meetingLink) {
+      return { success: true, booking: currentBooking };
+    }
+
+    // Generate clean, deterministic session meeting room
+    const ref = currentBooking.bookingReference || currentBooking.bookingNumber || currentBooking.id;
+    const cleanRef = ref.toLowerCase().replace(/[^a-z0-9]/g, '-');
+    const uniqueHash = Math.random().toString(36).substring(2, 7) + Math.random().toString(36).substring(2, 5);
+    const meetingLink = `https://meet.edunomo.com/room/edn-${cleanRef}-${uniqueHash}`;
+
+    const updatedBooking: TutorBooking = {
+      ...currentBooking,
+      status: 'Confirmed',
+      meetingProvider: 'edunomo_meet',
+      meetingLink,
+    };
+
+    list[idx] = updatedBooking;
+    storage.set(STORAGE_KEYS.TUTOR_BOOKINGS, list);
+
+    // Customer in-app notification (General Customer account)
+    try {
+      const tutorName = updatedBooking.tutorName || 'Dr. James Sterling';
+      const sessionDate = updatedBooking.sessionDate;
+      const startTime = updatedBooking.startTime || updatedBooking.sessionTime;
+      const duration = updatedBooking.durationMinutes ? `${updatedBooking.durationMinutes} mins` : `${updatedBooking.durationHours} hrs`;
+      const timezone = updatedBooking.sessionTimezone || 'GMT';
+
+      notificationService.addNotification({
+        title: `Tutoring Session Confirmed: ${updatedBooking.subjectName}`,
+        message: `Your tutoring session has been confirmed.\n\nTutor: ${tutorName}\nSubject: ${updatedBooking.subjectName}\nDate: ${sessionDate}\nTime: ${startTime}\nDuration: ${duration}\nTimezone: ${timezone}\n\nMeeting Link:\n${meetingLink}\n\nPlease join using the meeting link at the scheduled time.`,
+        type: 'success',
+        link: meetingLink,
+      });
+    } catch (err) {
+      console.warn('Failed to dispatch customer notification:', err);
+    }
+
+    // Tutor Partner in-app notification
+    try {
+      const partnerNotifs = storage.get<PartnerNotification[]>(STORAGE_KEYS.PARTNER_NOTIFICATIONS, INITIAL_PARTNER_NOTIFICATIONS);
+      const newTutorNotif: PartnerNotification = {
+        id: `pnotif-${Date.now()}`,
+        partnerId: updatedBooking.tutorId || 'partner-tutor-001',
+        role: 'TUTOR_PARTNER',
+        title: `Session Confirmed: ${updatedBooking.customerName || updatedBooking.studentName}`,
+        message: `You accepted the session for ${updatedBooking.subjectName} on ${updatedBooking.sessionDate} at ${updatedBooking.startTime || updatedBooking.sessionTime} (${updatedBooking.sessionTimezone || 'GMT'}). Secure meeting link generated.`,
+        timestamp: 'Just now',
+        isRead: false,
+        type: 'success',
+        link: '/partner/tutor/bookings',
+      };
+      storage.set(STORAGE_KEYS.PARTNER_NOTIFICATIONS, [newTutorNotif, ...partnerNotifs]);
+    } catch (err) {
+      console.warn('Failed to dispatch tutor notification:', err);
+    }
+
+    return { success: true, booking: updatedBooking };
   },
 
   // ==========================================

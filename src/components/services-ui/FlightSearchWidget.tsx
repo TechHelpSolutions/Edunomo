@@ -1,5 +1,5 @@
-﻿import React, { useState } from 'react';
-import { Plane, Calendar, Users, ArrowRightLeft, ShieldCheck, Luggage, Clock } from 'lucide-react';
+import React, { useState } from 'react';
+import { Plane, ArrowRightLeft, Luggage } from 'lucide-react';
 import { MOCK_FLIGHTS, MockFlight } from '../../data/otherServices';
 import { Button } from '../common/Button';
 import { useToast } from '../../context/ToastContext';
@@ -9,7 +9,7 @@ export const FlightSearchWidget: React.FC = () => {
   const [origin, setOrigin] = useState('DEL (New Delhi)');
   const [destination, setDestination] = useState('LHR (London Heathrow)');
   const [departDate, setDepartDate] = useState('2026-09-15');
-  const [flights, setFlights] = useState<MockFlight[]>(MOCK_FLIGHTS);
+  const [flights] = useState<MockFlight[]>(MOCK_FLIGHTS);
   const [isSearching, setIsSearching] = useState(false);
   const { showToast } = useToast();
 
@@ -24,7 +24,7 @@ export const FlightSearchWidget: React.FC = () => {
     setIsSearching(true);
     setTimeout(() => {
       setIsSearching(false);
-      showToast('Found 4 student flights matching your route', 'info');
+      showToast('Found 4 flights matching your route', 'info');
     }, 400);
   };
 
@@ -59,7 +59,7 @@ export const FlightSearchWidget: React.FC = () => {
             <span>Round Trip</span>
           </label>
           <span className="ml-auto text-[11px] font-bold text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-full">
-            Includes Student Extra Baggage
+            Includes Standard & Flexible Baggage
           </span>
         </div>
 
@@ -131,9 +131,9 @@ export const FlightSearchWidget: React.FC = () => {
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <h3 className="text-sm sm:text-base font-bold text-slate-900">
-            Available Student Flights ({flights.length})
+            Available Flights ({flights.length})
           </h3>
-          <span className="text-xs text-slate-500">Student Fares & Priority Baggage</span>
+          <span className="text-xs text-slate-500">Flexible Fares & Included Baggage</span>
         </div>
 
         <div className="grid grid-cols-1 gap-3.5">
