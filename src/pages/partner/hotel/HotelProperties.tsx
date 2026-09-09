@@ -344,7 +344,8 @@ export const HotelProperties: React.FC = () => {
           onClick={handleOpenAddModal}
           variant="primary"
           size="md"
-          leftIcon={<PlusCircle className="w-4 h-4" />}
+          className="w-full sm:w-auto justify-center"
+          leftIcon={<PlusCircle className="w-4 h-4 shrink-0" />}
         >
           Add Property
         </Button>
@@ -447,7 +448,7 @@ export const HotelProperties: React.FC = () => {
             </div>
 
             {/* Explicit Actions: Edit Property & View Details */}
-            <div className="p-5 pt-0 grid grid-cols-2 gap-2">
+            <div className="p-5 pt-0 grid grid-cols-1 sm:grid-cols-2 gap-2">
               <Button
                 onClick={() => {
                   setViewingProperty(prop);
@@ -455,7 +456,8 @@ export const HotelProperties: React.FC = () => {
                 }}
                 variant="outline"
                 size="sm"
-                leftIcon={<Eye className="w-3.5 h-3.5" />}
+                className="w-full justify-center"
+                leftIcon={<Eye className="w-3.5 h-3.5 shrink-0" />}
               >
                 View Details
               </Button>
@@ -463,7 +465,8 @@ export const HotelProperties: React.FC = () => {
                 onClick={() => handleOpenEditModal(prop)}
                 variant="secondary"
                 size="sm"
-                leftIcon={<Edit2 className="w-3.5 h-3.5" />}
+                className="w-full justify-center"
+                leftIcon={<Edit2 className="w-3.5 h-3.5 shrink-0" />}
               >
                 Edit Property
               </Button>
@@ -735,7 +738,7 @@ export const HotelProperties: React.FC = () => {
               </div>
 
               {/* Add via Web URL */}
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                 <div className="relative flex-1">
                   <LinkIcon className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
                   <input
@@ -751,6 +754,7 @@ export const HotelProperties: React.FC = () => {
                   onClick={() => handleAddImageUrl()}
                   variant="secondary"
                   size="sm"
+                  className="w-full sm:w-auto justify-center"
                   disabled={!imageUrlInput.trim()}
                 >
                   Add URL
@@ -895,11 +899,11 @@ export const HotelProperties: React.FC = () => {
             </div>
           </div>
 
-          <div className="pt-4 border-t border-slate-100 flex items-center justify-end gap-2.5">
-            <Button type="button" variant="outline" size="sm" onClick={resetForm}>
+          <div className="pt-4 border-t border-slate-100 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2 sm:gap-2.5">
+            <Button type="button" variant="outline" size="sm" onClick={resetForm} className="w-full sm:w-auto justify-center">
               Cancel
             </Button>
-            <Button type="submit" variant="primary" size="sm">
+            <Button type="submit" variant="primary" size="sm" className="w-full sm:w-auto justify-center">
               {editingPropertyId ? 'Save Changes' : 'Publish Property'}
             </Button>
           </div>
@@ -1055,7 +1059,7 @@ export const HotelProperties: React.FC = () => {
               </div>
             </div>
 
-            <div className="pt-4 border-t border-slate-100 flex justify-between items-center">
+            <div className="pt-4 border-t border-slate-100 flex flex-col-reverse sm:flex-row justify-between items-stretch sm:items-center gap-2">
               <Button
                 onClick={() => {
                   setViewingProperty(null);
@@ -1063,11 +1067,12 @@ export const HotelProperties: React.FC = () => {
                 }}
                 variant="outline"
                 size="sm"
-                leftIcon={<Edit2 className="w-3.5 h-3.5" />}
+                className="w-full sm:w-auto justify-center"
+                leftIcon={<Edit2 className="w-3.5 h-3.5 shrink-0" />}
               >
                 Edit Property
               </Button>
-              <Button onClick={() => setViewingProperty(null)} variant="primary" size="sm">
+              <Button onClick={() => setViewingProperty(null)} variant="primary" size="sm" className="w-full sm:w-auto justify-center">
                 Close
               </Button>
             </div>

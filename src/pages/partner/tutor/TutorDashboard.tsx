@@ -19,35 +19,36 @@ export const TutorDashboard: React.FC = () => {
   const completedSessions = bookings.filter((b) => b.status === 'Completed').length;
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       {/* Top Welcome Banner */}
-      <div className="bg-gradient-to-r from-[#78350F] to-[#92400E] rounded-3xl p-6 sm:p-8 text-white shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
-        <div className="flex items-center gap-4">
+      <div className="bg-gradient-to-r from-[#78350F] to-[#92400E] rounded-2xl sm:rounded-3xl p-5 sm:p-7 md:p-8 text-white shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-5 sm:gap-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3.5 sm:gap-4 min-w-0">
           <img
             src={tutorProfile.photoUrl}
             alt={tutorProfile.name}
-            className="w-16 h-16 rounded-2xl object-cover border-2 border-white/40 shadow-md shrink-0"
+            className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl object-cover border-2 border-white/40 shadow-md shrink-0"
           />
-          <div>
+          <div className="min-w-0">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold text-amber-200 mb-2 backdrop-blur-md">
-              <BookOpen className="w-3.5 h-3.5" />
+              <BookOpen className="w-3.5 h-3.5 shrink-0" />
               <span>Certified Academic Instructor</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight break-words">
               Welcome back, {(partner?.name || tutorProfile.name).split(' ')[0]}
             </h1>
-            <p className="text-xs sm:text-sm text-amber-100 max-w-xl">
+            <p className="text-xs sm:text-sm text-amber-100 max-w-xl leading-relaxed">
               {tutorProfile.educationLevel} • {tutorProfile.teachingExperienceYears} Years Mentorship Experience
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 w-full lg:w-auto shrink-0">
           <Button
             onClick={() => navigate('/partner/tutor/availability')}
             variant="secondary"
             size="md"
-            leftIcon={<Clock className="w-4 h-4" />}
+            className="w-full sm:w-auto justify-center text-xs sm:text-sm font-semibold"
+            leftIcon={<Clock className="w-4 h-4 shrink-0" />}
           >
             Weekly Schedule
           </Button>
@@ -55,8 +56,8 @@ export const TutorDashboard: React.FC = () => {
             onClick={() => navigate('/partner/tutor/bookings')}
             variant="white"
             size="md"
-            className="!text-amber-950 hover:bg-slate-100 font-bold"
-            leftIcon={<Calendar className="w-4 h-4 text-amber-950" />}
+            className="!text-amber-950 hover:bg-slate-100 font-bold w-full sm:w-auto justify-center text-xs sm:text-sm"
+            leftIcon={<Calendar className="w-4 h-4 text-amber-950 shrink-0" />}
           >
             Tutoring Sessions ({bookings.length})
           </Button>
@@ -64,7 +65,7 @@ export const TutorDashboard: React.FC = () => {
       </div>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <StatCard
           title="Active Subjects"
           value={totalSubjects}

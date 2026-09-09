@@ -23,28 +23,29 @@ export const CollegeDashboard: React.FC = () => {
   const acceptedApps = applications.filter((a) => a.status === 'Accepted').length;
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       {/* Top Welcome Banner */}
-      <div className="bg-gradient-to-r from-[#1E1B4B] via-[#2E1065] to-[#1E1B4B] rounded-3xl p-6 sm:p-8 text-white shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
-        <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold text-purple-200 mb-3 backdrop-blur-md">
-            <Building2 className="w-3.5 h-3.5" />
+      <div className="bg-gradient-to-r from-[#1E1B4B] via-[#2E1065] to-[#1E1B4B] rounded-2xl sm:rounded-3xl p-5 sm:p-7 md:p-8 text-white shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-5 sm:gap-6">
+        <div className="min-w-0">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold text-purple-200 mb-2.5 sm:mb-3 backdrop-blur-md">
+            <Building2 className="w-3.5 h-3.5 shrink-0" />
             <span>Admissions Dean Console</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight break-words">
             {(partner as any)?.institutionName || 'Oxford International College'}
           </h1>
-          <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-xl">
+          <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-xl leading-relaxed">
             Direct review of international student dossiers, credential verifications, course offerings, and offer letter issuances.
           </p>
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 w-full lg:w-auto shrink-0">
           <Button
             onClick={() => navigate('/partner/college/courses?action=new')}
             variant="secondary"
             size="md"
-            leftIcon={<PlusCircle className="w-4 h-4" />}
+            className="w-full sm:w-auto justify-center text-xs sm:text-sm font-semibold"
+            leftIcon={<PlusCircle className="w-4 h-4 shrink-0" />}
           >
             Add New Course
           </Button>
@@ -52,8 +53,8 @@ export const CollegeDashboard: React.FC = () => {
             onClick={() => navigate('/partner/college/applications')}
             variant="white"
             size="md"
-            className="!text-[#1E1B4B] hover:bg-slate-100 font-bold"
-            leftIcon={<FileText className="w-4 h-4 text-[#1E1B4B]" />}
+            className="!text-[#1E1B4B] hover:bg-slate-100 font-bold w-full sm:w-auto justify-center text-xs sm:text-sm"
+            leftIcon={<FileText className="w-4 h-4 text-[#1E1B4B] shrink-0" />}
           >
             Review Applications ({applications.length})
           </Button>
@@ -61,7 +62,7 @@ export const CollegeDashboard: React.FC = () => {
       </div>
 
       {/* 5 Specific Stat Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
         <StatCard
           title="Total Programs"
           value={totalCourses}

@@ -1,4 +1,4 @@
-﻿import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { PartnerType, BasePartnerAccount } from '../types/partner';
 import { partnerService } from '../services/partnerService';
 import { storage } from '../services/storage';
@@ -32,20 +32,29 @@ export const PartnerAuthProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   useEffect(() => {
-    const session = storage.get<{ loggedIn: boolean; email: string; role: PartnerType } | null>(
-      STORAGE_PARTNER_SESSION,
-      null
-    );
+    const syncSession = () => {
+      const session = storage.get<{ loggedIn: boolean; email: string; role: PartnerType } | null>(
+        STORAGE_PARTNER_SESSION,
+        null
+      );
 
-    if (session && session.loggedIn && session.email) {
-      const match = partnerService.getPartnerAccountByEmail(session.email);
-      if (match) {
-        setPartner(match.account);
-        setPartnerType(match.partnerType);
-        setIsAuthenticated(true);
-        return;
+      if (session && session.loggedIn && session.email) {
+        const match = partnerService.getPartnerAccountByEmail(session.email);
+        if (match) {
+          setPartner(match.account);
+          setPartnerType(match.partnerType);
+          setIsAuthenticated(true);
+          return;
+        }
       }
-    }
+      setPartner(null);
+      setPartnerType(null);
+      setIsAuthenticated(false);
+    };
+
+    syncSession();
+    window.addEventListener('edunomo-auth-change', syncSession);
+    return () => window.removeEventListener('edunomo-auth-change', syncSession);
   }, []);
 
   const login = async (email: string, _pass?: string): Promise<{ success: boolean; partnerType?: PartnerType; error?: string }> => {

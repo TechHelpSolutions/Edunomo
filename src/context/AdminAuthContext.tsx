@@ -1,4 +1,4 @@
-﻿import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { AdminUser } from '../types/admin';
 import { adminService } from '../services/adminService';
 import { storage } from '../services/storage';
@@ -19,14 +19,23 @@ export const AdminAuthProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState<boolean>(false);
 
   useEffect(() => {
-    const session = storage.get<{ loggedIn: boolean; email: string } | null>(
-      STORAGE_ADMIN_SESSION,
-      null
-    );
-    if (session && session.loggedIn) {
-      setAdminUser(adminService.getUser());
-      setIsAdminAuthenticated(true);
-    }
+    const syncSession = () => {
+      const session = storage.get<{ loggedIn: boolean; email: string } | null>(
+        STORAGE_ADMIN_SESSION,
+        null
+      );
+      if (session && session.loggedIn) {
+        setAdminUser(adminService.getUser());
+        setIsAdminAuthenticated(true);
+      } else {
+        setAdminUser(null);
+        setIsAdminAuthenticated(false);
+      }
+    };
+
+    syncSession();
+    window.addEventListener('edunomo-auth-change', syncSession);
+    return () => window.removeEventListener('edunomo-auth-change', syncSession);
   }, []);
 
   const login = async (email: string, _pass?: string): Promise<boolean> => {

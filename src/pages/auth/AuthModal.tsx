@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Mail, Lock, User, Phone, Check, ShieldCheck, ArrowRight } from 'lucide-react';
 import { Modal } from '../../components/common/Modal';
 import { Button } from '../../components/common/Button';
@@ -17,11 +17,11 @@ export const AuthModal: React.FC = () => {
   const { showToast } = useToast();
 
   const handleDemoFill = () => {
-    setEmail('aarav.sharma@example.com');
-    setPassword('Student@2026');
-    setFullName('Aarav Sharma');
+    setEmail('customer@edunomo.demo');
+    setPassword('demo123');
+    setFullName('Rahul Sharma');
     setPhone('+91 98765 43210');
-    showToast('Demo student credentials populated', 'info');
+    showToast('Demo customer credentials populated', 'info');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -43,7 +43,7 @@ export const AuthModal: React.FC = () => {
           return;
         }
         await signup({ fullName, email, phone: phone || '+91 98765 43210' });
-        showToast('Account created successfully!', 'success');
+        showToast('Customer account created successfully!', 'success');
       }
       setIsLoading(false);
       closeAuthModal();
@@ -61,10 +61,10 @@ export const AuthModal: React.FC = () => {
           <ShieldCheck className="w-6 h-6" />
         </div>
         <h3 className="text-xl font-bold text-slate-900">
-          {mode === 'login' ? 'Sign in to Edunomo' : 'Create Your Student Account'}
+          {mode === 'login' ? 'Login to Edunomo' : 'Create Your Customer Account'}
         </h3>
         <p className="text-xs text-slate-500 mt-1">
-          Access your global applications, visa tracking, and travel services
+          Access your bookings, global applications, stays, and transit services
         </p>
 
         {/* Quick Demo Pre-fill Button */}
@@ -73,7 +73,7 @@ export const AuthModal: React.FC = () => {
           onClick={handleDemoFill}
           className="mt-3 px-3 py-1 bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-900 text-xs font-semibold rounded-full inline-flex items-center gap-1.5 transition-colors"
         >
-          <span>⚡ Auto-fill Demo Student</span>
+          <span>⚡ Auto-fill Demo Customer</span>
         </button>
       </div>
 

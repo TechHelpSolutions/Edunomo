@@ -27,30 +27,31 @@ export const AgentDashboard: React.FC = () => {
   const recentStudents = students.slice(0, 4);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       {/* Top Welcome Banner */}
-      <div className="bg-gradient-to-r from-[#0D2A68] to-[#133E87] rounded-3xl p-6 sm:p-8 text-white shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
-        <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold text-sky-200 mb-3 backdrop-blur-md">
+      <div className="bg-gradient-to-r from-[#0D2A68] to-[#133E87] rounded-2xl sm:rounded-3xl p-5 sm:p-7 md:p-8 text-white shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-5 sm:gap-6">
+        <div className="min-w-0">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold text-sky-200 mb-2.5 sm:mb-3 backdrop-blur-md">
             <span>Agency Portal</span>
             <span>•</span>
-            <span>{partner?.organizationName || 'Global Education Consultants'}</span>
+            <span className="truncate">{partner?.organizationName || 'Global Education Consultants'}</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight break-words">
             Welcome back, {partner?.name?.split(' ')[0] || 'Partner'}
           </h1>
-          <p className="text-xs sm:text-sm text-slate-200 mt-1 max-w-xl">
+          <p className="text-xs sm:text-sm text-slate-200 mt-1 max-w-xl leading-relaxed">
             Track student dossiers, submit direct university applications, and manage college admission offers.
           </p>
         </div>
 
         {/* Quick Action Buttons */}
-        <div className="flex flex-wrap items-center gap-2.5">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 w-full lg:w-auto shrink-0">
           <Button
             onClick={() => navigate('/partner/agent/students?action=new')}
             variant="secondary"
             size="md"
-            leftIcon={<UserPlus className="w-4 h-4" />}
+            className="w-full sm:w-auto justify-center text-xs sm:text-sm font-semibold"
+            leftIcon={<UserPlus className="w-4 h-4 shrink-0" />}
           >
             Add Student
           </Button>
@@ -58,8 +59,8 @@ export const AgentDashboard: React.FC = () => {
             onClick={() => navigate('/partner/agent/applications/new')}
             variant="white"
             size="md"
-            className="!text-[#0D2A68] hover:bg-slate-100 font-bold"
-            leftIcon={<PlusCircle className="w-4 h-4 text-[#0D2A68]" />}
+            className="!text-[#0D2A68] hover:bg-slate-100 font-bold w-full sm:w-auto justify-center text-xs sm:text-sm"
+            leftIcon={<PlusCircle className="w-4 h-4 text-[#0D2A68] shrink-0" />}
           >
             Create Application
           </Button>
@@ -67,7 +68,7 @@ export const AgentDashboard: React.FC = () => {
       </div>
 
       {/* 4 Summary Stat Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <StatCard
           title="Total Students"
           value={totalStudents}

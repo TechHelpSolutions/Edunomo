@@ -1,50 +1,38 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Sparkles, X, ChevronUp, ChevronDown, Check, UserCheck, ShieldCheck, GraduationCap, Building2, Hotel, BookOpen } from 'lucide-react';
-import { DEMO_ACCOUNTS, DemoAccount } from '../../data/demoAccounts';
+import { Sparkles, X, ChevronUp, ChevronDown, UserCheck, ShieldCheck, User, Building2, Hotel, BookOpen, Car } from 'lucide-react';
+import { DEMO_ACCOUNTS, DemoAccount, COMMON_DEMO_PASSWORD } from '../../data/demoAccounts';
 import { useAuth } from '../../context/AuthContext';
-import { usePartnerAuth } from '../../context/PartnerAuthContext';
-import { useAdminAuth } from '../../context/AdminAuthContext';
 import { useToast } from '../../context/ToastContext';
 
 export const DemoSwitcher: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  const { login: studentLogin } = useAuth();
-  const { login: partnerLogin } = usePartnerAuth();
-  const { login: adminLogin } = useAdminAuth();
+  const { login } = useAuth();
   const { showToast } = useToast();
 
   const handleSelectAccount = async (account: DemoAccount) => {
-    if (account.role === 'Student') {
-      await studentLogin(account.email, account.password);
-      showToast(`Switched to Student Demo (${account.name})`, 'success');
-      navigate('/');
-    } else if (account.role === 'Admin') {
-      await adminLogin(account.email, account.password);
-      showToast(`Switched to Enterprise Admin (${account.name})`, 'success');
-      navigate('/admin/dashboard');
-    } else {
-      await partnerLogin(account.email, account.password);
-      showToast(`Switched to ${account.role} (${account.badge})`, 'success');
-      navigate(account.targetRoute);
-    }
+    const res = await login(account.email, account.password);
+    showToast(`Switched to ${account.displayRole} (${account.name})`, 'success');
+    navigate(res.redirectUrl || account.targetRoute);
     setIsOpen(false);
   };
 
   const getRoleIcon = (role: string) => {
     switch (role) {
-      case 'Student':
-        return <GraduationCap className="w-4 h-4 text-sky-600" />;
-      case 'Agent Partner':
+      case 'CUSTOMER':
+        return <User className="w-4 h-4 text-sky-600" />;
+      case 'AGENT':
         return <UserCheck className="w-4 h-4 text-blue-600" />;
-      case 'College Partner':
+      case 'COLLEGE_PARTNER':
         return <Building2 className="w-4 h-4 text-indigo-600" />;
-      case 'Hotel Partner':
+      case 'HOTEL_PARTNER':
         return <Hotel className="w-4 h-4 text-emerald-600" />;
-      case 'Tutor Partner':
+      case 'TUTOR_PARTNER':
         return <BookOpen className="w-4 h-4 text-amber-600" />;
-      case 'Admin':
+      case 'DRIVER':
+        return <Car className="w-4 h-4 text-orange-600" />;
+      case 'ADMIN':
         return <ShieldCheck className="w-4 h-4 text-purple-600" />;
       default:
         return <Sparkles className="w-4 h-4 text-slate-600" />;
@@ -90,7 +78,7 @@ export const DemoSwitcher: React.FC = () => {
                       {acc.name}
                     </span>
                     <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.5 bg-slate-100 text-slate-600 rounded">
-                      {acc.role}
+                      {acc.displayRole}
                     </span>
                   </div>
                   <span className="text-[11px] font-medium text-blue-700 block truncate">{acc.badge}</span>
@@ -101,7 +89,7 @@ export const DemoSwitcher: React.FC = () => {
           </div>
 
           <div className="mt-3 pt-2 border-t border-slate-100 text-[10px] text-slate-400 text-center">
-            Password for all demo accounts: <code className="font-mono text-slate-600 font-bold">Demo@123</code>
+            Common password: <code className="font-mono text-slate-600 font-bold">{COMMON_DEMO_PASSWORD}</code>
           </div>
         </div>
       )}

@@ -1,4 +1,4 @@
-﻿import React, { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { ToastProvider } from './context/ToastContext';
 import { AuthProvider } from './context/AuthContext';
@@ -9,6 +9,9 @@ import { PageContainer } from './components/layout/PageContainer';
 import { PartnerLayout } from './components/partner/PartnerLayout';
 import { AdminLayout } from './components/admin/AdminLayout';
 import { AuthModal } from './pages/auth/AuthModal';
+import { LoginPage } from './pages/auth/LoginPage';
+import { SignupPage } from './pages/auth/SignupPage';
+import { ProtectedRoute } from './components/common/ProtectedRoute';
 import { DemoSwitcher } from './components/common/DemoSwitcher';
 
 // Student Pages
@@ -107,22 +110,29 @@ export function App() {
                 <ScrollToTop />
                 <Routes>
                   {/* ================================================= */}
-                  {/* 1. STUDENT PLATFORM (edunomo.in)                  */}
+                  {/* 1. CUSTOMER PLATFORM & AUTH (edunomo.in)          */}
                   {/* ================================================= */}
+                  {/* Public Authentication Routes */}
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/signup" element={<SignupPage />} />
+
+                  {/* Public Browsing Routes */}
                   <Route path="/" element={<StudentRoute><Home /></StudentRoute>} />
                   <Route path="/explore" element={<StudentRoute><Explore /></StudentRoute>} />
-                  <Route path="/my-journey" element={<StudentRoute><MyJourney /></StudentRoute>} />
-                  <Route path="/notifications" element={<StudentRoute><Notifications /></StudentRoute>} />
-                  <Route path="/profile" element={<StudentRoute><Profile /></StudentRoute>} />
+
+                  {/* Protected Customer Routes */}
+                  <Route path="/my-journey" element={<ProtectedRoute><StudentRoute><MyJourney /></StudentRoute></ProtectedRoute>} />
+                  <Route path="/notifications" element={<ProtectedRoute><StudentRoute><Notifications /></StudentRoute></ProtectedRoute>} />
+                  <Route path="/profile" element={<ProtectedRoute><StudentRoute><Profile /></StudentRoute></ProtectedRoute>} />
 
                   {/* Study Abroad Module */}
                   <Route path="/study-abroad" element={<StudentRoute><StudyAbroadListing /></StudentRoute>} />
                   <Route path="/study-abroad/colleges/:id" element={<StudentRoute><CollegeDetail /></StudentRoute>} />
                   <Route path="/study-abroad/courses/:id" element={<StudentRoute><CourseDetail /></StudentRoute>} />
-                  <Route path="/apply/:courseId" element={<StudentRoute><ApplyWizard /></StudentRoute>} />
-                  <Route path="/applications" element={<StudentRoute><MyApplications /></StudentRoute>} />
-                  <Route path="/applications/:id" element={<StudentRoute><ApplicationDetail /></StudentRoute>} />
-                  <Route path="/applications/success/:appId" element={<StudentRoute><ApplicationSuccess /></StudentRoute>} />
+                  <Route path="/apply/:courseId" element={<ProtectedRoute><StudentRoute><ApplyWizard /></StudentRoute></ProtectedRoute>} />
+                  <Route path="/applications" element={<ProtectedRoute><StudentRoute><MyApplications /></StudentRoute></ProtectedRoute>} />
+                  <Route path="/applications/:id" element={<ProtectedRoute><StudentRoute><ApplicationDetail /></StudentRoute></ProtectedRoute>} />
+                  <Route path="/applications/success/:appId" element={<ProtectedRoute><StudentRoute><ApplicationSuccess /></StudentRoute></ProtectedRoute>} />
 
                   {/* Secondary Mobility Modules */}
                   <Route path="/visa" element={<StudentRoute><VisaPage /></StudentRoute>} />

@@ -19,6 +19,17 @@ const INITIAL_PROFILE: UserProfile = {
   completionPercentage: 88,
 };
 
+export interface AuthSessionUser {
+  loggedIn: boolean;
+  id?: string;
+  email?: string;
+  name?: string;
+  role?: string;
+  displayRole?: string;
+  dashboardUrl?: string;
+  phone?: string;
+}
+
 export const authService = {
   getProfile(): UserProfile {
     return storage.get<UserProfile>(storage.KEYS.PROFILE, INITIAL_PROFILE);
@@ -56,14 +67,28 @@ export const authService = {
     return updated;
   },
 
-  isAuthenticated(): boolean {
-    const user = storage.get(storage.KEYS.AUTH_USER, { loggedIn: true });
-    return Boolean(user?.loggedIn);
+  getSession(): AuthSessionUser {
+    return storage.get<AuthSessionUser>(storage.KEYS.AUTH_USER, { loggedIn: false });
   },
 
-  login(email: string, _pass: string): { success: boolean; user: UserProfile } {
+  isAuthenticated(): boolean {
+    const session = this.getSession();
+    return Boolean(session?.loggedIn);
+  },
+
+  login(sessionData: Partial<AuthSessionUser>): { success: boolean; user: UserProfile } {
     const profile = this.getProfile();
-    storage.set(storage.KEYS.AUTH_USER, { loggedIn: true, email });
+    const newSession: AuthSessionUser = {
+      loggedIn: true,
+      email: sessionData.email || profile.email,
+      name: sessionData.name || profile.fullName,
+      id: sessionData.id || profile.id,
+      role: sessionData.role || 'CUSTOMER',
+      displayRole: sessionData.displayRole || 'Customer',
+      dashboardUrl: sessionData.dashboardUrl || '/my-journey',
+      phone: sessionData.phone || profile.phone,
+    };
+    storage.set(storage.KEYS.AUTH_USER, newSession);
     return { success: true, user: profile };
   },
 
@@ -73,7 +98,17 @@ export const authService = {
       email: data.email,
       phone: data.phone,
     });
-    storage.set(storage.KEYS.AUTH_USER, { loggedIn: true, email: data.email });
+    const newSession: AuthSessionUser = {
+      loggedIn: true,
+      id: 'cust_' + Date.now(),
+      email: data.email,
+      name: data.fullName,
+      role: 'CUSTOMER',
+      displayRole: 'Customer',
+      dashboardUrl: '/my-journey',
+      phone: data.phone,
+    };
+    storage.set(storage.KEYS.AUTH_USER, newSession);
     return { success: true, user: newProfile };
   },
 
@@ -81,3 +116,4 @@ export const authService = {
     storage.set(storage.KEYS.AUTH_USER, { loggedIn: false });
   }
 };
+

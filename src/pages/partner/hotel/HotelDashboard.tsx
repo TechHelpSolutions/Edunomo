@@ -38,28 +38,29 @@ export const HotelDashboard: React.FC = () => {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       {/* Top Welcome Banner */}
-      <div className="bg-gradient-to-r from-[#064E3B] to-[#047857] rounded-3xl p-6 sm:p-8 text-white shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
-        <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold text-emerald-200 mb-3 backdrop-blur-md">
-            <Hotel className="w-3.5 h-3.5" />
+      <div className="bg-gradient-to-r from-[#064E3B] to-[#047857] rounded-2xl sm:rounded-3xl p-5 sm:p-7 md:p-8 text-white shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-5 sm:gap-6">
+        <div className="min-w-0">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold text-emerald-200 mb-2.5 sm:mb-3 backdrop-blur-md">
+            <Hotel className="w-3.5 h-3.5 shrink-0" />
             <span>Campus Living Provider</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight break-words">
             {partner?.organizationName || 'Edunomo Student Living'}
           </h1>
-          <p className="text-xs sm:text-sm text-slate-200 mt-1 max-w-xl">
+          <p className="text-xs sm:text-sm text-slate-200 mt-1 max-w-xl leading-relaxed">
             Oversee university residence halls, manage studio & shared flat inventory, and confirm international student leases.
           </p>
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 w-full lg:w-auto shrink-0">
           <Button
             onClick={() => navigate('/partner/hotel/properties?action=new')}
             variant="secondary"
             size="md"
-            leftIcon={<PlusCircle className="w-4 h-4" />}
+            className="w-full sm:w-auto justify-center text-xs sm:text-sm font-semibold"
+            leftIcon={<PlusCircle className="w-4 h-4 shrink-0" />}
           >
             Add Property
           </Button>
@@ -67,8 +68,8 @@ export const HotelDashboard: React.FC = () => {
             onClick={() => navigate('/partner/hotel/bookings')}
             variant="white"
             size="md"
-            className="!text-emerald-950 hover:bg-slate-100 font-bold"
-            leftIcon={<Calendar className="w-4 h-4 text-emerald-950" />}
+            className="!text-emerald-950 hover:bg-slate-100 font-bold w-full sm:w-auto justify-center text-xs sm:text-sm"
+            leftIcon={<Calendar className="w-4 h-4 text-emerald-950 shrink-0" />}
           >
             Manage Bookings ({bookings.length})
           </Button>
@@ -76,7 +77,7 @@ export const HotelDashboard: React.FC = () => {
       </div>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
         <StatCard
           title="Properties"
           value={totalProperties}
