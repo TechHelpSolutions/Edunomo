@@ -35,83 +35,75 @@ export const journeyService = {
         service: 'Study Abroad',
         category: 'study_abroad',
         headline: studyAbroadHeadline,
-        subtitle: primaryApp ? `Application #${primaryApp.id} (${primaryApp.intake})` : 'Explore 500+ programs across UK, Canada, USA & more',
-        statusText: studyAbroadStatusText,
+        subtitle: primaryApp ? `Application #${primaryApp.id} • ${primaryApp.intake}` : 'Explore 500+ programs across UK, Canada, USA & more',
+        statusText: primaryApp ? `Study Abroad → ${studyAbroadStatusText}` : 'Discover Programs',
         statusState: studyAbroadState,
         route: primaryApp ? `/applications/${primaryApp.id}` : '/study-abroad',
-        ctaText: primaryApp ? 'Track Application' : 'Find Universities',
+        ctaText: primaryApp ? 'View Application' : 'Explore Study Abroad',
         iconName: 'GraduationCap'
       },
       {
         service: 'Visa Services',
         category: 'visa',
-        headline: 'Student Visa Filing & CAS Pre-Assessment',
-        subtitle: primaryApp ? `Pre-check ready for ${primaryApp.country} Student Visa` : 'Guidance for UK, Canada, USA, Germany & Australia',
-        statusText: primaryApp?.status === 'Accepted' ? 'Ready to File' : 'Pre-Check Available',
+        headline: primaryApp ? `${primaryApp.country} Student Visa Guidance` : 'Student Visa Filing & Pre-Assessment',
+        subtitle: 'Document checklist, country guidelines & pre-assessment support',
+        statusText: primaryApp?.status === 'Accepted' ? 'Ready to File' : 'Pre-check Available',
         statusState: primaryApp?.status === 'Accepted' ? 'in_progress' : 'not_started',
         route: '/visa',
-        ctaText: 'Explore Visa Steps',
+        ctaText: 'Continue',
         iconName: 'ShieldCheck'
       },
       {
         service: 'Flight Booking',
         category: 'flights',
-        headline: 'Student Fares & 46kg Baggage Allowance',
-        subtitle: 'Special international student airfares with flexible date change',
-        statusText: 'Not Booked',
+        headline: 'Student Fares & Flexible Booking Options',
+        subtitle: 'Special international student airfares with 46kg baggage allowance',
+        statusText: 'Available',
         statusState: 'not_started',
         route: '/flights',
         ctaText: 'Search Flights',
         iconName: 'Plane'
       },
       {
-        service: 'Hotel & Living',
+        service: 'Hotels & Living',
         category: 'hotels',
-        headline: 'Verified Student Housing & Arrival Stays',
+        headline: 'Verified Student Accommodation & Guest Stays',
         subtitle: 'Accommodations within walking distance of global partner campuses',
-        statusText: 'Not Booked',
+        statusText: 'Available',
         statusState: 'not_started',
         route: '/hotels',
-        ctaText: 'Find Stay',
+        ctaText: 'Explore Hotels',
         iconName: 'Building2'
       },
       {
-        service: 'Cab Services',
+        service: 'CAP Services',
         category: 'cabs',
-        headline: 'Airport Meet & Greet Campus Transfer',
-        subtitle: 'Book verified airport transfers through the Edunomo mobile app',
+        headline: 'Airport Transfers & Local Cab Services',
+        subtitle: 'Terminal meet-and-greet and campus arrivals through the Edunomo mobile app',
         statusText: 'App-First',
         statusState: 'not_started',
         route: '/cabs',
-        ctaText: 'View App Details',
+        ctaText: 'Book a Cab',
         iconName: 'Car'
       },
       {
         service: 'Tuition & Tutors',
         category: 'tuition',
         headline: 'IELTS, GRE & Academic Subject Tutors',
-        subtitle: 'Certified global educators for language exams and STEM courses',
-        statusText: 'Not Started',
+        subtitle: 'Certified global educators for language exams and university subjects',
+        statusText: 'Available',
         statusState: 'not_started',
         route: '/tuition',
-        ctaText: 'Find Tutors',
+        ctaText: 'Find a Tutor',
         iconName: 'BookOpen'
       }
     ];
 
-    const completedCount = milestones.filter(m => m.statusState === 'completed').length;
-    let currentPhase = 'Discover & Apply';
-    if (primaryApp?.status === 'Under Review' || primaryApp?.status === 'Submitted to College') {
-      currentPhase = 'Admissions Review';
-    } else if (primaryApp?.status === 'Accepted') {
-      currentPhase = 'Prepare & Visa';
-    }
-
     return {
       activeApplication: primaryApp,
       milestones,
-      currentPhase,
-      completedCount,
+      currentPhase: 'Multi-Service Hub',
+      completedCount: milestones.length,
       totalServices: milestones.length
     };
   }

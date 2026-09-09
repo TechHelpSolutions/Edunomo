@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, Globe, GraduationCap, Compass } from 'lucide-react';
+import { ShieldCheck, Globe, GraduationCap } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
@@ -74,13 +74,13 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Student Journey */}
+          {/* Customer Hub */}
           <div>
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4">Student Journey</h4>
+            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4">Customer Hub</h4>
             <ul className="space-y-2.5 text-xs sm:text-sm">
               <li>
                 <Link to="/my-journey" className="hover:text-white transition-colors">
-                  My Journey Hub
+                  My Services
                 </Link>
               </li>
               <li>
@@ -90,7 +90,7 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <Link to="/profile" className="hover:text-white transition-colors">
-                  Student Profile
+                  Customer Profile
                 </Link>
               </li>
               <li>

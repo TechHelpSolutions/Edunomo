@@ -90,13 +90,13 @@ export const Header: React.FC = () => {
             ) : (
               /* LOGGED IN STATE */
               <div className="flex items-center gap-2 sm:gap-3">
-                {/* Quick Dashboard Link Badge */}
+                {/* Quick Dashboard / Services Link Badge */}
                 <Link
                   to={dashboardUrl}
                   className="hidden md:flex items-center gap-2 px-3 py-1.5 text-xs font-semibold text-[#0D2A68] bg-blue-50 hover:bg-blue-100/80 border border-blue-200/60 rounded-full transition-colors"
                 >
                   <LayoutDashboard className="w-3.5 h-3.5 text-[#1D4ED8]" />
-                  <span>Dashboard</span>
+                  <span>{currentUser?.role === 'CUSTOMER' ? 'My Services' : 'Dashboard'}</span>
                 </Link>
 
                 {/* Notification Bell */}
@@ -204,7 +204,7 @@ export const Header: React.FC = () => {
                               >
                                 <span className="flex items-center gap-2">
                                   <MapPin className="w-4 h-4 text-slate-400" />
-                                  My Journey Hub
+                                  My Services
                                 </span>
                                 <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
                               </Link>

@@ -1,17 +1,15 @@
-﻿import React from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Home, Compass, MapPin, Bell, User } from 'lucide-react';
 import { notificationService } from '../../services/notificationService';
-import { useAuth } from '../../context/AuthContext';
 
 export const BottomNav: React.FC = () => {
-  const { user } = useAuth();
   const unreadCount = notificationService.getUnreadCount();
 
   const navItems = [
     { label: 'Home', path: '/', icon: Home, badge: null },
     { label: 'Explore', path: '/explore', icon: Compass, badge: null },
-    { label: 'My Journey', path: '/my-journey', icon: MapPin, badge: null },
+    { label: 'My Services', path: '/my-journey', icon: MapPin, badge: null },
     { label: 'Notifications', path: '/notifications', icon: Bell, badge: unreadCount > 0 ? unreadCount : null },
     { label: 'Profile', path: '/profile', icon: User, badge: null },
   ];
