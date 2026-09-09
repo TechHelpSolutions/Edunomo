@@ -1,7 +1,7 @@
-﻿import React, { createContext, useContext, useState, useCallback } from 'react';
+import React, { createContext, useContext, useState, useCallback } from 'react';
 import { CheckCircle2, AlertCircle, Info, X } from 'lucide-react';
 
-export type ToastType = 'success' | 'error' | 'info';
+export type ToastType = 'success' | 'error' | 'info' | 'warning' | 'alert';
 
 interface Toast {
   id: string;
@@ -42,13 +42,16 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             className={`pointer-events-auto flex items-start gap-3 p-3.5 rounded-xl shadow-lg border text-sm font-medium transition-all duration-200 animate-in fade-in slide-in-from-top-2 ${
               toast.type === 'success'
                 ? 'bg-emerald-50 border-emerald-200 text-emerald-900'
-                : toast.type === 'error'
+                : toast.type === 'error' || toast.type === 'alert'
                 ? 'bg-red-50 border-red-200 text-red-900'
+                : toast.type === 'warning'
+                ? 'bg-amber-50 border-amber-200 text-amber-900'
                 : 'bg-slate-900 border-slate-800 text-white'
             }`}
           >
             {toast.type === 'success' && <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />}
-            {toast.type === 'error' && <AlertCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />}
+            {(toast.type === 'error' || toast.type === 'alert') && <AlertCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />}
+            {toast.type === 'warning' && <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />}
             {toast.type === 'info' && <Info className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />}
             
             <p className="flex-1 leading-snug">{toast.message}</p>

@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import {
   GraduationCap, ShieldCheck, Plane, Building2, Car, BookOpen,
   ArrowRight, Check, Compass, Sparkles, MapPin, Clock, ArrowUpRight,
-  Award, FileText, CheckCircle2, ChevronRight, HelpCircle
+  Award, FileText, CheckCircle2, ChevronRight, HelpCircle, Smartphone
 } from 'lucide-react';
 import { DESTINATIONS } from '../data/destinations';
 import { Destination } from '../types';
@@ -63,11 +63,11 @@ export const Home: React.FC = () => {
     {
       id: 'cabs',
       title: 'Cab Services',
-      description: 'Book airport and local rides',
+      description: 'Book airport & campus transfers via Edunomo app',
       icon: Car,
       path: '/cabs',
       isPrimary: false,
-      badge: 'Coming Soon',
+      badge: 'App-First',
       color: 'bg-amber-600',
     },
     {
@@ -93,7 +93,7 @@ export const Home: React.FC = () => {
         <div className="relative z-10 max-w-2xl">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold text-sky-300 backdrop-blur-md mb-4 border border-white/10">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Edunomo • Your Global Service Partner</span>
+            <span>Edunomo • Global Student Mobility Platform</span>
           </div>
 
           <p className="text-xs sm:text-sm font-bold text-sky-200 uppercase tracking-wider mb-1">
@@ -426,6 +426,63 @@ export const Home: React.FC = () => {
               </div>
             </Link>
           ))}
+        </div>
+      </div>
+
+      {/* SECTION: CAB APP HIGHLIGHT */}
+      <div className="bg-gradient-to-r from-[#0D2A68] via-[#0B2558] to-[#1E3A8A] text-white rounded-3xl p-6 sm:p-10 shadow-md border border-blue-900/40 relative overflow-hidden">
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div className="lg:col-span-8 space-y-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-bold text-sky-300 border border-white/10">
+              <Car className="w-3.5 h-3.5" />
+              <span>Campus & Airport Mobility</span>
+            </div>
+
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight">
+              Need a ride when you arrive?
+            </h2>
+
+            <p className="text-xs sm:text-sm text-slate-200 leading-relaxed max-w-xl">
+              Book airport and university transfers through the Edunomo mobile app.
+            </p>
+
+            <p className="text-xs text-sky-200 font-semibold">
+              Download the Edunomo app to book your ride.
+            </p>
+
+            <div className="pt-2 flex flex-wrap items-center gap-3">
+              <Link to="/cabs#download-app">
+                <Button variant="secondary" size="md" rightIcon={<Smartphone className="w-4 h-4" />}>
+                  Download App
+                </Button>
+              </Link>
+              <Link to="/cabs">
+                <Button variant="outline" size="md" className="text-white border-white/30 hover:bg-white/10">
+                  How Cab Services Work
+                </Button>
+              </Link>
+            </div>
+          </div>
+
+          <div className="lg:col-span-4 flex justify-center lg:justify-end">
+            <div className="bg-white/10 backdrop-blur-md p-5 rounded-3xl border border-white/20 text-center max-w-xs w-full space-y-3">
+              <div className="w-12 h-12 rounded-2xl bg-white text-[#0D2A68] flex items-center justify-center mx-auto shadow-sm">
+                <Smartphone className="w-6 h-6" />
+              </div>
+              <div>
+                <h4 className="font-extrabold text-sm text-white">Edunomo Mobile App</h4>
+                <p className="text-xs text-slate-300 mt-0.5">Airport Transfers • Student Rides • Live Tracking</p>
+              </div>
+              <div className="flex justify-center gap-2 pt-1">
+                <span className="text-[10px] font-bold bg-black/40 text-white px-2.5 py-1 rounded-lg border border-white/10">
+                  Google Play
+                </span>
+                <span className="text-[10px] font-bold bg-black/40 text-white px-2.5 py-1 rounded-lg border border-white/10">
+                  App Store
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

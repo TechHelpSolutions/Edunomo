@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { ShieldCheck, Globe, GraduationCap, Compass } from 'lucide-react';
 
@@ -108,14 +108,21 @@ export const Footer: React.FC = () => {
 
           {/* Trust & Legal */}
           <div>
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4">Transparency</h4>
-            <p className="text-xs text-slate-400 mb-3 leading-relaxed">
-              Phase 1 interactive prototype. Study Abroad features full end-to-end local persistence. Secondary mobility modules feature preview capabilities.
-            </p>
-            <div className="pt-2 border-t border-slate-800 flex flex-col gap-1.5 text-xs text-slate-400">
-              <span className="hover:text-white cursor-pointer">Terms & Conditions</span>
-              <span className="hover:text-white cursor-pointer">Data Privacy Policy</span>
-              <span className="hover:text-white cursor-pointer">Student Security Guarantee</span>
+            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4">Portals & Ecosystem</h4>
+            <div className="pt-1 flex flex-col gap-2 text-xs text-slate-400">
+              <Link to="/partner/login" className="hover:text-white transition-colors flex items-center gap-1.5 font-medium text-blue-300">
+                <span>Partner Portal</span>
+                <span className="text-[10px] bg-blue-900/60 px-1.5 py-0.5 rounded text-blue-200 border border-blue-700/40">Agent/College/Hotel/Tutor</span>
+              </Link>
+              <Link to="/admin/login" className="hover:text-white transition-colors flex items-center gap-1.5 font-medium text-indigo-300">
+                <span>Admin Console</span>
+                <span className="text-[10px] bg-indigo-900/60 px-1.5 py-0.5 rounded text-indigo-200 border border-indigo-700/40">Enterprise</span>
+              </Link>
+              <div className="pt-2 border-t border-slate-800 flex flex-col gap-1.5 text-xs text-slate-400">
+                <span className="hover:text-white cursor-pointer">Terms & Conditions</span>
+                <span className="hover:text-white cursor-pointer">Data Privacy Policy</span>
+                <span className="hover:text-white cursor-pointer">Student Security Guarantee</span>
+              </div>
             </div>
           </div>
         </div>

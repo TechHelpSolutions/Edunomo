@@ -1,10 +1,10 @@
-﻿import { UserProfile } from '../types';
+import { UserProfile } from '../types';
 import { storage } from './storage';
 
 const INITIAL_PROFILE: UserProfile = {
   id: 'usr_001',
-  fullName: 'Aarav Sharma',
-  email: 'aarav.sharma@example.com',
+  fullName: 'Rahul Sharma',
+  email: 'student.demo@edunomo.in',
   phone: '+91 98765 43210',
   dateOfBirth: '2001-05-14',
   nationality: 'Indian',

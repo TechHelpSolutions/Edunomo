@@ -1,4 +1,4 @@
-﻿import { JourneyServiceItem } from '../types';
+import { JourneyServiceItem } from '../types';
 import { studyAbroadService } from './studyAbroadService';
 
 export const journeyService = {
@@ -79,11 +79,11 @@ export const journeyService = {
         service: 'Cab Services',
         category: 'cabs',
         headline: 'Airport Meet & Greet Campus Transfer',
-        subtitle: 'Pre-book reliable transit from airport to campus accommodation',
-        statusText: 'Not Booked',
+        subtitle: 'Book verified airport transfers through the Edunomo mobile app',
+        statusText: 'App-First',
         statusState: 'not_started',
         route: '/cabs',
-        ctaText: 'Book Airport Ride',
+        ctaText: 'View App Details',
         iconName: 'Car'
       },
       {
