@@ -148,13 +148,9 @@ export const Home: React.FC = () => {
         {/* ========================================================================= */}
         {/* 1. HERO SECTION: Multi-service Global Mobility Hero & Journey Ecosystem  */}
         {/* ========================================================================= */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-[#0A1E4A] via-[#0D2A68] to-[#1E3A8A] text-white py-16 sm:py-20 lg:py-24">
-          {/* Background Glows */}
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/15 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-sky-400/10 rounded-full blur-3xl pointer-events-none" />
-
+        <section className="relative overflow-hidden bg-[#02183B] bg-gradient-to-r from-[#011638] via-[#032356] to-[#043372] text-white py-14 sm:py-18 lg:py-20">
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 xl:gap-8 items-center">
               {/* Left Column: ~45-50% width on desktop */}
               <div className="lg:col-span-6 xl:col-span-5 space-y-6 text-left z-10">
                 {/* Category Pill */}
@@ -213,17 +209,17 @@ export const Home: React.FC = () => {
                 </div>
               </div>
 
-              {/* Right Column: Hero Journey Ecosystem Visual (~50-55% width on desktop) */}
-              <div className="lg:col-span-6 xl:col-span-7 w-full flex items-center justify-center lg:justify-end pt-6 lg:pt-0">
-                <div className="relative w-full max-w-[620px] xl:max-w-[700px] flex items-center justify-center lg:justify-end">
-                  {/* Subtle ambient lighting behind visual */}
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 sm:w-96 h-72 sm:h-96 bg-blue-500/15 rounded-full blur-3xl pointer-events-none" />
+              {/* Right Column: Seamless Journey Ecosystem Visual */}
+              <div className="lg:col-span-6 xl:col-span-7 w-full flex items-center justify-center lg:justify-end pt-6 lg:pt-0 lg:-mr-6 xl:-mr-12 2xl:-mr-20">
+                <div className="relative w-full max-w-[620px] lg:max-w-none flex items-center justify-center lg:justify-end">
+                  {/* Left atmospheric blending gradient overlay */}
+                  <div className="hidden lg:block absolute inset-y-0 left-0 w-28 xl:w-40 bg-gradient-to-r from-[#011638] via-[#011638]/60 to-transparent pointer-events-none z-20" />
 
                   <img
                     src="/assets/hero-journey-visual@2x.png"
                     srcSet="/assets/hero-journey-visual.png 1x, /assets/hero-journey-visual@2x.png 2x"
                     alt="Edunomo Global Journey Ecosystem - Education, Travel, Visa, Accommodation, Mobility, Tuition"
-                    className="relative z-10 w-full h-auto object-contain pointer-events-none drop-shadow-2xl select-none"
+                    className="relative z-10 w-full lg:w-[108%] xl:w-[114%] max-w-none h-auto object-contain pointer-events-none select-none [mask-image:linear-gradient(to_right,transparent_0%,black_16%,black_100%)] [-webkit-mask-image:linear-gradient(to_right,transparent_0%,black_16%,black_100%)]"
                     loading="eager"
                     decoding="async"
                   />
