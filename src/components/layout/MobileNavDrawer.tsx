@@ -17,8 +17,12 @@ import {
   LogOut,
   ChevronRight,
   Sparkles,
+  User,
+  Compass,
+  Bell,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { notificationService } from '../../services/notificationService';
 
 interface MobileNavDrawerProps {
   isOpen: boolean;
@@ -35,6 +39,7 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ isOpen, onClos
   const displayName = currentUser?.name || user?.fullName || 'User';
   const displayEmail = currentUser?.email || user?.email || '';
   const dashboardUrl = currentUser?.dashboardUrl || (isStudent ? '/dashboard' : '/');
+  const unreadCount = notificationService.getUnreadCount();
 
   const currentPathRef = React.useRef(location.pathname);
 
@@ -245,8 +250,9 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ isOpen, onClos
                 </Link>
               </div>
             ) : (
-              /* Authenticated User Details & Shortcuts */
+              /* Authenticated User Details & Role/Session Navigation */
               <div className="space-y-2.5">
+                {/* User Info Card */}
                 <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-[#0D2A68] text-white flex items-center justify-center text-sm font-bold shrink-0">
                     {displayName ? displayName.charAt(0).toUpperCase() : 'U'}
@@ -264,14 +270,98 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ isOpen, onClos
                   </div>
                 </div>
 
-                <Link
-                  to={dashboardUrl}
-                  onClick={onClose}
-                  className="min-h-[44px] w-full flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-bold text-white bg-[#0D2A68] hover:bg-[#1D4ED8] rounded-xl shadow-xs transition-all"
-                >
-                  <LayoutDashboard className="w-4 h-4" />
-                  <span>Open Dashboard</span>
-                </Link>
+                {/* Role-Specific Account Navigation */}
+                <div className="space-y-1 pt-1">
+                  <Link
+                    to={dashboardUrl}
+                    onClick={onClose}
+                    className={`min-h-[44px] flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all group ${
+                      isActive(dashboardUrl)
+                        ? 'bg-blue-50 text-[#0D2A68] font-bold shadow-xs'
+                        : 'text-slate-700 hover:text-[#0D2A68] hover:bg-slate-50'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center">
+                        <LayoutDashboard className="w-4 h-4" />
+                      </div>
+                      <span>Dashboard</span>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-slate-400 group-hover:translate-x-0.5 transition-transform" />
+                  </Link>
+
+                  {isStudent && (
+                    <>
+                      <Link
+                        to="/applications"
+                        onClick={onClose}
+                        className={`min-h-[44px] flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all group ${
+                          isActive('/applications')
+                            ? 'bg-blue-50 text-[#0D2A68] font-bold shadow-xs'
+                            : 'text-slate-700 hover:text-[#0D2A68] hover:bg-slate-50'
+                        }`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-700 flex items-center justify-center">
+                            <Compass className="w-4 h-4" />
+                          </div>
+                          <span>My Applications</span>
+                        </div>
+                        <ChevronRight className="w-4 h-4 text-slate-400 group-hover:translate-x-0.5 transition-transform" />
+                      </Link>
+
+                      <Link
+                        to="/profile"
+                        onClick={onClose}
+                        className={`min-h-[44px] flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all group ${
+                          isActive('/profile')
+                            ? 'bg-blue-50 text-[#0D2A68] font-bold shadow-xs'
+                            : 'text-slate-700 hover:text-[#0D2A68] hover:bg-slate-50'
+                        }`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-lg bg-sky-50 text-sky-700 flex items-center justify-center">
+                            <User className="w-4 h-4" />
+                          </div>
+                          <span>Profile & Stays</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          {user?.completionPercentage !== undefined && (
+                            <span className="text-[10px] text-blue-700 font-semibold bg-blue-50 px-2 py-0.5 rounded-full">
+                              {user.completionPercentage}%
+                            </span>
+                          )}
+                          <ChevronRight className="w-4 h-4 text-slate-400 group-hover:translate-x-0.5 transition-transform" />
+                        </div>
+                      </Link>
+
+                      <Link
+                        to="/notifications"
+                        onClick={onClose}
+                        className={`min-h-[44px] flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all group ${
+                          isActive('/notifications')
+                            ? 'bg-blue-50 text-[#0D2A68] font-bold shadow-xs'
+                            : 'text-slate-700 hover:text-[#0D2A68] hover:bg-slate-50'
+                        }`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center">
+                            <Bell className="w-4 h-4" />
+                          </div>
+                          <span>Notifications</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          {unreadCount > 0 && (
+                            <span className="text-[10px] font-bold bg-red-600 text-white px-1.5 py-0.2 rounded-full">
+                              {unreadCount}
+                            </span>
+                          )}
+                          <ChevronRight className="w-4 h-4 text-slate-400 group-hover:translate-x-0.5 transition-transform" />
+                        </div>
+                      </Link>
+                    </>
+                  )}
+                </div>
 
                 <button
                   type="button"
@@ -280,7 +370,7 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ isOpen, onClos
                     logout();
                     navigate('/');
                   }}
-                  className="min-h-[44px] w-full flex items-center justify-center gap-2 px-4 py-2 text-xs font-semibold text-red-600 hover:bg-red-50 rounded-xl transition-colors"
+                  className="min-h-[44px] w-full mt-2 flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-semibold text-red-600 hover:bg-red-50 rounded-xl border border-red-100 transition-colors"
                 >
                   <LogOut className="w-4 h-4" />
                   <span>Log Out</span>
