@@ -66,7 +66,7 @@ export const SignupPage: React.FC = () => {
       });
 
       showToast(`Customer account created successfully! Welcome, ${fullName}!`, 'success');
-      const target = redirectParam || res.redirectUrl || '/my-journey';
+      const target = redirectParam || res.redirectUrl || '/';
       navigate(target, { replace: true });
     } catch (err: any) {
       setErrorMsg(err?.message || 'Failed to create account. Please try again.');

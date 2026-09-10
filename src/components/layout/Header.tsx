@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Bell, User, MapPin, Compass, LogOut, ChevronRight, LayoutDashboard, Sparkles } from 'lucide-react';
+import { Bell, User, Compass, LogOut, ChevronRight, LayoutDashboard, Sparkles } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { notificationService } from '../../services/notificationService';
 
@@ -28,7 +28,7 @@ export const Header: React.FC = () => {
 
   const displayName = currentUser?.name || user?.fullName || 'User';
   const displayEmail = currentUser?.email || user?.email || '';
-  const dashboardUrl = currentUser?.dashboardUrl || '/my-journey';
+  const dashboardUrl = currentUser?.dashboardUrl || '/';
 
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 transition-all">
@@ -90,13 +90,13 @@ export const Header: React.FC = () => {
             ) : (
               /* LOGGED IN STATE */
               <div className="flex items-center gap-2 sm:gap-3">
-                {/* Quick Dashboard / Services Link Badge */}
+                {/* Quick Dashboard / Applications Link Badge */}
                 <Link
-                  to={dashboardUrl}
+                  to={currentUser?.role === 'CUSTOMER' ? '/applications' : dashboardUrl}
                   className="hidden md:flex items-center gap-2 px-3 py-1.5 text-xs font-semibold text-[#0D2A68] bg-blue-50 hover:bg-blue-100/80 border border-blue-200/60 rounded-full transition-colors"
                 >
                   <LayoutDashboard className="w-3.5 h-3.5 text-[#1D4ED8]" />
-                  <span>{currentUser?.role === 'CUSTOMER' ? 'My Services' : 'Dashboard'}</span>
+                  <span>{currentUser?.role === 'CUSTOMER' ? 'My Applications' : 'Dashboard'}</span>
                 </Link>
 
                 {/* Notification Bell */}
@@ -193,18 +193,6 @@ export const Header: React.FC = () => {
                                 <span className="flex items-center gap-2">
                                   <Compass className="w-4 h-4 text-slate-400" />
                                   My Applications
-                                </span>
-                                <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-                              </Link>
-
-                              <Link
-                                to="/my-journey"
-                                onClick={() => setIsProfileMenuOpen(false)}
-                                className="flex items-center justify-between px-4 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50"
-                              >
-                                <span className="flex items-center gap-2">
-                                  <MapPin className="w-4 h-4 text-slate-400" />
-                                  My Services
                                 </span>
                                 <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
                               </Link>

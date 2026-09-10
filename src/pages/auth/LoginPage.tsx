@@ -52,7 +52,7 @@ export const LoginPage: React.FC = () => {
       showToast(`Welcome back, ${res.user?.name || 'User'}!`, 'success');
 
       // Determine final redirection target
-      const target = redirectParam || res.redirectUrl || '/my-journey';
+      const target = redirectParam || res.redirectUrl || '/';
       navigate(target, { replace: true });
     } catch (err: any) {
       setErrorMsg(err?.message || 'Login failed. Please verify credentials.');

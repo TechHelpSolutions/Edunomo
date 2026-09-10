@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Home, Compass, MapPin, Bell, User } from 'lucide-react';
+import { Home, Compass, FileText, Bell, User } from 'lucide-react';
 import { notificationService } from '../../services/notificationService';
 
 export const BottomNav: React.FC = () => {
@@ -9,7 +9,7 @@ export const BottomNav: React.FC = () => {
   const navItems = [
     { label: 'Home', path: '/', icon: Home, badge: null },
     { label: 'Explore', path: '/explore', icon: Compass, badge: null },
-    { label: 'My Services', path: '/my-journey', icon: MapPin, badge: null },
+    { label: 'Applications', path: '/applications', icon: FileText, badge: null },
     { label: 'Notifications', path: '/notifications', icon: Bell, badge: unreadCount > 0 ? unreadCount : null },
     { label: 'Profile', path: '/profile', icon: User, badge: null },
   ];

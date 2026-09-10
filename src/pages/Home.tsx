@@ -265,25 +265,25 @@ export const Home: React.FC = () => {
         </div>
       </div>
 
-      {/* SECTION 4: HOME - MY JOURNEY (Section 8) */}
+      {/* SECTION 4: APPLICATION TRACKER */}
       <div className="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-8 shadow-sm">
         <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
           <div>
             <div className="flex items-center gap-2">
               <Compass className="w-5 h-5 text-[#0D2A68]" />
               <h2 className="text-lg sm:text-xl font-bold text-slate-900">
-                My Journey Tracker
+                Application Tracker
               </h2>
             </div>
             <p className="text-xs text-slate-500 mt-0.5">
-              Live progression of your active study abroad and mobility steps
+              Live progression of your active study abroad applications and steps
             </p>
           </div>
           <Link
-            to="/my-journey"
+            to="/applications"
             className="text-xs font-bold text-blue-700 hover:text-blue-900 flex items-center gap-1"
           >
-            <span>Full Dashboard</span>
+            <span>View Applications</span>
             <ChevronRight className="w-3.5 h-3.5" />
           </Link>
         </div>

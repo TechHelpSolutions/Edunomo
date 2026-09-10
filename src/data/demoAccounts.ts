@@ -35,7 +35,7 @@ export const DEMO_ACCOUNTS: DemoAccount[] = [
     role: 'CUSTOMER',
     displayRole: 'Customer',
     badge: 'Customer Account',
-    targetRoute: '/my-journey',
+    targetRoute: '/',
     description: 'General customer account for hotels, flights, cabs, tutors, and study abroad',
     phone: '+91 98765 43210',
   },

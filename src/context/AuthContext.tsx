@@ -53,7 +53,7 @@ function mapSessionToCurrentUser(session: AuthSessionUser): CurrentUser | null {
     role: (session.role as DemoUserRole) || 'CUSTOMER',
     displayRole: session.displayRole || 'Customer',
     badge: (session.role as DemoUserRole) === 'CUSTOMER' ? 'Customer Account' : (session.displayRole || 'User'),
-    dashboardUrl: session.dashboardUrl || '/my-journey',
+    dashboardUrl: session.dashboardUrl || '/',
     phone: session.phone,
   };
 }
@@ -101,7 +101,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const demo = findDemoAccount(trimmedEmail);
 
     let sessionUser: CurrentUser;
-    let targetRoute = '/my-journey';
+    let targetRoute = '/';
 
     if (demo) {
       targetRoute = demo.targetRoute;
@@ -137,7 +137,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     } else {
       // General Customer login fallback
-      targetRoute = '/my-journey';
+      targetRoute = '/';
       sessionUser = {
         id: 'cust_' + Date.now(),
         name: trimmedEmail.split('@')[0] || 'Customer',
@@ -145,7 +145,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         role: 'CUSTOMER',
         displayRole: 'Customer',
         badge: 'Customer Account',
-        dashboardUrl: '/my-journey',
+        dashboardUrl: '/',
       };
       storage.set(STORAGE_PARTNER_SESSION, { loggedIn: false });
       storage.set(STORAGE_ADMIN_SESSION, { loggedIn: false });
@@ -178,7 +178,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       role: 'CUSTOMER',
       displayRole: 'Customer',
       badge: 'Customer Account',
-      dashboardUrl: '/my-journey',
+      dashboardUrl: '/',
     };
 
     authService.login(sessionUser);
@@ -194,7 +194,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     return {
       success: true,
-      redirectUrl: '/my-journey',
+      redirectUrl: '/',
       user: sessionUser,
     };
   };

@@ -85,7 +85,7 @@ export const authService = {
       id: sessionData.id || profile.id,
       role: sessionData.role || 'CUSTOMER',
       displayRole: sessionData.displayRole || 'Customer',
-      dashboardUrl: sessionData.dashboardUrl || '/my-journey',
+      dashboardUrl: sessionData.dashboardUrl || '/',
       phone: sessionData.phone || profile.phone,
     };
     storage.set(storage.KEYS.AUTH_USER, newSession);
@@ -105,7 +105,7 @@ export const authService = {
       name: data.fullName,
       role: 'CUSTOMER',
       displayRole: 'Customer',
-      dashboardUrl: '/my-journey',
+      dashboardUrl: '/',
       phone: data.phone,
     };
     storage.set(storage.KEYS.AUTH_USER, newSession);

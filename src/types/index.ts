@@ -1,4 +1,4 @@
-﻿export type ServiceCategory = 'study_abroad' | 'visa' | 'flights' | 'hotels' | 'cabs' | 'tuition';
+export type ServiceCategory = 'study_abroad' | 'visa' | 'flights' | 'hotels' | 'cabs' | 'tuition';
 
 export interface Destination {
   id: string;
@@ -169,17 +169,4 @@ export interface NotificationItem {
   timestamp: string;
   isRead: boolean;
   link?: string;
-}
-
-export interface JourneyServiceItem {
-  service: string;
-  category: ServiceCategory;
-  headline: string;
-  subtitle: string;
-  statusText: string;
-  statusState: 'completed' | 'in_progress' | 'warning' | 'not_started';
-  badgeColor?: string;
-  route: string;
-  ctaText: string;
-  iconName: string;
 }

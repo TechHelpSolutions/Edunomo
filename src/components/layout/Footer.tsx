@@ -79,11 +79,6 @@ export const Footer: React.FC = () => {
             <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4">Customer Hub</h4>
             <ul className="space-y-2.5 text-xs sm:text-sm">
               <li>
-                <Link to="/my-journey" className="hover:text-white transition-colors">
-                  My Services
-                </Link>
-              </li>
-              <li>
                 <Link to="/applications" className="hover:text-white transition-colors">
                   Track Applications
                 </Link>
