@@ -20,7 +20,13 @@
     --brand-danger: #DC2626;
   }
 
-  html, body {
+  html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+
+  body {
     margin: 0;
     padding: 0;
     background-color: #F8FAFC;
@@ -29,7 +35,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-tap-highlight-color: transparent;
-    overflow-x: hidden;
+    overflow-x: clip;
     width: 100%;
   }
 
@@ -37,7 +43,6 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    overflow-x: hidden;
     width: 100%;
   }
 }

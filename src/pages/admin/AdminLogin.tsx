@@ -1,6 +1,6 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ShieldCheck, Mail, Lock, ArrowRight, AlertCircle, Sparkles } from 'lucide-react';
+import { ShieldCheck, Mail, Lock, ArrowRight, ArrowLeft, AlertCircle, Sparkles } from 'lucide-react';
 import { useAdminAuth } from '../../context/AdminAuthContext';
 import { Button } from '../../components/common/Button';
 
@@ -36,24 +36,37 @@ export const AdminLogin: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-950 text-white flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        <Link to="/" className="inline-block mb-6">
-          <img
-            src="/assets/edunomo-logo.png"
-            alt="Edunomo"
-            className="h-12 w-auto mx-auto object-contain brightness-0 invert"
-          />
-        </Link>
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-xs font-semibold text-sky-400 mb-3">
-          <ShieldCheck className="w-4 h-4" />
-          <span>Restricted Administration System</span>
+      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="flex items-center justify-between mb-4">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white transition-all py-1.5 px-3 rounded-xl hover:bg-slate-900 border border-slate-800 bg-slate-900/60 backdrop-blur-xs group"
+          >
+            <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-1 text-slate-500 group-hover:text-white" />
+            <span>Back to Home</span>
+          </Link>
+
+          <Link to="/" className="inline-block">
+            <img
+              src="/assets/edunomo-logo.png"
+              alt="Edunomo"
+              className="h-9 w-auto object-contain brightness-0 invert transition-transform hover:scale-105"
+            />
+          </Link>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
-          Edunomo Central Console
-        </h1>
-        <p className="text-xs sm:text-sm text-slate-400 mt-1">
-          Global Operations, Admissions Verification & Fleet Management
-        </p>
+
+        <div className="text-center">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-xs font-semibold text-sky-400 mb-3">
+            <ShieldCheck className="w-4 h-4" />
+            <span>Restricted Administration System</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
+            Edunomo Central Console
+          </h1>
+          <p className="text-xs sm:text-sm text-slate-400 mt-1">
+            Global Operations, Admissions Verification & Fleet Management
+          </p>
+        </div>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
@@ -109,15 +122,22 @@ export const AdminLogin: React.FC = () => {
           </form>
 
           {/* Quick Demo Pre-fill */}
-          <div className="mt-6 pt-5 border-t border-slate-800 text-center">
+          <div className="mt-6 pt-5 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-center">
             <button
               type="button"
               onClick={handleFillDemo}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-semibold text-sky-300 transition-colors"
             >
               <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-              <span>Fill Admin Demo Credentials (admin.demo@edunomo.in)</span>
+              <span>Fill Admin Demo</span>
             </button>
+            <Link
+              to="/"
+              className="inline-flex items-center gap-1 text-xs font-semibold text-slate-400 hover:text-white transition-colors group"
+            >
+              <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-0.5" />
+              <span>Back to Home</span>
+            </Link>
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
-  Mail, Lock, Eye, EyeOff, ArrowRight, Sparkles, ShieldCheck,
+  Mail, Lock, Eye, EyeOff, ArrowRight, ArrowLeft, Sparkles, ShieldCheck,
   GraduationCap, Building2, Hotel, BookOpen, Car, UserCheck, User,
   CheckCircle2, AlertCircle, HelpCircle, X
 } from 'lucide-react';
@@ -86,15 +86,25 @@ export const LoginPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col justify-center py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
-      {/* Top Brand Bar */}
-      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center mb-6">
+      {/* Top Header Navigation Bar */}
+      <div className="max-w-5xl w-full mx-auto mb-5 sm:mb-6 flex items-center justify-between px-2 sm:px-4">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-600 hover:text-[#0D2A68] transition-all py-2 px-3 sm:px-3.5 rounded-xl hover:bg-white hover:shadow-xs border border-slate-200/70 bg-white/70 backdrop-blur-xs group"
+        >
+          <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1 text-slate-500 group-hover:text-[#0D2A68]" />
+          <span>Back to Home</span>
+        </Link>
+
         <Link to="/" className="inline-flex items-center gap-2 group">
           <img
             src="/assets/edunomo-logo.png"
             alt="Edunomo"
-            className="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105"
+            className="h-9 sm:h-11 w-auto object-contain transition-transform group-hover:scale-105"
           />
         </Link>
+
+        <div className="w-[125px] hidden sm:block" aria-hidden="true" />
       </div>
 
       {/* Main Container Card (Two-column desktop / Single-column mobile) */}
@@ -344,8 +354,8 @@ export const LoginPage: React.FC = () => {
             </div>
 
             {/* Bottom Footer Links */}
-            <div className="mt-8 pt-4 border-t border-slate-100 text-center">
-              <p className="text-xs text-slate-500">
+            <div className="mt-8 pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+              <p>
                 Don't have an account yet?{' '}
                 <Link
                   to="/signup"
@@ -354,6 +364,13 @@ export const LoginPage: React.FC = () => {
                   Create Customer Account
                 </Link>
               </p>
+              <Link
+                to="/"
+                className="inline-flex items-center gap-1.5 font-semibold text-slate-600 hover:text-[#0D2A68] transition-colors group"
+              >
+                <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-0.5 text-slate-400 group-hover:text-[#0D2A68]" />
+                <span>Back to Home</span>
+              </Link>
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Lock, Mail, ArrowRight, ShieldCheck, UserCheck, Building2, Hotel, BookOpen, AlertCircle } from 'lucide-react';
+import { Lock, Mail, ArrowRight, ArrowLeft, ShieldCheck, UserCheck, Building2, Hotel, BookOpen, AlertCircle } from 'lucide-react';
 import { usePartnerAuth } from '../../context/PartnerAuthContext';
 import { Button } from '../../components/common/Button';
 
@@ -54,16 +54,29 @@ export const PartnerLogin: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        <Link to="/" className="inline-block mb-6">
-          <img src="/assets/edunomo-logo.png" alt="Edunomo" className="h-12 w-auto mx-auto object-contain" />
-        </Link>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-          Partner Portal
-        </h1>
-        <p className="text-sm text-slate-600 mt-1.5 font-medium">
-          Manage your business with Edunomo
-        </p>
+      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="flex items-center justify-between mb-4">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-[#0D2A68] transition-all py-1.5 px-3 rounded-xl hover:bg-white hover:shadow-xs border border-slate-200/70 bg-white/70 backdrop-blur-xs group"
+          >
+            <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-1 text-slate-500 group-hover:text-[#0D2A68]" />
+            <span>Back to Home</span>
+          </Link>
+
+          <Link to="/" className="inline-block">
+            <img src="/assets/edunomo-logo.png" alt="Edunomo" className="h-9 w-auto object-contain transition-transform hover:scale-105" />
+          </Link>
+        </div>
+
+        <div className="text-center">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+            Partner Portal
+          </h1>
+          <p className="text-sm text-slate-600 mt-1.5 font-medium">
+            Manage your business with Edunomo
+          </p>
+        </div>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
@@ -172,11 +185,20 @@ export const PartnerLogin: React.FC = () => {
             </div>
           </div>
 
-          {/* Become a Partner link */}
-          <div className="mt-6 text-center text-xs text-slate-600">
-            <span>Not a partner yet? </span>
-            <Link to="/partner/register" className="font-bold text-[#0D2A68] hover:underline">
-              Register with Edunomo
+          {/* Bottom Links */}
+          <div className="mt-6 flex items-center justify-between text-xs text-slate-600">
+            <div>
+              <span>Not a partner yet? </span>
+              <Link to="/partner/register" className="font-bold text-[#0D2A68] hover:underline">
+                Register
+              </Link>
+            </div>
+            <Link
+              to="/"
+              className="inline-flex items-center gap-1 font-semibold text-slate-500 hover:text-[#0D2A68] transition-colors group"
+            >
+              <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-0.5" />
+              <span>Back to Home</span>
             </Link>
           </div>
         </div>
