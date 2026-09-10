@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Lock, User, Phone, Check, ShieldCheck, ArrowRight } from 'lucide-react';
+import { Mail, Lock, User, Phone, ShieldCheck, ArrowRight } from 'lucide-react';
 import { Modal } from '../../components/common/Modal';
 import { Button } from '../../components/common/Button';
 import { useAuth } from '../../context/AuthContext';
@@ -21,7 +21,7 @@ export const AuthModal: React.FC = () => {
     setPassword('demo123');
     setFullName('Rahul Sharma');
     setPhone('+91 98765 43210');
-    showToast('Demo customer credentials populated', 'info');
+    showToast('Demo student credentials populated', 'info');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -43,7 +43,7 @@ export const AuthModal: React.FC = () => {
           return;
         }
         await signup({ fullName, email, phone: phone || '+91 98765 43210' });
-        showToast('Customer account created successfully!', 'success');
+        showToast('Student account created successfully!', 'success');
       }
       setIsLoading(false);
       closeAuthModal();
@@ -61,19 +61,19 @@ export const AuthModal: React.FC = () => {
           <ShieldCheck className="w-6 h-6" />
         </div>
         <h3 className="text-xl font-bold text-slate-900">
-          {mode === 'login' ? 'Login to Edunomo' : 'Create Your Customer Account'}
+          {mode === 'login' ? 'Login to Edunomo' : 'Create Your Student Account'}
         </h3>
         <p className="text-xs text-slate-500 mt-1">
-          Access your bookings, global applications, stays, and transit services
+          Access your global applications, stays, bookings, and transit services
         </p>
 
         {/* Quick Demo Pre-fill Button */}
         <button
           type="button"
           onClick={handleDemoFill}
-          className="mt-3 px-3 py-1 bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-900 text-xs font-semibold rounded-full inline-flex items-center gap-1.5 transition-colors"
+          className="mt-3 px-3 py-1 bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-900 text-xs font-semibold rounded-full inline-flex items-center gap-1.5 transition-colors cursor-pointer"
         >
-          <span>⚡ Auto-fill Demo Customer</span>
+          <span>⚡ Auto-fill Demo Student</span>
         </button>
       </div>
 

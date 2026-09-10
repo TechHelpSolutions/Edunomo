@@ -1,554 +1,621 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
   GraduationCap, ShieldCheck, Plane, Building2, Car, BookOpen,
-  ArrowRight, Check, Compass, Sparkles, MapPin, Clock, ArrowUpRight,
-  Award, FileText, CheckCircle2, ChevronRight, HelpCircle, Smartphone
+  ArrowRight, ChevronRight, CheckCircle2,
+  Compass, Search, Globe, Award, MapPin,
+  HeartHandshake, Sparkles
 } from 'lucide-react';
 import { DESTINATIONS } from '../data/destinations';
 import { Destination } from '../types';
-import { useApplications } from '../context/ApplicationContext';
-import { useAuth } from '../context/AuthContext';
-import { StatusBadge } from '../components/common/StatusBadge';
 import { Button } from '../components/common/Button';
+import { AppDownloadBanner } from '../components/common/AppDownloadBanner';
+import { PageContainer } from '../components/layout/PageContainer';
 
 export const Home: React.FC = () => {
-  const navigate = useNavigate();
-  const { applications } = useApplications();
-  const { user } = useAuth();
-
-  const primaryApplication = applications.length > 0 ? applications[0] : null;
-
   const services = [
     {
       id: 'study-abroad',
       title: 'Study Abroad',
-      description: 'Find universities, courses and apply',
+      description: 'Find universities, courses and application guidance.',
       icon: GraduationCap,
       path: '/study-abroad',
       isPrimary: true,
       badge: 'Active & Verified',
+      ctaText: 'Browse Universities',
       color: 'bg-blue-600',
     },
     {
       id: 'visa',
-      title: 'Visa Services',
-      description: 'Get help with your visa journey',
+      title: 'Visa Assistance',
+      description: 'Get support with your visa journey and documentation.',
       icon: ShieldCheck,
       path: '/visa',
       isPrimary: false,
       badge: 'Coming Soon',
+      ctaText: 'View Visa Guidance',
       color: 'bg-indigo-600',
     },
     {
       id: 'flights',
       title: 'Flights',
-      description: 'Search and book flights with student baggage',
+      description: 'Search and book international flights for your journey.',
       icon: Plane,
       path: '/flights',
       isPrimary: false,
       badge: 'Coming Soon',
+      ctaText: 'Search Fares',
       color: 'bg-sky-600',
     },
     {
       id: 'hotels',
-      title: 'Hotels',
-      description: 'Find your verified campus stay',
+      title: 'Accommodation',
+      description: 'Find suitable student accommodation near your campus.',
       icon: Building2,
       path: '/hotels',
       isPrimary: false,
       badge: 'Coming Soon',
+      ctaText: 'Explore Residences',
       color: 'bg-emerald-600',
     },
     {
       id: 'cabs',
-      title: 'Cab Services',
-      description: 'Book airport & campus transfers via Edunomo app',
+      title: 'Cab & Airport Transfers',
+      description: 'Arrange airport pickup and campus transfers.',
       icon: Car,
       path: '/cabs',
       isPrimary: false,
       badge: 'App-First',
+      ctaText: 'Book Transfers',
       color: 'bg-amber-600',
     },
     {
       id: 'tuition',
-      title: 'Tuition',
-      description: 'Find tutors and learning support',
+      title: 'Tuition & Tutors',
+      description: 'Find tutors and learning support.',
       icon: BookOpen,
       path: '/tuition',
       isPrimary: false,
       badge: 'Coming Soon',
+      ctaText: 'Find Tutors',
       color: 'bg-violet-600',
     },
   ];
 
+  const whyChooseEdunomo = [
+    {
+      title: 'Verified Study Destinations',
+      desc: 'Accredited global universities with transparent admission pathways and post-study opportunities.',
+      icon: Globe,
+    },
+    {
+      title: 'End-to-End Journey Support',
+      desc: 'A unified student ecosystem guiding you from course discovery through to campus settlement.',
+      icon: HeartHandshake,
+    },
+    {
+      title: 'Visa Assistance',
+      desc: 'Expert checklist pre-checks, CAS filing guidance, and embassy paperwork reviews.',
+      icon: ShieldCheck,
+    },
+    {
+      title: 'Student-Friendly Travel',
+      desc: 'Exclusive airline partnerships with student fares and extra 46kg luggage allowance.',
+      icon: Plane,
+    },
+    {
+      title: 'Accommodation Support',
+      desc: 'Pre-screened student residences and arrival transit stays close to lecture halls.',
+      icon: Building2,
+    },
+    {
+      title: 'Airport & Campus Mobility',
+      desc: 'Fixed-price meet-and-greet airport rides directly to your dormitory doorstep.',
+      icon: Car,
+    },
+  ];
+
+  const howItWorksSteps = [
+    {
+      step: '01',
+      title: 'Discover',
+      desc: 'Explore universities, destinations and services tailored to your educational and lifestyle aspirations.',
+      icon: Search,
+    },
+    {
+      step: '02',
+      title: 'Plan',
+      desc: 'Compare your options and prepare your journey, including tuition, visas, travel timelines, and stays.',
+      icon: Compass,
+    },
+    {
+      step: '03',
+      title: 'Apply & Book',
+      desc: 'Apply for study opportunities and arrange required services with institutional verification.',
+      icon: Award,
+    },
+    {
+      step: '04',
+      title: 'Arrive & Settle',
+      desc: 'Get travel, accommodation and mobility support to touch down safely at your new campus.',
+      icon: MapPin,
+    },
+  ];
+
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-12 sm:space-y-16">
-      {/* SECTION 1: TOP GREETING & HERO */}
-      <div className="relative bg-gradient-to-br from-[#0D2A68] via-[#0B2558] to-[#081B40] rounded-3xl p-6 sm:p-10 md:p-12 text-white shadow-md overflow-hidden">
-        {/* Subtle decorative elements */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-10 -left-10 w-72 h-72 bg-sky-400/10 rounded-full blur-2xl pointer-events-none" />
+    <PageContainer>
+      <div className="space-y-16 sm:space-y-24 pb-16">
+        {/* ========================================================================= */}
+        {/* 1. HERO SECTION: Multi-service Global Mobility Hero                      */}
+        {/* ========================================================================= */}
+        <section className="relative overflow-hidden bg-gradient-to-br from-[#0A1E4A] via-[#0D2A68] to-[#1E3A8A] text-white py-16 sm:py-24 lg:py-28">
+          {/* Background Glows */}
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-sky-400/10 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative z-10 max-w-2xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold text-sky-300 backdrop-blur-md mb-4 border border-white/10">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Edunomo • Global Student Mobility Platform</span>
-          </div>
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-3xl space-y-6 text-left">
+              {/* Category Pill */}
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-xs font-semibold text-sky-200 border border-white/15 backdrop-blur-md">
+                <Sparkles className="w-4 h-4 text-amber-300" />
+                <span>Global Mobility & Education Ecosystem</span>
+              </div>
 
-          <p className="text-xs sm:text-sm font-bold text-sky-200 uppercase tracking-wider mb-1">
-            Hi, {user.fullName ? user.fullName.split(' ')[0] : 'there'}
-          </p>
+              {/* Main Headline */}
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.15]">
+                Your journey abroad, <br className="hidden sm:block" />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-200 via-blue-100 to-white">
+                  all in one place.
+                </span>
+              </h1>
 
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-white mb-3 leading-tight">
-            Your journey starts here.
-          </h1>
+              {/* Supporting Copy */}
+              <p className="text-base sm:text-lg text-slate-200 leading-relaxed font-normal max-w-2xl">
+                Discover universities, get visa assistance, book flights, find accommodation and arrange airport transfers — all through Edunomo.
+              </p>
 
-          <p className="text-xs sm:text-sm text-slate-200 leading-relaxed mb-6 max-w-lg">
-            Study, travel and settle abroad with Edunomo.
-          </p>
-
-          {/* Core CTAs per Section 7 Requirements */}
-          <div className="flex flex-col sm:flex-row items-center gap-3">
-            <Link to="/study-abroad" className="w-full sm:w-auto">
-              <Button variant="secondary" size="md" fullWidth rightIcon={<ArrowRight className="w-4 h-4" />}>
-                Explore Study Abroad
-              </Button>
-            </Link>
-            <Link to="/applications" className="w-full sm:w-auto">
-              <button className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs sm:text-sm backdrop-blur-md transition-colors border border-white/20 flex items-center justify-center gap-2">
-                <Compass className="w-4 h-4 text-sky-300" />
-                <span>View My Applications</span>
-              </button>
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* SECTION 2: SERVICES GRID */}
-      <div>
-        <div className="flex items-center justify-between mb-5">
-          <div>
-            <h2 className="text-lg sm:text-xl font-bold text-slate-900">
-              Explore Our Services
-            </h2>
-            <p className="text-xs text-slate-500 mt-0.5">
-              Comprehensive global student solutions in one ecosystem
-            </p>
-          </div>
-          <Link
-            to="/explore"
-            className="text-xs font-bold text-blue-700 hover:text-blue-900 flex items-center gap-1"
-          >
-            <span>All Services</span>
-            <ChevronRight className="w-3.5 h-3.5" />
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {services.map((srv) => {
-            const Icon = srv.icon;
-            return (
-              <Link
-                key={srv.id}
-                to={srv.path}
-                className={`p-5 rounded-2xl border transition-all duration-200 group flex flex-col justify-between ${
-                  srv.isPrimary
-                    ? 'bg-gradient-to-br from-white to-blue-50/70 border-blue-200 shadow-sm ring-1 ring-blue-600/10 hover:shadow-md'
-                    : 'bg-white border-slate-200/90 shadow-xs hover:shadow-md hover:border-slate-300'
-                }`}
-              >
-                <div>
-                  <div className="flex items-start justify-between mb-4">
+              {/* Ecosystem Pillars Badge Row */}
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3 pt-2">
+                {[
+                  { label: 'Education', icon: GraduationCap },
+                  { label: 'Travel', icon: Plane },
+                  { label: 'Mobility', icon: Car },
+                  { label: 'Settlement', icon: Building2 },
+                ].map((pillar, i) => {
+                  const Icon = pillar.icon;
+                  return (
                     <div
-                      className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-105 shadow-xs ${
-                        srv.isPrimary
-                          ? 'bg-[#0D2A68] text-white'
-                          : 'bg-slate-100 text-slate-700'
-                      }`}
+                      key={i}
+                      className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/10 text-xs font-medium text-slate-200 border border-white/10 backdrop-blur-xs"
                     >
-                      <Icon className="w-6 h-6" />
+                      <Icon className="w-3.5 h-3.5 text-sky-300" />
+                      <span>{pillar.label}</span>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Primary & Secondary CTAs */}
+              <div className="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 max-w-md sm:max-w-none">
+                <a href="#services" className="w-full sm:w-auto">
+                  <Button variant="secondary" size="lg" fullWidth rightIcon={<ArrowRight className="w-4 h-4" />}>
+                    Explore Services
+                  </Button>
+                </a>
+                <Link to="/study-abroad" className="w-full sm:w-auto">
+                  <button className="w-full sm:w-auto px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm backdrop-blur-md transition-colors border border-white/20 flex items-center justify-center gap-2 cursor-pointer shadow-xs">
+                    <Compass className="w-4 h-4 text-sky-300" />
+                    <span>Start Your Journey</span>
+                  </button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 sm:space-y-24">
+          {/* ========================================================================= */}
+          {/* 2. SERVICES SECTION: 6 Multi-Service Cards                                */}
+          {/* ========================================================================= */}
+          <section id="services" className="scroll-mt-24">
+            <div className="max-w-2xl mb-8 sm:mb-12">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-[#0D2A68] text-xs font-bold uppercase tracking-wider mb-2">
+                <span>Multi-Service Directory</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
+                Everything you need for your journey
+              </h2>
+              <p className="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
+                From choosing your university to reaching your new campus, Edunomo brings your essential services together in one ecosystem.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+              {services.map((srv) => {
+                const Icon = srv.icon;
+                return (
+                  <Link
+                    key={srv.id}
+                    to={srv.path}
+                    className={`p-6 rounded-3xl border transition-all duration-200 group flex flex-col justify-between ${
+                      srv.isPrimary
+                        ? 'bg-gradient-to-br from-white via-white to-blue-50/70 border-blue-200 shadow-sm ring-1 ring-blue-600/10 hover:shadow-lg hover:border-blue-400'
+                        : 'bg-white border-slate-200/90 shadow-xs hover:shadow-lg hover:border-slate-300'
+                    }`}
+                  >
+                    <div>
+                      <div className="flex items-start justify-between mb-4">
+                        <div
+                          className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-105 shadow-2xs ${
+                            srv.isPrimary ? 'bg-[#0D2A68] text-white' : 'bg-slate-100 text-slate-700'
+                          }`}
+                        >
+                          <Icon className="w-6 h-6" />
+                        </div>
+
+                        <span
+                          className={`text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider ${
+                            srv.isPrimary
+                              ? 'bg-blue-100 text-blue-900 border border-blue-200'
+                              : 'bg-slate-100 text-slate-600 border border-slate-200'
+                          }`}
+                        >
+                          {srv.badge}
+                        </span>
+                      </div>
+
+                      <h3 className="text-lg font-bold text-slate-900 group-hover:text-[#0D2A68] transition-colors mb-2">
+                        {srv.title}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-slate-500 leading-relaxed mb-6">
+                        {srv.description}
+                      </p>
                     </div>
 
-                    <span
-                      className={`text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider ${
-                        srv.isPrimary
-                          ? 'bg-blue-100 text-blue-900 border border-blue-200'
-                          : 'bg-slate-100 text-slate-600 border border-slate-200'
-                      }`}
-                    >
-                      {srv.badge}
-                    </span>
-                  </div>
-
-                  <h3 className="text-base font-bold text-slate-900 group-hover:text-[#0D2A68] transition-colors mb-1">
-                    {srv.title}
-                  </h3>
-                  <p className="text-xs text-slate-500 leading-relaxed">
-                    {srv.description}
-                  </p>
-                </div>
-
-                <div className="pt-4 mt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold">
-                  <span
-                    className={
-                      srv.isPrimary ? 'text-[#0D2A68] font-bold' : 'text-slate-600'
-                    }
-                  >
-                    {srv.isPrimary ? 'Browse Universities' : 'Explore Preview'}
-                  </span>
-                  <ArrowRight className="w-4 h-4 text-slate-400 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </Link>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* SECTION 3: HOME - STUDY ABROAD HERO CTA (Section 7) */}
-      <div className="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-10 shadow-sm">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          <div className="lg:col-span-7 space-y-4">
-            <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0D2A68] bg-blue-50 px-3 py-1 rounded-full">
-              <GraduationCap className="w-3.5 h-3.5" />
-              <span>Primary Admissions Desk</span>
+                    <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold">
+                      <span className={srv.isPrimary ? 'text-[#0D2A68]' : 'text-slate-600 group-hover:text-[#0D2A68]'}>
+                        {srv.ctaText}
+                      </span>
+                      <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-[#0D2A68] group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight">
-              Find your path abroad.
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-lg">
-              Explore universities and courses that match your career goals. Filter programs by tuition fees, intakes, and countries with verified admission guidance.
-            </p>
+          </section>
 
-            <div className="pt-2 flex flex-col sm:flex-row items-center gap-3">
-              <Link to="/study-abroad" className="w-full sm:w-auto">
-                <Button variant="primary" size="lg" fullWidth rightIcon={<ArrowRight className="w-4 h-4" />}>
-                  Explore Study Abroad
-                </Button>
-              </Link>
-              <Link to="/applications" className="w-full sm:w-auto">
-                <Button variant="outline" size="lg" fullWidth>
-                  View My Applications
-                </Button>
-              </Link>
-            </div>
-          </div>
+          {/* ========================================================================= */}
+          {/* 3. WHY CHOOSE EDUNOMO                                                     */}
+          {/* ========================================================================= */}
+          <section className="bg-slate-900 text-white rounded-3xl p-8 sm:p-12 lg:p-16 shadow-md relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
 
-          <div className="lg:col-span-5 bg-slate-50 rounded-2xl p-5 border border-slate-200/80">
-            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3">
-              Application Milestones
-            </h4>
-            <div className="space-y-2 text-xs">
-              {[
-                { title: 'Search & Shortlist Programs', icon: CheckCircle2, done: true },
-                { title: 'Upload & Verify Transcripts', icon: CheckCircle2, done: true },
-                { title: 'Edunomo Admissions Review', icon: Clock, current: true },
-                { title: 'Direct College Submission', icon: ArrowRight },
-                { title: 'Offer Letter & CAS Decision', icon: Award },
-              ].map((item, idx) => (
-                <div
-                  key={idx}
-                  className={`flex items-center gap-2.5 p-2.5 rounded-xl border ${
-                    item.done
-                      ? 'bg-emerald-50/60 border-emerald-200 text-emerald-900'
-                      : item.current
-                      ? 'bg-blue-50 border-blue-200 text-blue-900 font-semibold'
-                      : 'bg-white border-slate-200/70 text-slate-500'
-                  }`}
-                >
-                  <item.icon className={`w-4 h-4 shrink-0 ${item.done ? 'text-emerald-600' : item.current ? 'text-blue-600' : 'text-slate-400'}`} />
-                  <span className="truncate">{item.title}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* SECTION 4: APPLICATION TRACKER */}
-      <div className="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-8 shadow-sm">
-        <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
-          <div>
-            <div className="flex items-center gap-2">
-              <Compass className="w-5 h-5 text-[#0D2A68]" />
-              <h2 className="text-lg sm:text-xl font-bold text-slate-900">
-                Application Tracker
+            <div className="max-w-2xl mb-10 sm:mb-12 relative z-10">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold text-sky-300 mb-3 backdrop-blur-md">
+                <ShieldCheck className="w-3.5 h-3.5" />
+                <span>Integrated Reliability</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-white mb-3">
+                Why choose Edunomo?
               </h2>
-            </div>
-            <p className="text-xs text-slate-500 mt-0.5">
-              Live progression of your active study abroad applications and steps
-            </p>
-          </div>
-          <Link
-            to="/applications"
-            className="text-xs font-bold text-blue-700 hover:text-blue-900 flex items-center gap-1"
-          >
-            <span>View Applications</span>
-            <ChevronRight className="w-3.5 h-3.5" />
-          </Link>
-        </div>
-
-        {primaryApplication ? (
-          <div>
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-200 mb-6">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-slate-200 overflow-hidden shrink-0">
-                  <img src={primaryApplication.collegeLogo} alt={primaryApplication.collegeName} className="w-full h-full object-cover" />
-                </div>
-                <div>
-                  <span className="text-[10px] uppercase font-bold text-slate-500">
-                    Study Abroad • Application #{primaryApplication.id}
-                  </span>
-                  <h4 className="text-sm font-bold text-slate-900">
-                    {primaryApplication.courseTitle}
-                  </h4>
-                  <p className="text-xs text-slate-500">
-                    {primaryApplication.collegeName} • {primaryApplication.intake}
-                  </p>
-                </div>
-              </div>
-              <StatusBadge status={primaryApplication.status} size="sm" />
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                We combine higher education admissions with end-to-end travel, accommodation and transit logistics for a smooth transition overseas.
+              </p>
             </div>
 
-            {/* Stepper Progress Bar: Fluid mobile scroll strip and desktop grid */}
-            <div className="flex sm:grid sm:grid-cols-5 gap-2 overflow-x-auto no-scrollbar pb-1">
-              {[
-                { label: 'Application Submitted', state: 'done' },
-                { label: 'Documents Verified', state: 'done' },
-                {
-                  label: primaryApplication.status === 'Documents Required' ? 'Documents Required' : 'Under Review',
-                  state: primaryApplication.status === 'Documents Required' ? 'warning' : 'current'
-                },
-                { label: 'Submitted to College', state: 'upcoming' },
-                { label: 'College Decision', state: 'upcoming' },
-              ].map((step, idx) => (
-                <div
-                  key={idx}
-                  className={`p-2.5 sm:p-3 rounded-xl border flex flex-col justify-between gap-2 min-w-[130px] sm:min-w-0 shrink-0 sm:shrink ${
-                    step.state === 'done'
-                      ? 'bg-emerald-50 border-emerald-200 text-emerald-900'
-                      : step.state === 'current'
-                      ? 'bg-blue-50 border-blue-300 text-blue-900 font-semibold'
-                      : step.state === 'warning'
-                      ? 'bg-amber-50 border-amber-300 text-amber-900 font-bold'
-                      : 'bg-slate-50 border-slate-200 text-slate-400'
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-bold uppercase tracking-wider">Step {idx + 1}</span>
-                    {step.state === 'done' && <Check className="w-3.5 h-3.5 text-emerald-600" />}
-                    {step.state === 'current' && <Clock className="w-3.5 h-3.5 text-blue-600 animate-pulse" />}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 relative z-10">
+              {whyChooseEdunomo.map((item, idx) => {
+                const Icon = item.icon;
+                return (
+                  <div
+                    key={idx}
+                    className="p-5 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/[0.08] transition-colors flex items-start gap-4"
+                  >
+                    <div className="w-10 h-10 rounded-xl bg-blue-500/20 text-sky-300 flex items-center justify-center shrink-0 mt-0.5">
+                      <Icon className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-white text-sm sm:text-base mb-1">
+                        {item.title}
+                      </h4>
+                      <p className="text-xs text-slate-300 leading-relaxed">
+                        {item.desc}
+                      </p>
+                    </div>
                   </div>
-                  <span className="text-[11px] sm:text-xs font-semibold leading-tight">{step.label}</span>
-                </div>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* ========================================================================= */}
+          {/* 4. HOW IT WORKS: Simple 4-Step Process                                    */}
+          {/* ========================================================================= */}
+          <section>
+            <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-[#0D2A68] text-xs font-bold uppercase tracking-wider mb-2">
+                <span>The Edunomo Flow</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
+                How It Works
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-600 mt-2">
+                A seamless four-stage progression from your home country to your overseas lecture hall.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {howItWorksSteps.map((step, idx) => {
+                const Icon = step.icon;
+                return (
+                  <div
+                    key={idx}
+                    className="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-xs relative flex flex-col justify-between group hover:shadow-md transition-all"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between mb-4">
+                        <span className="font-black text-2xl text-blue-200 group-hover:text-[#0D2A68] transition-colors">
+                          {step.step}
+                        </span>
+                        <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#0D2A68] flex items-center justify-center">
+                          <Icon className="w-5 h-5" />
+                        </div>
+                      </div>
+                      <h3 className="text-base font-bold text-slate-900 mb-2">
+                        {step.title}
+                      </h3>
+                      <p className="text-xs text-slate-500 leading-relaxed">
+                        {step.desc}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* ========================================================================= */}
+          {/* 5. POPULAR DESTINATIONS: Global hubs                                     */}
+          {/* ========================================================================= */}
+          <section>
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
+                  Popular Study Destinations
+                </h2>
+                <p className="text-xs text-slate-500 mt-1">
+                  Global hubs offering world-ranked universities and post-study work authorization
+                </p>
+              </div>
+              <Link
+                to="/study-abroad"
+                className="text-xs font-bold text-blue-700 hover:text-blue-900 flex items-center gap-1 shrink-0"
+              >
+                <span>View All</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {DESTINATIONS.map((dest: Destination) => (
+                <Link
+                  key={dest.id}
+                  to={`/study-abroad?country=${encodeURIComponent(dest.country)}`}
+                  className="bg-white rounded-2xl border border-slate-200/90 overflow-hidden shadow-xs hover:shadow-md transition-all group flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="relative h-44 w-full overflow-hidden bg-slate-900">
+                      <img
+                        src={dest.image}
+                        alt={dest.country}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 opacity-90"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
+                      
+                      <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-bold text-slate-900 flex items-center gap-1.5">
+                        <span className="text-base">{dest.flag}</span>
+                        <span>{dest.country}</span>
+                      </div>
+
+                      <div className="absolute bottom-3 left-3 right-3 text-white text-xs flex items-center justify-between">
+                        <span className="font-semibold">{dest.collegesCount} Partner Colleges</span>
+                        <span className="text-sky-300 font-medium">{dest.coursesCount}+ Courses</span>
+                      </div>
+                    </div>
+
+                    <div className="p-4">
+                      <p className="text-xs text-slate-600 line-clamp-2 mb-3 leading-relaxed">
+                        {dest.description}
+                      </p>
+
+                      <div className="flex items-center justify-between text-xs p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+                        <span className="text-slate-500">Starting Tuition</span>
+                        <span className="font-bold text-[#0D2A68]">{dest.startingFeeInr}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-4 pt-0 flex items-center justify-between text-xs font-semibold text-blue-700">
+                    <span>View {dest.country} Universities</span>
+                    <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </Link>
               ))}
             </div>
+          </section>
 
-            <div className="mt-5 text-right">
-              <Link to={`/applications/${primaryApplication.id}`}>
-                <Button variant="primary" size="sm" rightIcon={<ArrowRight className="w-3.5 h-3.5" />}>
-                  View Timeline & Uploads
-                </Button>
-              </Link>
-            </div>
-          </div>
-        ) : (
-          <div className="text-center py-8">
-            <h3 className="text-base font-bold text-slate-900 mb-1">Your journey starts here</h3>
-            <p className="text-xs text-slate-500 max-w-sm mx-auto mb-5">
-              Start your Study Abroad application to track everything in one place.
-            </p>
-            <Link to="/study-abroad">
-              <Button variant="primary" size="md">
-                Start Application
-              </Button>
-            </Link>
-          </div>
-        )}
-      </div>
+          {/* ========================================================================= */}
+          {/* 6. STUDY ABROAD FEATURE: Deep-dive on primary service                    */}
+          {/* ========================================================================= */}
+          <section className="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-10 lg:p-12 shadow-sm">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              <div className="lg:col-span-7 space-y-4">
+                <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0D2A68] bg-blue-50 px-3 py-1 rounded-full">
+                  <GraduationCap className="w-3.5 h-3.5" />
+                  <span>Primary Admissions Desk</span>
+                </div>
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+                  Find your path abroad
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-xl">
+                  Edunomo provides a verified directory of programs across top study destinations. Filter courses by intake deadlines, annual tuition, and country requirements.
+                </p>
 
-      {/* SECTION 5: POPULAR DESTINATIONS (Section 9) */}
-      <div>
-        <div className="flex items-center justify-between mb-5">
-          <div>
-            <h2 className="text-lg sm:text-xl font-bold text-slate-900">
-              Popular Study Destinations
-            </h2>
-            <p className="text-xs text-slate-500 mt-0.5">
-              Global hubs offering world-ranked universities and post-study work authorization
-            </p>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {DESTINATIONS.map((dest: Destination) => (
-            <Link
-              key={dest.id}
-              to={`/study-abroad?country=${encodeURIComponent(dest.country)}`}
-              className="bg-white rounded-2xl border border-slate-200/90 overflow-hidden shadow-xs hover:shadow-md transition-all group flex flex-col justify-between"
-            >
-              <div>
-                <div className="relative h-40 w-full overflow-hidden bg-slate-900">
-                  <img
-                    src={dest.image}
-                    alt={dest.country}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 opacity-90"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
-                  
-                  <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                    <span className="text-base">{dest.flag}</span>
-                    <span>{dest.country}</span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2 text-xs font-semibold text-slate-700">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span>Discover 200+ partner universities</span>
                   </div>
-
-                  <div className="absolute bottom-3 left-3 right-3 text-white text-xs flex items-center justify-between">
-                    <span className="font-semibold">{dest.collegesCount} Partner Colleges</span>
-                    <span className="text-sky-300 font-medium">{dest.coursesCount}+ Courses</span>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span>Explore 500+ undergraduate & masters</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span>Compare global tuition & living fees</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span>Apply directly with verified documents</span>
                   </div>
                 </div>
 
-                <div className="p-4">
-                  <p className="text-xs text-slate-600 line-clamp-2 mb-3 leading-relaxed">
-                    {dest.description}
-                  </p>
+                <div className="pt-3">
+                  <Link to="/study-abroad">
+                    <Button variant="primary" size="lg" rightIcon={<ArrowRight className="w-4 h-4" />}>
+                      Explore Study Abroad
+                    </Button>
+                  </Link>
+                </div>
+              </div>
 
-                  <div className="flex items-center justify-between text-xs p-2.5 rounded-xl bg-slate-50 border border-slate-100">
-                    <span className="text-slate-500">Starting Tuition</span>
-                    <span className="font-bold text-[#0D2A68]">{dest.startingFeeInr}</span>
+              <div className="lg:col-span-5 bg-gradient-to-br from-slate-50 to-blue-50/50 rounded-2xl p-6 border border-slate-200">
+                <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-4">
+                  Admissions Milestone Checklist
+                </h4>
+                <div className="space-y-2.5 text-xs">
+                  {[
+                    { step: '1', title: 'Search & Shortlist Programs', desc: 'Browse degree offerings and filter requirements.' },
+                    { step: '2', title: 'Upload & Verify Transcripts', desc: 'Pre-check passport and mark sheets.' },
+                    { step: '3', title: 'Edunomo Admissions Review', desc: 'Expert verification before university dispatch.' },
+                    { step: '4', title: 'Direct College Submission', desc: 'Immediate formal lodgement with admissions teams.' },
+                    { step: '5', title: 'Offer Letter & CAS Decision', desc: 'Enrolment confirmation and visa package release.' },
+                  ].map((item, idx) => (
+                    <div key={idx} className="p-2.5 rounded-xl bg-white border border-slate-200/80 flex items-start gap-3">
+                      <span className="w-5 h-5 rounded-full bg-blue-100 text-[#0D2A68] text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">
+                        {item.step}
+                      </span>
+                      <div>
+                        <span className="font-bold text-slate-800 block">{item.title}</span>
+                        <span className="text-[11px] text-slate-500">{item.desc}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* ========================================================================= */}
+          {/* 7. CAMPUS & AIRPORT MOBILITY SECTION: Cab Feature                         */}
+          {/* ========================================================================= */}
+          <section className="bg-gradient-to-r from-[#0D2A68] via-[#0B2558] to-[#1E3A8A] text-white rounded-3xl p-8 sm:p-12 shadow-md relative overflow-hidden">
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              <div className="lg:col-span-8 space-y-4">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-bold text-sky-300 border border-white/10">
+                  <Car className="w-3.5 h-3.5" />
+                  <span>Campus & Airport Mobility</span>
+                </div>
+
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight">
+                  From the airport to your campus
+                </h2>
+
+                <p className="text-xs sm:text-sm text-slate-200 leading-relaxed max-w-xl">
+                  Arrive with peace of mind. Edunomo provides licensed chauffeurs, terminal meet-and-greet services, and direct campus drop-offs with transparent student fares.
+                </p>
+
+                <div className="flex flex-wrap gap-2 text-xs text-sky-200 font-medium pt-1">
+                  <span>• Airport Transfers</span>
+                  <span>• Student Rides</span>
+                  <span>• Campus Mobility</span>
+                  <span>• Live Tracking (App-First)</span>
+                </div>
+
+                <div className="pt-3 flex flex-wrap items-center gap-3">
+                  <Link to="/cabs">
+                    <Button variant="secondary" size="md" rightIcon={<ArrowRight className="w-4 h-4" />}>
+                      Explore Cab Services
+                    </Button>
+                  </Link>
+                  <a href="#download-app">
+                    <Button variant="outline" size="md" className="text-white border-white/30 hover:bg-white/10">
+                      Get the App
+                    </Button>
+                  </a>
+                </div>
+              </div>
+
+              <div className="lg:col-span-4 flex justify-center lg:justify-end">
+                <div className="bg-white/10 backdrop-blur-md p-5 rounded-3xl border border-white/20 text-center max-w-xs w-full space-y-3">
+                  <div className="w-12 h-12 rounded-2xl bg-white text-[#0D2A68] flex items-center justify-center mx-auto shadow-sm">
+                    <Car className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h4 className="font-extrabold text-sm text-white">Airport Transit Guarantee</h4>
+                    <p className="text-xs text-slate-300 mt-0.5">Terminal Meet & Greet • Driver Dispatch • Fixed Student Fares</p>
+                  </div>
+                  <div className="pt-2 border-t border-white/10 text-[11px] text-sky-200">
+                    Heathrow • Pearson • Tullamarine • Frankfurt
                   </div>
                 </div>
               </div>
-
-              <div className="p-4 pt-0 flex items-center justify-between text-xs font-semibold text-blue-700">
-                <span>View {dest.country} Universities</span>
-                <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
-
-      {/* SECTION: CAB APP HIGHLIGHT */}
-      <div className="bg-gradient-to-r from-[#0D2A68] via-[#0B2558] to-[#1E3A8A] text-white rounded-3xl p-6 sm:p-10 shadow-md border border-blue-900/40 relative overflow-hidden">
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          <div className="lg:col-span-8 space-y-4">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-bold text-sky-300 border border-white/10">
-              <Car className="w-3.5 h-3.5" />
-              <span>Campus & Airport Mobility</span>
             </div>
+          </section>
 
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight">
-              Need a ride when you arrive?
-            </h2>
+          {/* ========================================================================= */}
+          {/* 8. APP DOWNLOAD PROMOTION                                                 */}
+          {/* ========================================================================= */}
+          <section>
+            <AppDownloadBanner
+              title="Your Edunomo journey, wherever you go."
+              subtitle="Coordinate airport transfers, book rides with live tracking, and view verified campus pickups directly from the mobile app."
+              variant="card"
+              showQr={true}
+            />
+          </section>
 
-            <p className="text-xs sm:text-sm text-slate-200 leading-relaxed max-w-xl">
-              Book airport and university transfers through the Edunomo mobile app.
-            </p>
-
-            <p className="text-xs text-sky-200 font-semibold">
-              Download the Edunomo app to book your ride.
-            </p>
-
-            <div className="pt-2 flex flex-wrap items-center gap-3">
-              <Link to="/cabs#download-app">
-                <Button variant="secondary" size="md" rightIcon={<Smartphone className="w-4 h-4" />}>
-                  Download App
-                </Button>
-              </Link>
-              <Link to="/cabs">
-                <Button variant="outline" size="md" className="text-white border-white/30 hover:bg-white/10">
-                  How Cab Services Work
-                </Button>
-              </Link>
-            </div>
-          </div>
-
-          <div className="lg:col-span-4 flex justify-center lg:justify-end">
-            <div className="bg-white/10 backdrop-blur-md p-5 rounded-3xl border border-white/20 text-center max-w-xs w-full space-y-3">
-              <div className="w-12 h-12 rounded-2xl bg-white text-[#0D2A68] flex items-center justify-center mx-auto shadow-sm">
-                <Smartphone className="w-6 h-6" />
-              </div>
-              <div>
-                <h4 className="font-extrabold text-sm text-white">Edunomo Mobile App</h4>
-                <p className="text-xs text-slate-300 mt-0.5">Airport Transfers • Student Rides • Live Tracking</p>
-              </div>
-              <div className="flex justify-center gap-2 pt-1">
-                <span className="text-[10px] font-bold bg-black/40 text-white px-2.5 py-1 rounded-lg border border-white/10">
-                  Google Play
-                </span>
-                <span className="text-[10px] font-bold bg-black/40 text-white px-2.5 py-1 rounded-lg border border-white/10">
-                  App Store
-                </span>
+          {/* ========================================================================= */}
+          {/* 9. FINAL CALL TO ACTION                                                   */}
+          {/* ========================================================================= */}
+          <section className="bg-gradient-to-br from-slate-900 to-[#0D2A68] rounded-3xl p-8 sm:p-14 text-center text-white relative overflow-hidden shadow-lg">
+            <div className="relative z-10 max-w-2xl mx-auto space-y-4">
+              <h2 className="text-2xl sm:text-4xl font-black tracking-tight">
+                Ready to start your journey?
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-300 max-w-lg mx-auto leading-relaxed">
+                Explore education, travel and mobility services with Edunomo.
+              </p>
+              <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
+                <a href="#services">
+                  <Button variant="secondary" size="lg">
+                    Explore Services
+                  </Button>
+                </a>
+                <Link to="/signup">
+                  <button className="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm backdrop-blur-md transition-colors border border-white/20 flex items-center gap-2 cursor-pointer">
+                    <span>Create Account</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </Link>
               </div>
             </div>
-          </div>
+          </section>
         </div>
       </div>
-
-      {/* SECTION 6: TRUST SECTION (Section 10) */}
-      <div className="bg-slate-900 text-white rounded-3xl p-8 sm:p-10 shadow-md">
-        <div className="max-w-xl mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold text-sky-300 mb-3">
-            <ShieldCheck className="w-3.5 h-3.5" />
-            <span>Admissions & Mobility Guarantee</span>
-          </div>
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight mb-2">
-            Everything you need for your journey.
-          </h2>
-          <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-            From verified institutional applications and visa documentation to seamless airport transit and accommodation.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
-          {[
-            {
-              title: 'Study Abroad Guidance',
-              desc: 'Official direct admissions partnership with verified global universities.',
-              icon: GraduationCap,
-            },
-            {
-              title: 'Verified Documents',
-              desc: 'Rigorous admissions desk pre-check to eliminate insufficient paperwork.',
-              icon: FileText,
-            },
-            {
-              title: 'Travel Support',
-              desc: 'Discounted international student airfares with 46kg luggage allowance.',
-              icon: Plane,
-            },
-            {
-              title: 'Accommodation',
-              desc: 'Furnished student residences within walking distance of global campuses.',
-              icon: Building2,
-            },
-            {
-              title: 'Cab Services',
-              desc: 'Meet-and-greet airport chauffeurs with fixed student pricing.',
-              icon: Car,
-            },
-            {
-              title: 'Education Support',
-              desc: 'Certified mentors for IELTS, GRE, and prerequisite curriculum mastery.',
-              icon: BookOpen,
-            },
-          ].map((item, i) => {
-            const Icon = item.icon;
-            return (
-              <div key={i} className="p-4 rounded-2xl bg-white/5 border border-white/10 flex items-start gap-3">
-                <div className="w-9 h-9 rounded-xl bg-blue-500/20 text-sky-300 flex items-center justify-center shrink-0">
-                  <Icon className="w-4 h-4" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-white text-sm mb-1">{item.title}</h4>
-                  <p className="text-slate-400 leading-relaxed">{item.desc}</p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </div>
+    </PageContainer>
   );
 };
+
+export default Home;

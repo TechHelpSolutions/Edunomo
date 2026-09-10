@@ -35,25 +35,25 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Quick Services */}
+          {/* Services Column */}
           <div>
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4">Core Services</h4>
+            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4">Services</h4>
             <ul className="space-y-2.5 text-xs sm:text-sm">
               <li>
-                <Link to="/study-abroad" className="hover:text-white transition-colors flex items-center gap-2">
+                <Link to="/study-abroad" className="hover:text-white transition-colors flex items-center gap-1.5">
                   <GraduationCap className="w-3.5 h-3.5 text-blue-400" />
-                  Study Abroad (Primary)
+                  Study Abroad
                 </Link>
               </li>
               <li>
-                <Link to="/visa" className="hover:text-white transition-colors flex items-center gap-2">
+                <Link to="/visa" className="hover:text-white transition-colors flex items-center gap-1.5">
                   <ShieldCheck className="w-3.5 h-3.5 text-indigo-400" />
-                  Visa Services
+                  Visa Assistance
                 </Link>
               </li>
               <li>
                 <Link to="/flights" className="hover:text-white transition-colors">
-                  Flight Booking
+                  Flights
                 </Link>
               </li>
               <li>
@@ -63,7 +63,7 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <Link to="/cabs" className="hover:text-white transition-colors">
-                  Airport Cabs & Transit
+                  Cabs & Transfers
                 </Link>
               </li>
               <li>
@@ -74,50 +74,67 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Customer Hub */}
+          {/* Company Column */}
           <div>
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4">Customer Hub</h4>
+            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4">Company</h4>
             <ul className="space-y-2.5 text-xs sm:text-sm">
               <li>
-                <Link to="/applications" className="hover:text-white transition-colors">
-                  Track Applications
-                </Link>
-              </li>
-              <li>
-                <Link to="/profile" className="hover:text-white transition-colors">
-                  Customer Profile
-                </Link>
-              </li>
-              <li>
-                <Link to="/notifications" className="hover:text-white transition-colors">
-                  Notification Center
+                <Link to="/explore" className="hover:text-white transition-colors">
+                  About Edunomo
                 </Link>
               </li>
               <li>
                 <Link to="/explore" className="hover:text-white transition-colors">
-                  Service Directory
+                  Contact
+                </Link>
+              </li>
+              <li>
+                <Link to="/partner/login" className="hover:text-white transition-colors text-blue-300 font-medium">
+                  Become a Partner
+                </Link>
+              </li>
+              <li>
+                <Link to="/partner/login" className="hover:text-white transition-colors text-slate-400 text-xs">
+                  Partner Portal (Agent / College / Tutor / Hotel)
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Trust & Legal */}
+          {/* Account & Support Column */}
           <div>
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4">Portals & Ecosystem</h4>
-            <div className="pt-1 flex flex-col gap-2 text-xs text-slate-400">
-              <Link to="/partner/login" className="hover:text-white transition-colors flex items-center gap-1.5 font-medium text-blue-300">
-                <span>Partner Portal</span>
-                <span className="text-[10px] bg-blue-900/60 px-1.5 py-0.5 rounded text-blue-200 border border-blue-700/40">Agent/College/Hotel/Tutor</span>
+            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4">Account</h4>
+            <ul className="space-y-2.5 text-xs sm:text-sm">
+              <li>
+                <Link to="/login" className="hover:text-white transition-colors">
+                  Login
+                </Link>
+              </li>
+              <li>
+                <Link to="/signup" className="hover:text-white transition-colors">
+                  Sign Up
+                </Link>
+              </li>
+              <li>
+                <Link to="/dashboard" className="hover:text-white transition-colors">
+                  Student Dashboard
+                </Link>
+              </li>
+              <li>
+                <Link to="/applications" className="hover:text-white transition-colors">
+                  My Applications
+                </Link>
+              </li>
+            </ul>
+
+            <h4 className="text-xs font-bold text-white uppercase tracking-wider mt-6 mb-3">Support</h4>
+            <div className="flex flex-col gap-1.5 text-xs text-slate-400">
+              <span className="hover:text-white cursor-pointer">Help & FAQ</span>
+              <span className="hover:text-white cursor-pointer">Terms & Conditions</span>
+              <span className="hover:text-white cursor-pointer">Privacy Policy</span>
+              <Link to="/admin/login" className="hover:text-white transition-colors text-indigo-300 mt-1">
+                Admin Console
               </Link>
-              <Link to="/admin/login" className="hover:text-white transition-colors flex items-center gap-1.5 font-medium text-indigo-300">
-                <span>Admin Console</span>
-                <span className="text-[10px] bg-indigo-900/60 px-1.5 py-0.5 rounded text-indigo-200 border border-indigo-700/40">Enterprise</span>
-              </Link>
-              <div className="pt-2 border-t border-slate-800 flex flex-col gap-1.5 text-xs text-slate-400">
-                <span className="hover:text-white cursor-pointer">Terms & Conditions</span>
-                <span className="hover:text-white cursor-pointer">Data Privacy Policy</span>
-                <span className="hover:text-white cursor-pointer">Student Security Guarantee</span>
-              </div>
             </div>
           </div>
         </div>

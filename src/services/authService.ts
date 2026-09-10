@@ -83,9 +83,9 @@ export const authService = {
       email: sessionData.email || profile.email,
       name: sessionData.name || profile.fullName,
       id: sessionData.id || profile.id,
-      role: sessionData.role || 'CUSTOMER',
-      displayRole: sessionData.displayRole || 'Customer',
-      dashboardUrl: sessionData.dashboardUrl || '/',
+      role: sessionData.role || 'STUDENT',
+      displayRole: sessionData.displayRole || 'Student',
+      dashboardUrl: sessionData.dashboardUrl || '/dashboard',
       phone: sessionData.phone || profile.phone,
     };
     storage.set(storage.KEYS.AUTH_USER, newSession);
@@ -100,12 +100,12 @@ export const authService = {
     });
     const newSession: AuthSessionUser = {
       loggedIn: true,
-      id: 'cust_' + Date.now(),
+      id: 'stud_' + Date.now(),
       email: data.email,
       name: data.fullName,
-      role: 'CUSTOMER',
-      displayRole: 'Customer',
-      dashboardUrl: '/',
+      role: 'STUDENT',
+      displayRole: 'Student',
+      dashboardUrl: '/dashboard',
       phone: data.phone,
     };
     storage.set(storage.KEYS.AUTH_USER, newSession);

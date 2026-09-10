@@ -1,5 +1,6 @@
 export type DemoUserRole =
   | 'CUSTOMER'
+  | 'STUDENT'
   | 'AGENT'
   | 'HOTEL_PARTNER'
   | 'TUTOR_PARTNER'
@@ -25,6 +26,55 @@ export interface DemoAccount {
 
 export const COMMON_DEMO_PASSWORD = 'demo123';
 
+export function formatRoleLabel(role?: string): string {
+  if (!role) return 'Student';
+  const r = role.toUpperCase();
+  switch (r) {
+    case 'STUDENT':
+    case 'CUSTOMER':
+      return 'Student';
+    case 'AGENT':
+      return 'Partner / Agent Partner';
+    case 'DRIVER':
+      return 'Driver';
+    case 'TUTOR':
+    case 'TUTOR_PARTNER':
+      return 'Tutor';
+    case 'HOTEL_PARTNER':
+      return 'Hotel Partner';
+    case 'COLLEGE_PARTNER':
+      return 'College Partner';
+    case 'ADMIN':
+      return 'Admin';
+    default:
+      return role.charAt(0).toUpperCase() + role.slice(1);
+  }
+}
+
+export function getRoleDashboardUrl(role?: string): string {
+  if (!role) return '/dashboard';
+  const r = role.toUpperCase();
+  switch (r) {
+    case 'STUDENT':
+    case 'CUSTOMER':
+      return '/dashboard';
+    case 'AGENT':
+      return '/partner/agent/dashboard';
+    case 'COLLEGE_PARTNER':
+      return '/partner/college/dashboard';
+    case 'HOTEL_PARTNER':
+      return '/partner/hotel/dashboard';
+    case 'TUTOR_PARTNER':
+      return '/partner/tutor/dashboard';
+    case 'DRIVER':
+      return '/cabs';
+    case 'ADMIN':
+      return '/admin/dashboard';
+    default:
+      return '/dashboard';
+  }
+}
+
 export const DEMO_ACCOUNTS: DemoAccount[] = [
   {
     id: 'usr_demo_cust',
@@ -32,11 +82,11 @@ export const DEMO_ACCOUNTS: DemoAccount[] = [
     aliases: ['student.demo@edunomo.in', 'customer@edunomo.in'],
     password: COMMON_DEMO_PASSWORD,
     name: 'Rahul Sharma',
-    role: 'CUSTOMER',
-    displayRole: 'Customer',
-    badge: 'Customer Account',
-    targetRoute: '/',
-    description: 'General customer account for hotels, flights, cabs, tutors, and study abroad',
+    role: 'STUDENT',
+    displayRole: 'Student',
+    badge: 'Student Account',
+    targetRoute: '/dashboard',
+    description: 'Student account managing university applications, documents, and mobility services',
     phone: '+91 98765 43210',
   },
   {

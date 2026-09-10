@@ -63,6 +63,8 @@ export const LoginPage: React.FC = () => {
 
   const getRoleIcon = (role: string) => {
     switch (role) {
+      case 'STUDENT':
+        return <GraduationCap className="w-4 h-4 text-blue-600" />;
       case 'CUSTOMER':
         return <User className="w-4 h-4 text-sky-600" />;
       case 'AGENT':

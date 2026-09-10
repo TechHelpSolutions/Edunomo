@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { UserProfile } from '../types';
 import { authService, AuthSessionUser } from '../services/authService';
-import { findDemoAccount, getDemoAccountByRole, DemoUserRole } from '../data/demoAccounts';
+import { findDemoAccount, getDemoAccountByRole, DemoUserRole, formatRoleLabel, getRoleDashboardUrl } from '../data/demoAccounts';
 import { storage } from '../services/storage';
 
 export interface CurrentUser {
@@ -46,14 +46,17 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 function mapSessionToCurrentUser(session: AuthSessionUser): CurrentUser | null {
   if (!session || !session.loggedIn) return null;
+  const role = (session.role as DemoUserRole) || 'STUDENT';
+  const isStudent = role === 'STUDENT' || role === 'CUSTOMER';
+  const displayRole = formatRoleLabel(session.displayRole || session.role || 'STUDENT');
   return {
-    id: session.id || 'usr_cust',
+    id: session.id || 'usr_stud',
     name: session.name || 'User',
     email: session.email || '',
-    role: (session.role as DemoUserRole) || 'CUSTOMER',
-    displayRole: session.displayRole || 'Customer',
-    badge: (session.role as DemoUserRole) === 'CUSTOMER' ? 'Customer Account' : (session.displayRole || 'User'),
-    dashboardUrl: session.dashboardUrl || '/',
+    role,
+    displayRole,
+    badge: isStudent ? 'Student Account' : (session.displayRole || 'User'),
+    dashboardUrl: session.dashboardUrl || getRoleDashboardUrl(role),
     phone: session.phone,
   };
 }
@@ -101,18 +104,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const demo = findDemoAccount(trimmedEmail);
 
     let sessionUser: CurrentUser;
-    let targetRoute = '/';
+    let targetRoute = '/dashboard';
 
     if (demo) {
-      targetRoute = demo.targetRoute;
+      targetRoute = demo.targetRoute || getRoleDashboardUrl(demo.role);
       sessionUser = {
         id: demo.id,
         name: demo.name,
         email: demo.email,
         role: demo.role,
-        displayRole: demo.displayRole,
+        displayRole: demo.displayRole || formatRoleLabel(demo.role),
         badge: demo.badge,
-        dashboardUrl: demo.targetRoute,
+        dashboardUrl: targetRoute,
         phone: demo.phone,
       };
 
@@ -136,16 +139,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         storage.set(STORAGE_ADMIN_SESSION, { loggedIn: false });
       }
     } else {
-      // General Customer login fallback
-      targetRoute = '/';
+      // General Student login fallback
+      targetRoute = '/dashboard';
       sessionUser = {
-        id: 'cust_' + Date.now(),
-        name: trimmedEmail.split('@')[0] || 'Customer',
+        id: 'stud_' + Date.now(),
+        name: trimmedEmail.split('@')[0] || 'Student',
         email: trimmedEmail,
-        role: 'CUSTOMER',
-        displayRole: 'Customer',
-        badge: 'Customer Account',
-        dashboardUrl: '/',
+        role: 'STUDENT',
+        displayRole: 'Student',
+        badge: 'Student Account',
+        dashboardUrl: '/dashboard',
       };
       storage.set(STORAGE_PARTNER_SESSION, { loggedIn: false });
       storage.set(STORAGE_ADMIN_SESSION, { loggedIn: false });
@@ -171,14 +174,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signup = async (data: { fullName: string; email: string; phone: string; password?: string }): Promise<LoginResult> => {
     const newProfile = authService.signup(data);
     const sessionUser: CurrentUser = {
-      id: 'cust_' + Date.now(),
+      id: 'stud_' + Date.now(),
       name: data.fullName,
       email: data.email,
       phone: data.phone,
-      role: 'CUSTOMER',
-      displayRole: 'Customer',
-      badge: 'Customer Account',
-      dashboardUrl: '/',
+      role: 'STUDENT',
+      displayRole: 'Student',
+      badge: 'Student Account',
+      dashboardUrl: '/dashboard',
     };
 
     authService.login(sessionUser);
@@ -194,7 +197,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     return {
       success: true,
-      redirectUrl: '/',
+      redirectUrl: '/dashboard',
       user: sessionUser,
     };
   };

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Sparkles, X, ChevronUp, ChevronDown, UserCheck, ShieldCheck, User, Building2, Hotel, BookOpen, Car } from 'lucide-react';
+import { Sparkles, X, ChevronUp, ChevronDown, UserCheck, ShieldCheck, User, Building2, Hotel, BookOpen, Car, GraduationCap } from 'lucide-react';
 import { DEMO_ACCOUNTS, DemoAccount, COMMON_DEMO_PASSWORD } from '../../data/demoAccounts';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
@@ -20,6 +20,8 @@ export const DemoSwitcher: React.FC = () => {
 
   const getRoleIcon = (role: string) => {
     switch (role) {
+      case 'STUDENT':
+        return <GraduationCap className="w-4 h-4 text-blue-600" />;
       case 'CUSTOMER':
         return <User className="w-4 h-4 text-sky-600" />;
       case 'AGENT':

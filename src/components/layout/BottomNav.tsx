@@ -1,22 +1,33 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Home, Compass, FileText, Bell, User } from 'lucide-react';
+import { Home, Compass, FileText, Bell, User, LayoutDashboard, GraduationCap } from 'lucide-react';
 import { notificationService } from '../../services/notificationService';
+import { useAuth } from '../../context/AuthContext';
 
 export const BottomNav: React.FC = () => {
+  const { isAuthenticated } = useAuth();
   const unreadCount = notificationService.getUnreadCount();
 
-  const navItems = [
+  const publicNavItems = [
     { label: 'Home', path: '/', icon: Home, badge: null },
-    { label: 'Explore', path: '/explore', icon: Compass, badge: null },
+    { label: 'Study Abroad', path: '/study-abroad', icon: GraduationCap, badge: null },
+    { label: 'Services', path: '/explore', icon: Compass, badge: null },
+    { label: 'Login', path: '/login', icon: User, badge: null },
+  ];
+
+  const authenticatedNavItems = [
+    { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard, badge: null },
+    { label: 'Study Abroad', path: '/study-abroad', icon: GraduationCap, badge: null },
     { label: 'Applications', path: '/applications', icon: FileText, badge: null },
     { label: 'Notifications', path: '/notifications', icon: Bell, badge: unreadCount > 0 ? unreadCount : null },
     { label: 'Profile', path: '/profile', icon: User, badge: null },
   ];
 
+  const navItems = isAuthenticated ? authenticatedNavItems : publicNavItems;
+
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200/90 lg:hidden shadow-lg pb-safe">
-      <div className="max-w-md mx-auto grid grid-cols-5 h-16">
+      <div className={`max-w-md mx-auto grid ${isAuthenticated ? 'grid-cols-5' : 'grid-cols-4'} h-16`}>
         {navItems.map((item) => {
           const Icon = item.icon;
           return (

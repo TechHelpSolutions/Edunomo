@@ -16,6 +16,7 @@ import { DemoSwitcher } from './components/common/DemoSwitcher';
 
 // Student Pages
 import { Home } from './pages/Home';
+import { Dashboard } from './pages/Dashboard';
 import { Explore } from './pages/Explore';
 import { Notifications } from './pages/Notifications';
 import { Profile } from './pages/Profile';
@@ -116,11 +117,12 @@ export function App() {
                   <Route path="/signup" element={<SignupPage />} />
 
                   {/* Public Browsing Routes */}
-                  <Route path="/" element={<StudentRoute><Home /></StudentRoute>} />
+                  <Route path="/" element={<Home />} />
                   <Route path="/explore" element={<StudentRoute><Explore /></StudentRoute>} />
 
-                  {/* Protected Customer Routes */}
-                  <Route path="/my-journey" element={<Navigate to="/" replace />} />
+                  {/* Authenticated Student Dashboard & Protected Routes */}
+                  <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+                  <Route path="/my-journey" element={<Navigate to="/dashboard" replace />} />
                   <Route path="/notifications" element={<ProtectedRoute><StudentRoute><Notifications /></StudentRoute></ProtectedRoute>} />
                   <Route path="/profile" element={<ProtectedRoute><StudentRoute><Profile /></StudentRoute></ProtectedRoute>} />
 
