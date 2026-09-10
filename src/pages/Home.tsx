@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   GraduationCap, ShieldCheck, Plane, Building2, Car, BookOpen,
   ArrowRight, ChevronRight, CheckCircle2,
-  Compass, Search, Globe, Award, MapPin,
+  Compass, Search, Globe, Award,
   HeartHandshake, Sparkles
 } from 'lucide-react';
 import { DESTINATIONS } from '../data/destinations';
@@ -118,27 +118,27 @@ export const Home: React.FC = () => {
   const howItWorksSteps = [
     {
       step: '01',
-      title: 'Discover',
-      desc: 'Explore universities, destinations and services tailored to your educational and lifestyle aspirations.',
+      title: 'EXPLORE',
+      desc: 'Discover the education, travel, visa, accommodation and mobility services you need.',
       icon: Search,
     },
     {
       step: '02',
-      title: 'Plan',
-      desc: 'Compare your options and prepare your journey, including tuition, visas, travel timelines, and stays.',
+      title: 'CHOOSE',
+      desc: 'Compare your options and choose the services that fit your journey.',
       icon: Compass,
     },
     {
       step: '03',
-      title: 'Apply & Book',
-      desc: 'Apply for study opportunities and arrange required services with institutional verification.',
+      title: 'APPLY & BOOK',
+      desc: 'Complete applications, make bookings and arrange the services you need in one place.',
       icon: Award,
     },
     {
       step: '04',
-      title: 'Arrive & Settle',
-      desc: 'Get travel, accommodation and mobility support to touch down safely at your new campus.',
-      icon: MapPin,
+      title: 'MOVE FORWARD',
+      desc: 'Stay connected with your journey through updates, support and mobility services.',
+      icon: ArrowRight,
     },
   ];
 
@@ -146,68 +146,254 @@ export const Home: React.FC = () => {
     <PageContainer>
       <div className="space-y-16 sm:space-y-24 pb-16">
         {/* ========================================================================= */}
-        {/* 1. HERO SECTION: Multi-service Global Mobility Hero                      */}
+        {/* 1. HERO SECTION: Multi-service Global Mobility Hero & Journey Ecosystem  */}
         {/* ========================================================================= */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-[#0A1E4A] via-[#0D2A68] to-[#1E3A8A] text-white py-16 sm:py-24 lg:py-28">
+        <section className="relative overflow-hidden bg-gradient-to-br from-[#0A1E4A] via-[#0D2A68] to-[#1E3A8A] text-white py-16 sm:py-20 lg:py-24">
           {/* Background Glows */}
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/15 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-sky-400/10 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-3xl space-y-6 text-left">
-              {/* Category Pill */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-xs font-semibold text-sky-200 border border-white/15 backdrop-blur-md">
-                <Sparkles className="w-4 h-4 text-amber-300" />
-                <span>Global Mobility & Education Ecosystem</span>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+              {/* Left Column: ~55-60% width */}
+              <div className="lg:col-span-7 space-y-6 text-left">
+                {/* Category Pill */}
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-xs font-semibold text-sky-200 border border-white/15 backdrop-blur-md">
+                  <Sparkles className="w-4 h-4 text-amber-300" />
+                  <span>Global Mobility & Education Ecosystem</span>
+                </div>
+
+                {/* Main Headline */}
+                <h1 className="text-3xl sm:text-5xl lg:text-5xl xl:text-6xl font-black tracking-tight text-white leading-[1.15]">
+                  Your journey abroad, <br className="hidden sm:block" />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-200 via-blue-100 to-white">
+                    all in one place.
+                  </span>
+                </h1>
+
+                {/* Supporting Copy */}
+                <p className="text-base sm:text-lg text-slate-200 leading-relaxed font-normal max-w-xl">
+                  Discover universities, get visa assistance, book flights, find accommodation and arrange airport transfers — all through Edunomo.
+                </p>
+
+                {/* Ecosystem Pillars Badge Row (Education, Travel, Visa, Mobility) */}
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3 pt-1">
+                  {[
+                    { label: 'Education', icon: GraduationCap },
+                    { label: 'Travel', icon: Plane },
+                    { label: 'Visa', icon: ShieldCheck },
+                    { label: 'Mobility', icon: Car },
+                  ].map((pillar, i) => {
+                    const Icon = pillar.icon;
+                    return (
+                      <div
+                        key={i}
+                        className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/10 text-xs font-medium text-slate-200 border border-white/10 backdrop-blur-xs"
+                      >
+                        <Icon className="w-3.5 h-3.5 text-sky-300" />
+                        <span>{pillar.label}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Primary & Secondary CTAs */}
+                <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 max-w-md sm:max-w-none">
+                  <a href="#services" className="w-full sm:w-auto">
+                    <Button variant="secondary" size="lg" fullWidth rightIcon={<ArrowRight className="w-4 h-4" />}>
+                      Explore Services
+                    </Button>
+                  </a>
+                  <Link to="/study-abroad" className="w-full sm:w-auto">
+                    <button className="w-full sm:w-auto px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm backdrop-blur-md transition-colors border border-white/20 flex items-center justify-center gap-2 cursor-pointer shadow-xs">
+                      <Compass className="w-4 h-4 text-sky-300" />
+                      <span>Start Your Journey</span>
+                    </button>
+                  </Link>
+                </div>
               </div>
 
-              {/* Main Headline */}
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.15]">
-                Your journey abroad, <br className="hidden sm:block" />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-200 via-blue-100 to-white">
-                  all in one place.
-                </span>
-              </h1>
+              {/* Right Column: Edunomo Journey Ecosystem Visual (~40-45% width) */}
+              <div className="lg:col-span-5 w-full flex items-center justify-center pt-6 lg:pt-0">
+                <div className="relative w-full max-w-[440px] aspect-square rounded-3xl bg-gradient-to-br from-white/[0.08] via-slate-900/40 to-white/[0.02] border border-white/15 p-4 sm:p-5 backdrop-blur-md shadow-2xl flex items-center justify-center overflow-hidden select-none">
+                  {/* Glowing ambient orbs */}
+                  <div className="absolute -top-10 -right-10 w-44 h-44 bg-sky-500/20 rounded-full blur-3xl pointer-events-none" />
+                  <div className="absolute -bottom-10 -left-10 w-44 h-44 bg-blue-600/20 rounded-full blur-3xl pointer-events-none" />
 
-              {/* Supporting Copy */}
-              <p className="text-base sm:text-lg text-slate-200 leading-relaxed font-normal max-w-2xl">
-                Discover universities, get visa assistance, book flights, find accommodation and arrange airport transfers — all through Edunomo.
-              </p>
+                  {/* Decorative background orbits */}
+                  <div className="absolute inset-8 rounded-full border border-dashed border-sky-400/20 pointer-events-none animate-[spin_80s_linear_infinite]" />
+                  <div className="absolute inset-20 rounded-full border border-blue-300/10 pointer-events-none" />
 
-              {/* Ecosystem Pillars Badge Row */}
-              <div className="flex flex-wrap items-center gap-2 sm:gap-3 pt-2">
-                {[
-                  { label: 'Education', icon: GraduationCap },
-                  { label: 'Travel', icon: Plane },
-                  { label: 'Mobility', icon: Car },
-                  { label: 'Settlement', icon: Building2 },
-                ].map((pillar, i) => {
-                  const Icon = pillar.icon;
-                  return (
-                    <div
-                      key={i}
-                      className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/10 text-xs font-medium text-slate-200 border border-white/10 backdrop-blur-xs"
-                    >
-                      <Icon className="w-3.5 h-3.5 text-sky-300" />
-                      <span>{pillar.label}</span>
+                  {/* SVG Network Connector Lines */}
+                  <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 400 400" fill="none">
+                    <defs>
+                      <linearGradient id="ecoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.5" />
+                        <stop offset="100%" stopColor="#60a5fa" stopOpacity="0.2" />
+                      </linearGradient>
+                      <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.3" />
+                        <stop offset="100%" stopColor="#818cf8" stopOpacity="0.15" />
+                      </linearGradient>
+                    </defs>
+
+                    {/* Outer hexagon network ring */}
+                    <polygon
+                      points="105,65 295,65 345,200 295,335 105,335 55,200"
+                      stroke="url(#ringGrad)"
+                      strokeWidth="1.2"
+                      strokeDasharray="4 4"
+                      fill="none"
+                    />
+
+                    {/* Radial lines from center (200, 200) to each node */}
+                    <line x1="200" y1="200" x2="105" y2="65" stroke="url(#ecoGrad)" strokeWidth="1.5" strokeDasharray="3 3" />
+                    <line x1="200" y1="200" x2="295" y2="65" stroke="url(#ecoGrad)" strokeWidth="1.5" strokeDasharray="3 3" />
+                    <line x1="200" y1="200" x2="55" y2="200" stroke="url(#ecoGrad)" strokeWidth="1.5" strokeDasharray="3 3" />
+                    <line x1="200" y1="200" x2="345" y2="200" stroke="url(#ecoGrad)" strokeWidth="1.5" strokeDasharray="3 3" />
+                    <line x1="200" y1="200" x2="105" y2="335" stroke="url(#ecoGrad)" strokeWidth="1.5" strokeDasharray="3 3" />
+                    <line x1="200" y1="200" x2="295" y2="335" stroke="url(#ecoGrad)" strokeWidth="1.5" strokeDasharray="3 3" />
+
+                    {/* Pulsing connection anchor dots */}
+                    <circle cx="105" cy="65" r="3" fill="#38bdf8" />
+                    <circle cx="295" cy="65" r="3" fill="#38bdf8" />
+                    <circle cx="55" cy="200" r="3" fill="#818cf8" />
+                    <circle cx="345" cy="200" r="3" fill="#34d399" />
+                    <circle cx="105" cy="335" r="3" fill="#fbbf24" />
+                    <circle cx="295" cy="335" r="3" fill="#a78bfa" />
+                  </svg>
+
+                  {/* ================= CENTER HUB ================= */}
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center justify-center">
+                    <div className="relative group">
+                      <div className="absolute -inset-1.5 rounded-2xl bg-gradient-to-r from-sky-400 to-blue-600 opacity-40 blur-md group-hover:opacity-75 transition-opacity" />
+                      <div className="relative px-3.5 py-3 rounded-2xl bg-slate-900/90 border border-sky-400/40 backdrop-blur-xl shadow-2xl flex flex-col items-center text-center">
+                        <div className="w-8 h-8 rounded-xl bg-white p-1 flex items-center justify-center mb-1 shadow-inner">
+                          <img src="/assets/edunomo-logo.png" alt="Edunomo" className="h-6 w-auto object-contain" />
+                        </div>
+                        <span className="text-xs font-black text-white tracking-wider block leading-none">
+                          EDUNOMO
+                        </span>
+                        <span className="text-[8px] font-bold text-sky-300 tracking-widest uppercase mt-0.5">
+                          JOURNEY HUB
+                        </span>
+                        <div className="mt-1 flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-400/25">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+                          <span className="text-[8px] font-medium text-emerald-300">Unified Platform</span>
+                        </div>
+                      </div>
                     </div>
-                  );
-                })}
-              </div>
+                  </div>
 
-              {/* Primary & Secondary CTAs */}
-              <div className="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 max-w-md sm:max-w-none">
-                <a href="#services" className="w-full sm:w-auto">
-                  <Button variant="secondary" size="lg" fullWidth rightIcon={<ArrowRight className="w-4 h-4" />}>
-                    Explore Services
-                  </Button>
-                </a>
-                <Link to="/study-abroad" className="w-full sm:w-auto">
-                  <button className="w-full sm:w-auto px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm backdrop-blur-md transition-colors border border-white/20 flex items-center justify-center gap-2 cursor-pointer shadow-xs">
-                    <Compass className="w-4 h-4 text-sky-300" />
-                    <span>Start Your Journey</span>
-                  </button>
-                </Link>
+                  {/* ================= 6 SERVICE NODES ================= */}
+                  {/* Node 1: Study Abroad (Top-Left) */}
+                  <Link
+                    to="/study-abroad"
+                    className="absolute top-2 left-2 sm:top-3 sm:left-3 z-10 px-2 py-1.5 sm:px-2.5 sm:py-2 rounded-xl bg-slate-900/85 hover:bg-slate-800/95 border border-sky-400/30 hover:border-sky-400 shadow-lg backdrop-blur-md transition-all duration-200 flex items-center gap-2 group max-w-[125px] sm:max-w-[145px]"
+                  >
+                    <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-blue-500/20 text-sky-300 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                      <GraduationCap className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                    </div>
+                    <div className="min-w-0">
+                      <span className="block text-[10px] sm:text-xs font-bold text-white truncate group-hover:text-sky-200">
+                        Study Abroad
+                      </span>
+                      <span className="block text-[8px] sm:text-[9px] text-slate-400 truncate">
+                        Universities
+                      </span>
+                    </div>
+                  </Link>
+
+                  {/* Node 2: Flights (Top-Right) */}
+                  <Link
+                    to="/flights"
+                    className="absolute top-2 right-2 sm:top-3 sm:right-3 z-10 px-2 py-1.5 sm:px-2.5 sm:py-2 rounded-xl bg-slate-900/85 hover:bg-slate-800/95 border border-sky-400/30 hover:border-sky-400 shadow-lg backdrop-blur-md transition-all duration-200 flex items-center gap-2 group max-w-[125px] sm:max-w-[145px]"
+                  >
+                    <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-sky-500/20 text-sky-300 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                      <Plane className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                    </div>
+                    <div className="min-w-0">
+                      <span className="block text-[10px] sm:text-xs font-bold text-white truncate group-hover:text-sky-200">
+                        Flights
+                      </span>
+                      <span className="block text-[8px] sm:text-[9px] text-slate-400 truncate">
+                        Air Travel
+                      </span>
+                    </div>
+                  </Link>
+
+                  {/* Node 3: Visa (Middle-Left) */}
+                  <Link
+                    to="/visa"
+                    className="absolute top-1/2 -translate-y-1/2 left-1 sm:left-2 z-10 px-2 py-1.5 sm:px-2.5 sm:py-2 rounded-xl bg-slate-900/85 hover:bg-slate-800/95 border border-indigo-400/30 hover:border-indigo-400 shadow-lg backdrop-blur-md transition-all duration-200 flex items-center gap-2 group max-w-[120px] sm:max-w-[140px]"
+                  >
+                    <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-indigo-500/20 text-indigo-300 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                      <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                    </div>
+                    <div className="min-w-0">
+                      <span className="block text-[10px] sm:text-xs font-bold text-white truncate group-hover:text-indigo-200">
+                        Visa
+                      </span>
+                      <span className="block text-[8px] sm:text-[9px] text-slate-400 truncate">
+                        Guidance
+                      </span>
+                    </div>
+                  </Link>
+
+                  {/* Node 4: Accommodation (Middle-Right) */}
+                  <Link
+                    to="/hotels"
+                    className="absolute top-1/2 -translate-y-1/2 right-1 sm:right-2 z-10 px-2 py-1.5 sm:px-2.5 sm:py-2 rounded-xl bg-slate-900/85 hover:bg-slate-800/95 border border-emerald-400/30 hover:border-emerald-400 shadow-lg backdrop-blur-md transition-all duration-200 flex items-center gap-2 group max-w-[125px] sm:max-w-[150px]"
+                  >
+                    <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-emerald-500/20 text-emerald-300 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                      <Building2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                    </div>
+                    <div className="min-w-0">
+                      <span className="block text-[10px] sm:text-xs font-bold text-white truncate group-hover:text-emerald-200">
+                        Accommodation
+                      </span>
+                      <span className="block text-[8px] sm:text-[9px] text-slate-400 truncate">
+                        Verified Stays
+                      </span>
+                    </div>
+                  </Link>
+
+                  {/* Node 5: Cab Mobility (Bottom-Left) */}
+                  <Link
+                    to="/cabs"
+                    className="absolute bottom-2 left-2 sm:bottom-3 sm:left-3 z-10 px-2 py-1.5 sm:px-2.5 sm:py-2 rounded-xl bg-slate-900/85 hover:bg-slate-800/95 border border-amber-400/30 hover:border-amber-400 shadow-lg backdrop-blur-md transition-all duration-200 flex items-center gap-2 group max-w-[125px] sm:max-w-[145px]"
+                  >
+                    <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                      <Car className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                    </div>
+                    <div className="min-w-0">
+                      <span className="block text-[10px] sm:text-xs font-bold text-white truncate group-hover:text-amber-200">
+                        Cab Mobility
+                      </span>
+                      <span className="block text-[8px] sm:text-[9px] text-slate-400 truncate">
+                        Airport Transit
+                      </span>
+                    </div>
+                  </Link>
+
+                  {/* Node 6: Tuition (Bottom-Right) */}
+                  <Link
+                    to="/tuition"
+                    className="absolute bottom-2 right-2 sm:bottom-3 sm:right-3 z-10 px-2 py-1.5 sm:px-2.5 sm:py-2 rounded-xl bg-slate-900/85 hover:bg-slate-800/95 border border-violet-400/30 hover:border-violet-400 shadow-lg backdrop-blur-md transition-all duration-200 flex items-center gap-2 group max-w-[125px] sm:max-w-[145px]"
+                  >
+                    <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-violet-500/20 text-violet-300 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                      <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                    </div>
+                    <div className="min-w-0">
+                      <span className="block text-[10px] sm:text-xs font-bold text-white truncate group-hover:text-violet-200">
+                        Tuition
+                      </span>
+                      <span className="block text-[8px] sm:text-[9px] text-slate-400 truncate">
+                        Tutors & Prep
+                      </span>
+                    </div>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -329,48 +515,53 @@ export const Home: React.FC = () => {
           </section>
 
           {/* ========================================================================= */}
-          {/* 4. HOW IT WORKS: Simple 4-Step Process                                    */}
+          {/* 4. THE EDUNOMO FLOW: 4-Step Process                                       */}
           {/* ========================================================================= */}
           <section>
             <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-[#0D2A68] text-xs font-bold uppercase tracking-wider mb-2">
-                <span>The Edunomo Flow</span>
+                <span>Integrated Journey</span>
               </div>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
-                How It Works
+                The Edunomo Flow
               </h2>
               <p className="text-xs sm:text-sm text-slate-600 mt-2">
-                A seamless four-stage progression from your home country to your overseas lecture hall.
+                One platform. Multiple services. A simpler way to plan, book and manage your journey.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {howItWorksSteps.map((step, idx) => {
-                const Icon = step.icon;
-                return (
-                  <div
-                    key={idx}
-                    className="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-xs relative flex flex-col justify-between group hover:shadow-md transition-all"
-                  >
-                    <div>
-                      <div className="flex items-center justify-between mb-4">
-                        <span className="font-black text-2xl text-blue-200 group-hover:text-[#0D2A68] transition-colors">
-                          {step.step}
-                        </span>
-                        <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#0D2A68] flex items-center justify-center">
-                          <Icon className="w-5 h-5" />
+            <div className="relative">
+              {/* Subtle desktop connecting flow line */}
+              <div className="hidden lg:block absolute top-10 left-12 right-12 h-0.5 bg-gradient-to-r from-blue-200 via-sky-300 to-blue-200 z-0" />
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
+                {howItWorksSteps.map((step, idx) => {
+                  const Icon = step.icon;
+                  return (
+                    <div
+                      key={idx}
+                      className="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-xs relative flex flex-col justify-between group hover:shadow-md hover:border-blue-300 transition-all"
+                    >
+                      <div>
+                        <div className="flex items-center justify-between mb-5">
+                          <span className="font-black text-2xl text-blue-200 group-hover:text-[#0D2A68] transition-colors">
+                            {step.step}
+                          </span>
+                          <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#0D2A68] group-hover:bg-[#0D2A68] group-hover:text-white transition-colors flex items-center justify-center shadow-xs">
+                            <Icon className="w-5 h-5" />
+                          </div>
                         </div>
+                        <h3 className="text-base font-bold text-slate-900 mb-2 tracking-wide">
+                          {step.title}
+                        </h3>
+                        <p className="text-xs text-slate-500 leading-relaxed">
+                          {step.desc}
+                        </p>
                       </div>
-                      <h3 className="text-base font-bold text-slate-900 mb-2">
-                        {step.title}
-                      </h3>
-                      <p className="text-xs text-slate-500 leading-relaxed">
-                        {step.desc}
-                      </p>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
           </section>
 
