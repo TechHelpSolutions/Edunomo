@@ -155,8 +155,8 @@ export const Home: React.FC = () => {
 
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
-              {/* Left Column: ~55-60% width */}
-              <div className="lg:col-span-7 space-y-6 text-left">
+              {/* Left Column: ~45-50% width on desktop */}
+              <div className="lg:col-span-6 xl:col-span-5 space-y-6 text-left z-10">
                 {/* Category Pill */}
                 <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-xs font-semibold text-sky-200 border border-white/15 backdrop-blur-md">
                   <Sparkles className="w-4 h-4 text-amber-300" />
@@ -213,186 +213,20 @@ export const Home: React.FC = () => {
                 </div>
               </div>
 
-              {/* Right Column: Edunomo Journey Ecosystem Visual (~40-45% width) */}
-              <div className="lg:col-span-5 w-full flex items-center justify-center pt-6 lg:pt-0">
-                <div className="relative w-full max-w-[440px] aspect-square rounded-3xl bg-gradient-to-br from-white/[0.08] via-slate-900/40 to-white/[0.02] border border-white/15 p-4 sm:p-5 backdrop-blur-md shadow-2xl flex items-center justify-center overflow-hidden select-none">
-                  {/* Glowing ambient orbs */}
-                  <div className="absolute -top-10 -right-10 w-44 h-44 bg-sky-500/20 rounded-full blur-3xl pointer-events-none" />
-                  <div className="absolute -bottom-10 -left-10 w-44 h-44 bg-blue-600/20 rounded-full blur-3xl pointer-events-none" />
+              {/* Right Column: Hero Journey Ecosystem Visual (~50-55% width on desktop) */}
+              <div className="lg:col-span-6 xl:col-span-7 w-full flex items-center justify-center lg:justify-end pt-6 lg:pt-0">
+                <div className="relative w-full max-w-[620px] xl:max-w-[700px] flex items-center justify-center lg:justify-end">
+                  {/* Subtle ambient lighting behind visual */}
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 sm:w-96 h-72 sm:h-96 bg-blue-500/15 rounded-full blur-3xl pointer-events-none" />
 
-                  {/* Decorative background orbits */}
-                  <div className="absolute inset-8 rounded-full border border-dashed border-sky-400/20 pointer-events-none animate-[spin_80s_linear_infinite]" />
-                  <div className="absolute inset-20 rounded-full border border-blue-300/10 pointer-events-none" />
-
-                  {/* SVG Network Connector Lines */}
-                  <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 400 400" fill="none">
-                    <defs>
-                      <linearGradient id="ecoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.5" />
-                        <stop offset="100%" stopColor="#60a5fa" stopOpacity="0.2" />
-                      </linearGradient>
-                      <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.3" />
-                        <stop offset="100%" stopColor="#818cf8" stopOpacity="0.15" />
-                      </linearGradient>
-                    </defs>
-
-                    {/* Outer hexagon network ring */}
-                    <polygon
-                      points="105,65 295,65 345,200 295,335 105,335 55,200"
-                      stroke="url(#ringGrad)"
-                      strokeWidth="1.2"
-                      strokeDasharray="4 4"
-                      fill="none"
-                    />
-
-                    {/* Radial lines from center (200, 200) to each node */}
-                    <line x1="200" y1="200" x2="105" y2="65" stroke="url(#ecoGrad)" strokeWidth="1.5" strokeDasharray="3 3" />
-                    <line x1="200" y1="200" x2="295" y2="65" stroke="url(#ecoGrad)" strokeWidth="1.5" strokeDasharray="3 3" />
-                    <line x1="200" y1="200" x2="55" y2="200" stroke="url(#ecoGrad)" strokeWidth="1.5" strokeDasharray="3 3" />
-                    <line x1="200" y1="200" x2="345" y2="200" stroke="url(#ecoGrad)" strokeWidth="1.5" strokeDasharray="3 3" />
-                    <line x1="200" y1="200" x2="105" y2="335" stroke="url(#ecoGrad)" strokeWidth="1.5" strokeDasharray="3 3" />
-                    <line x1="200" y1="200" x2="295" y2="335" stroke="url(#ecoGrad)" strokeWidth="1.5" strokeDasharray="3 3" />
-
-                    {/* Pulsing connection anchor dots */}
-                    <circle cx="105" cy="65" r="3" fill="#38bdf8" />
-                    <circle cx="295" cy="65" r="3" fill="#38bdf8" />
-                    <circle cx="55" cy="200" r="3" fill="#818cf8" />
-                    <circle cx="345" cy="200" r="3" fill="#34d399" />
-                    <circle cx="105" cy="335" r="3" fill="#fbbf24" />
-                    <circle cx="295" cy="335" r="3" fill="#a78bfa" />
-                  </svg>
-
-                  {/* ================= CENTER HUB ================= */}
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center justify-center">
-                    <div className="relative group">
-                      <div className="absolute -inset-1.5 rounded-2xl bg-gradient-to-r from-sky-400 to-blue-600 opacity-40 blur-md group-hover:opacity-75 transition-opacity" />
-                      <div className="relative px-3.5 py-3 rounded-2xl bg-slate-900/90 border border-sky-400/40 backdrop-blur-xl shadow-2xl flex flex-col items-center text-center">
-                        <div className="w-8 h-8 rounded-xl bg-white p-1 flex items-center justify-center mb-1 shadow-inner">
-                          <img src="/assets/edunomo-logo.png" alt="Edunomo" className="h-6 w-auto object-contain" />
-                        </div>
-                        <span className="text-xs font-black text-white tracking-wider block leading-none">
-                          EDUNOMO
-                        </span>
-                        <span className="text-[8px] font-bold text-sky-300 tracking-widest uppercase mt-0.5">
-                          JOURNEY HUB
-                        </span>
-                        <div className="mt-1 flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-400/25">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
-                          <span className="text-[8px] font-medium text-emerald-300">Unified Platform</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* ================= 6 SERVICE NODES ================= */}
-                  {/* Node 1: Study Abroad (Top-Left) */}
-                  <Link
-                    to="/study-abroad"
-                    className="absolute top-2 left-2 sm:top-3 sm:left-3 z-10 px-2 py-1.5 sm:px-2.5 sm:py-2 rounded-xl bg-slate-900/85 hover:bg-slate-800/95 border border-sky-400/30 hover:border-sky-400 shadow-lg backdrop-blur-md transition-all duration-200 flex items-center gap-2 group max-w-[125px] sm:max-w-[145px]"
-                  >
-                    <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-blue-500/20 text-sky-300 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                      <GraduationCap className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                    </div>
-                    <div className="min-w-0">
-                      <span className="block text-[10px] sm:text-xs font-bold text-white truncate group-hover:text-sky-200">
-                        Study Abroad
-                      </span>
-                      <span className="block text-[8px] sm:text-[9px] text-slate-400 truncate">
-                        Universities
-                      </span>
-                    </div>
-                  </Link>
-
-                  {/* Node 2: Flights (Top-Right) */}
-                  <Link
-                    to="/flights"
-                    className="absolute top-2 right-2 sm:top-3 sm:right-3 z-10 px-2 py-1.5 sm:px-2.5 sm:py-2 rounded-xl bg-slate-900/85 hover:bg-slate-800/95 border border-sky-400/30 hover:border-sky-400 shadow-lg backdrop-blur-md transition-all duration-200 flex items-center gap-2 group max-w-[125px] sm:max-w-[145px]"
-                  >
-                    <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-sky-500/20 text-sky-300 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                      <Plane className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                    </div>
-                    <div className="min-w-0">
-                      <span className="block text-[10px] sm:text-xs font-bold text-white truncate group-hover:text-sky-200">
-                        Flights
-                      </span>
-                      <span className="block text-[8px] sm:text-[9px] text-slate-400 truncate">
-                        Air Travel
-                      </span>
-                    </div>
-                  </Link>
-
-                  {/* Node 3: Visa (Middle-Left) */}
-                  <Link
-                    to="/visa"
-                    className="absolute top-1/2 -translate-y-1/2 left-1 sm:left-2 z-10 px-2 py-1.5 sm:px-2.5 sm:py-2 rounded-xl bg-slate-900/85 hover:bg-slate-800/95 border border-indigo-400/30 hover:border-indigo-400 shadow-lg backdrop-blur-md transition-all duration-200 flex items-center gap-2 group max-w-[120px] sm:max-w-[140px]"
-                  >
-                    <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-indigo-500/20 text-indigo-300 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                      <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                    </div>
-                    <div className="min-w-0">
-                      <span className="block text-[10px] sm:text-xs font-bold text-white truncate group-hover:text-indigo-200">
-                        Visa
-                      </span>
-                      <span className="block text-[8px] sm:text-[9px] text-slate-400 truncate">
-                        Guidance
-                      </span>
-                    </div>
-                  </Link>
-
-                  {/* Node 4: Accommodation (Middle-Right) */}
-                  <Link
-                    to="/hotels"
-                    className="absolute top-1/2 -translate-y-1/2 right-1 sm:right-2 z-10 px-2 py-1.5 sm:px-2.5 sm:py-2 rounded-xl bg-slate-900/85 hover:bg-slate-800/95 border border-emerald-400/30 hover:border-emerald-400 shadow-lg backdrop-blur-md transition-all duration-200 flex items-center gap-2 group max-w-[125px] sm:max-w-[150px]"
-                  >
-                    <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-emerald-500/20 text-emerald-300 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                      <Building2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                    </div>
-                    <div className="min-w-0">
-                      <span className="block text-[10px] sm:text-xs font-bold text-white truncate group-hover:text-emerald-200">
-                        Accommodation
-                      </span>
-                      <span className="block text-[8px] sm:text-[9px] text-slate-400 truncate">
-                        Verified Stays
-                      </span>
-                    </div>
-                  </Link>
-
-                  {/* Node 5: Cab Mobility (Bottom-Left) */}
-                  <Link
-                    to="/cabs"
-                    className="absolute bottom-2 left-2 sm:bottom-3 sm:left-3 z-10 px-2 py-1.5 sm:px-2.5 sm:py-2 rounded-xl bg-slate-900/85 hover:bg-slate-800/95 border border-amber-400/30 hover:border-amber-400 shadow-lg backdrop-blur-md transition-all duration-200 flex items-center gap-2 group max-w-[125px] sm:max-w-[145px]"
-                  >
-                    <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                      <Car className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                    </div>
-                    <div className="min-w-0">
-                      <span className="block text-[10px] sm:text-xs font-bold text-white truncate group-hover:text-amber-200">
-                        Cab Mobility
-                      </span>
-                      <span className="block text-[8px] sm:text-[9px] text-slate-400 truncate">
-                        Airport Transit
-                      </span>
-                    </div>
-                  </Link>
-
-                  {/* Node 6: Tuition (Bottom-Right) */}
-                  <Link
-                    to="/tuition"
-                    className="absolute bottom-2 right-2 sm:bottom-3 sm:right-3 z-10 px-2 py-1.5 sm:px-2.5 sm:py-2 rounded-xl bg-slate-900/85 hover:bg-slate-800/95 border border-violet-400/30 hover:border-violet-400 shadow-lg backdrop-blur-md transition-all duration-200 flex items-center gap-2 group max-w-[125px] sm:max-w-[145px]"
-                  >
-                    <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-violet-500/20 text-violet-300 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                      <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                    </div>
-                    <div className="min-w-0">
-                      <span className="block text-[10px] sm:text-xs font-bold text-white truncate group-hover:text-violet-200">
-                        Tuition
-                      </span>
-                      <span className="block text-[8px] sm:text-[9px] text-slate-400 truncate">
-                        Tutors & Prep
-                      </span>
-                    </div>
-                  </Link>
+                  <img
+                    src="/assets/hero-journey-visual@2x.png"
+                    srcSet="/assets/hero-journey-visual.png 1x, /assets/hero-journey-visual@2x.png 2x"
+                    alt="Edunomo Global Journey Ecosystem - Education, Travel, Visa, Accommodation, Mobility, Tuition"
+                    className="relative z-10 w-full h-auto object-contain pointer-events-none drop-shadow-2xl select-none"
+                    loading="eager"
+                    decoding="async"
+                  />
                 </div>
               </div>
             </div>
